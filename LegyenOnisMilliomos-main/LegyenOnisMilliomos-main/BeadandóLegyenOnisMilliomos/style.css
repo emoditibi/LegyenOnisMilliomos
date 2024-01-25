@@ -1,0 +1,27 @@
+body{
+    background-color: green;
+    color:aliceblue;
+    font-family: Arial;
+}
+h1,p,table{
+    text-align: center;
+}
+.gomb{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 12px;
+  width: 50%;
+}
+.gomb2{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 12px;
+  width: 50%;
+  text-align: center;
+}
+td{
+  width: 50%;
+}
+p{
+  font-size:x-large;
+}
