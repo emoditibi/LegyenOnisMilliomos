@@ -14,17 +14,39 @@
         <div class="shape"></div>
     </div>
     <form id="logForm">
+        
         <label for="fn" id="fnl">Felhasználónév:</label>
-        <input type="text" id="fn" placeholder="Felhasználónév"><br>
-        <label for="pw" id="pwl">Jelszó:</label>
-        <input type="password" id="pw" placeholder="Jelszó"><br>
-        <p id="loginfo"></p>
-        <input class="gomb" type="button" id="bejelentkezesgomb" value="Bejelentkezés" onclick="login()">
+        <input type="text" class="des" id="fn" placeholder="Felhasználónév"><br>
+        <label for="pw" id="pw">Jelszó:</label>
+        <input type="password" class="des" id="pw" placeholder="Jelszó"><br>
+        <input class="gomb"  type="button" id="bejelentkezesgomb" value="Bejelentkezés" oAnclick="login()">
+        <input  class="gomb" type="button" id="atiranyitasregisztraciohoz" value="Nincs még fiókom!" onclick="atiranyitas()">
+    </form>
+    <form id="regForm">
+        <label for="fn" id="regfn">Felhasználónév:</label>
+        <input type="text" class="des" id="regfn" placeholder="Felhasználónév"><br>
+        <label for="email" id="email">Email:</label>
+        <input type="text" class="des" id="email" placeholder="Email"><br>
+        <label for="pw" id="regpw">Jelszó:</label>
+        <input type="password" class="des" id="regpw" placeholder="Jelszó"><br>
+        <label for="pw" id="regpwre">Jelszó:</label>
+        <input type="password" class="des" id="regpwre" placeholder="Jelszó újra"><br>
+        <table>
+            <tr>
+                <th>
+                    <label for="tanare1"  id="diak" >Diak</label>
+                    <input type="radio" id="diak" name="fiok">
+                </th>
+                <th><label for="tanare2" id="tanar">Tanar</label>
+                    <input type="radio" id="tanar" name="fiok">
+                </th>
+            </tr>
+        </table>
+        <input  class="gomb" type="button" id="regisztaciogomb" value="Regisztráció" onclick="regisztracio()">
+        <input  class="gomb" type="button" id="atiranyitasabejeletkezeshez" value="Van már fiókom!" onclick="atiranyitas2()">
     </form>
     <p id="fNev"></p>
-
-        
-    </div>
+    <p id="version">v0.0.1</p>
     <script src="script.js"></script>
 </body>
 </html>
