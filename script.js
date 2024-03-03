@@ -1,3 +1,4 @@
+document.getElementById("regForm").style.display="none";
 const AdatbazisEleres = ()=>{
     fetch("http://127.0.0.1:3000")
     .then(function (response) {
@@ -71,18 +72,24 @@ function login(){
                     localStorage.setItem("login",true);
                     let fNev=document.getElementById("fNev");
                     fNev.innerHTML=`${localStorage.getItem("fn")}`;
-                    document.getElementById("fn").style.display="none";
-                    document.getElementById("fnl").style.display="none";
-                    document.getElementById("pw").style.display="none";
-                    document.getElementById("pwl").style.display="none";
-                    document.getElementById("bejelentkezesgomb").style.display="none";
+                    document.getElementById("logForm").style.display="none";
+                    document.getElementById("regForm").style.display="none";
 
                 }
-               
             });
-           
         })
-            
-        
     }
+}
+
+function atiranyitas(){
+
+    document.getElementById("logForm").style.display="none";
+    document.getElementById("regForm").style.display="block";
+    
+}
+function atiranyitas2(){
+    
+    document.getElementById("regForm").style.display="none";
+    document.getElementById("logForm").style.display="block";
+    
 }
