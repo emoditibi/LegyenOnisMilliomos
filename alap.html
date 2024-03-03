@@ -21,7 +21,9 @@
         <input type="password" class="des" id="pw" placeholder="Jelszó"><br>
         <input class="gomb"  type="button" id="bejelentkezesgomb" value="Bejelentkezés" onclick="login()">
         <input  class="gomb" type="button" id="atiranyitasregisztraciohoz" value="Nincs még fiókom!" onclick="atiranyitas()">
+        <p id="logInfo"></p>
     </form>
+
     <form id="regForm">
         <label for="fn">Felhasználónév:</label>
         <input type="text" class="des" id="regfn" placeholder="Felhasználónév"><br>
@@ -30,23 +32,22 @@
         <label for="pw">Jelszó:</label>
         <input type="password" class="des" id="regpw" placeholder="Jelszó"><br>
         <input type="password" class="des" id="regpwre" placeholder="Jelszó újra"><br>
-        
-
         <table>
             <tr>
                 <th>
-                    <label for="tanare1">Diak</label>
+                    <label for="tanar1">Diák</label>
                     <input type="radio" id="diak" name="fiok">
                 </th>
-                <th><label for="tanare2">Tanar</label>
+                <th><label for="tanar2">Tanár</label>
                     <input type="radio" id="tanar" name="fiok">
                 </th>
             </tr>
         </table>
         <input  class="gomb" type="button" id="regisztaciogomb" value="Regisztráció" onclick="regisztracio()">
-        <input  class="gomb" type="button" id="atiranyitasabejeletkezeshez" value="Van már fiókom!" onclick="atiranyitas2()">
-        <p id="reginfo"></p>
+        <input  class="gomb" type="button" id="atiranyitasabejeletkezeshez" value="Van már fiókom!" onclick="atiranyitas()">
+        <p id="regInfo"></p>
     </form>
+
     <p id="fNev"></p>
     <p id="version">v0.0.1</p>
     <script src="script.js"></script>
