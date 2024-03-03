@@ -1,4 +1,9 @@
-document.getElementById("regForm").style.display="none";
+var logForm = document.getElementById("logForm");
+var logInfo = document.getElementById("logInfo");
+var regForm = document.getElementById("regForm");
+var regInfo = document.getElementById("regInfo");
+regForm.style.display="none";
+
 const AdatbazisEleres = ()=>{
     fetch("http://127.0.0.1:3000")
     .then(function (response) {
@@ -21,7 +26,6 @@ const AdatbazisEleres = ()=>{
         }
     });
 }
-
 AdatbazisEleres();
 async function hash(string) {
     const utf8 = new TextEncoder().encode(string);
@@ -56,6 +60,15 @@ const LekerdezesEredmenye = (sql) => {
         }
     });
 }
+function atiranyitas(){
+    if (regForm.style.display === "block") {
+        regForm.style.display = "none";
+        logForm.style.display = "block";
+    } else {
+        logForm.style.display = "none";
+        regForm.style.display = "block";
+    }
+}
 function login(){
     let fn=document.getElementById("fn").value;
     let pw=document.getElementById("pw").value;
@@ -88,8 +101,8 @@ function login(){
                            console.log(valasz[0]);
                         }
                     });
-                    document.getElementById("logForm").style.display="none";
-                    document.getElementById("regForm").style.display="none";
+                    logForm.style.display="none";
+                    regForm.style.display="none";
 
                 }
             });
@@ -97,49 +110,40 @@ function login(){
     }
 }
 function regisztracio(){
+    let tan;
     let regfn=document.getElementById("regfn").value;
     let email=document.getElementById("email").value;
     let regpw=document.getElementById("regpw").value;
     let regpwre=document.getElementById("regpwre").value;
-    const regExp=/[A-Za-z0-9\.\_]{1,16}$/;
-    const emailregExp=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre==regpw){
-        hash(regpw).then((hash)=>{ 
-            let sql="insert into felhasznalok(id,nev,password,email)values(null,'"+regfn+"','"+hash+"','"+email+"')";
-            let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
-            let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
-            LekerdezesEredmenye(sql2).then((valasz)=>{
-                if(valasz.length==1){
-                    document.getElementById("reginfo").innerHTML="Van már ilyen nevű felhasználó!";
-                }
-                else LekerdezesEredmenye(sql).then((valasz)=>{
-                    console.log(valasz);
-                });
-            });
-            LekerdezesEredmenye(sql3).then((valasz)=>{
-                if(valasz.length==1){
-                    document.getElementById("reginfo").innerHTML="Van már ilyen email cím!";
-                }
-                else LekerdezesEredmenye(sql).then((valasz)=>{
-                    console.log(valasz);
-                });
-            });
-    
-})}
-else if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre!=regpw) document.getElementById("reginfo").innerHTML="Nem egyezik a két jelszó!";
-else document.getElementById("reginfo").innerHTML="Nem megfelelő adatokat adtál meg!";
-}
+    let diak=document.getElementById("diak").checked;
+    let tanar=document.getElementById("tanar").checked;
 
-
-function atiranyitas(){
-
-    document.getElementById("logForm").style.display="none";
-    document.getElementById("regForm").style.display="block";
-    
-}
-function atiranyitas2(){
-    
-    document.getElementById("regForm").style.display="none";
-    document.getElementById("logForm").style.display="block";
-    
+    if(diak===false && tanar===false){
+        regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"}
+    else{
+        const regExp=/[A-Za-z0-9\.\_]{1,16}$/;
+        const emailregExp=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre==regpw){
+            hash(regpw).then((hash)=>{ 
+                    if(diak===true && tanar ===false){tan=0;}
+                    else if(diak===false && tanar ===true){tan=1;}
+                    let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
+                    let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
+                    let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
+                    LekerdezesEredmenye(sql2).then((valasz)=>{
+                        if(valasz.length==1){
+                            regInfo.innerHTML="Van már ilyen nevű felhasználó!";}
+                        else{
+                            LekerdezesEredmenye(sql3).then((valasz)=>{
+                            if(valasz.length==1){
+                                regInfo.innerHTML="Van már ilyen email cím!";}
+                            else LekerdezesEredmenye(sql).then((valasz)=>{
+                                console.log(valasz);})
+                            })
+                        }
+                    })
+                })}
+            else if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre!=regpw) document.getElementById("reginfo").innerHTML="Nem egyezik a két jelszó!";
+            else regInfo.innerHTML="Nem megfelelő adatokat adtál meg!";
+    }
 }
