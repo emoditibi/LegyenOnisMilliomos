@@ -130,7 +130,7 @@ function regisztracio(){
                 let sql4="SELECT * FROM codok c WHERE c.nev='"+kod+"'";
                 let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
                 let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
-
+            
                     if(tanar===false){
                         tan=0;
                         let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
@@ -147,6 +147,10 @@ function regisztracio(){
                                     regInfo.innerHTML="Sikeres regisztáció";
                                     logForm.style.display="none";
                                     regForm.style.display="none";
+                                    LekerdezesEredmenye(sql2).then(()=>{
+                                        fNev.innerHTML="Diak: "+regfn;
+                                            
+                                    })
                                 })
                             }
                         })
@@ -169,17 +173,20 @@ function regisztracio(){
                                             regInfo.innerHTML="Sikeres regisztáció";
                                             logForm.style.display="none";
                                             regForm.style.display="none";
-                                        })
+                                            LekerdezesEredmenye(sql2).then(()=>{
+                                                fNev.innerHTML="Tanar: "+regfn;
+                                                    
+                                            })
+                                            
+                                        });
                                    
                                     }
                                 })
                             }
                                 else {regInfo.innerHTML="Nem jó jelszót adtál meg";}
                             })}
-                        if(tan=0)
-                        fNev.innerHTML="Diak: "+localStorage.getItem("fn");
-                        else if(tan=1)
-                        fNev.innerHTML="Tanar: "+localStorage.getItem("fn");
+                        
+                    
                     })
                     }
                 
