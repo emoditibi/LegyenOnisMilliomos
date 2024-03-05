@@ -145,7 +145,6 @@ function regisztracio(){
                                 fNev.innerHTML="Diak: "+localStorage.getItem("fn");
                                 else if(tan=1)
                                 fNev.innerHTML="Tanar: "+localStorage.getItem("fn");
-                                else ta
                             })
                         }
                     })
