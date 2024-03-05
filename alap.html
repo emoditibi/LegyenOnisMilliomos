@@ -26,20 +26,23 @@
 
     <form id="regForm">
         <label for="fn">Felhasználónév:</label>
-        <input type="text" class="des" id="regfn" placeholder="Felhasználónév"><br>
+        <input type="text" class="des" id="regfn" placeholder="Felhasználónév"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
         <label for="email">Email:</label>
-        <input type="text" class="des" id="email" placeholder="Email"><br>
+        <input type="text" class="des" id="email" placeholder="Email"  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"><br>
         <label for="pw">Jelszó:</label>
-        <input type="password" class="des" id="regpw" placeholder="Jelszó"><br>
-        <input type="password" class="des" id="regpwre" placeholder="Jelszó újra"><br>
+        <input type="password" class="des" id="regpw" placeholder="Jelszó"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+        <input type="password" class="des" id="regpwre" placeholder="Jelszó újra" ><br>
         <table>
             <tr>
                 <th>
                     <label for="tanar1">Diák</label>
-                    <input type="radio" id="diak" name="fiok">
+                    <input type="radio" id="diak" name="fiok" onclick="tanarikod()">
                 </th>
                 <th><label for="tanar2">Tanár</label>
-                    <input type="radio" id="tanar" name="fiok">
+                    <input type="radio" id="tanar" name="fiok" onclick="tanarikod()">
+                </th>
+                <th>
+                    <input type="text" class="des" id="kod" placeholder="Tanári kód:" >
                 </th>
             </tr>
         </table>
