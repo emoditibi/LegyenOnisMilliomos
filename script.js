@@ -2,7 +2,9 @@ var logForm = document.getElementById("logForm");
 var logInfo = document.getElementById("logInfo");
 var regForm = document.getElementById("regForm");
 var regInfo = document.getElementById("regInfo");
+var kod = document.getElementById("kod");
 regForm.style.display="none";
+kod.style.display="none";
 
 const AdatbazisEleres = ()=>{
     fetch("http://127.0.0.1:3000")
@@ -110,49 +112,91 @@ function login(){
     }
 }
 function regisztracio(){
-    let tan;
+    let tan=0;
     let regfn=document.getElementById("regfn").value;
     let email=document.getElementById("email").value;
     let regpw=document.getElementById("regpw").value;
     let regpwre=document.getElementById("regpwre").value;
     let diak=document.getElementById("diak").checked;
     let tanar=document.getElementById("tanar").checked;
+    let kod=document.getElementById("kod").value;
 
     if(regfn==""||regpw==""||email=="")regInfo.innerHTML="Nem töltötted ki az adatokat!";
     else{
         const regExp=/[A-Za-z0-9\.\_]{1,16}$/;
         const emailregExp=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre==regpw){
+        if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre==regpw &&(diak===true || tanar===true)){
             hash(regpw).then((hash)=>{ 
-                    if(diak===true && tanar ===false)tan=0;
-                    else if(diak===false && tanar ===true)tan=1;
-                    let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
-                    let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
-                    let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
-                    LekerdezesEredmenye(sql2).then((valasz)=>{
-                        if(valasz.length==1){
-                            regInfo.innerHTML="A felhasználó név már foglalt!";}
-                        else{
-                            LekerdezesEredmenye(sql3).then((valasz)=>{
+                let sql4="SELECT * FROM codok c WHERE c.nev='"+kod+"'";
+                let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
+                let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
+
+                    if(tanar===false){
+                        tan=0;
+                        let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
+                        LekerdezesEredmenye(sql2).then((valasz)=>{
                             if(valasz.length==1){
-                                regInfo.innerHTML="Van már ilyen email cím!";}
-                            else LekerdezesEredmenye(sql).then((valasz)=>{
-                                console.log(valasz);})
-                                regInfo.innerHTML="Sikeres regisztáció";
-                                logForm.style.display="none";
-                                regForm.style.display="none";
-                                if(tan=0)
-                                fNev.innerHTML="Diak: "+localStorage.getItem("fn");
-                                else if(tan=1)
-                                fNev.innerHTML="Tanar: "+localStorage.getItem("fn");
-                            })
-                        }
+                                regInfo.innerHTML="A felhasználó név már foglalt!";}
+                            else{
+                                LekerdezesEredmenye(sql3).then((valasz)=>{
+                                if(valasz.length==1){
+                                    regInfo.innerHTML="Van már ilyen email cím!";}
+                                    
+                                else LekerdezesEredmenye(sql).then((valasz)=>{
+                                    console.log(valasz);})
+                                    regInfo.innerHTML="Sikeres regisztáció";
+                                    logForm.style.display="none";
+                                    regForm.style.display="none";
+                                })
+                            }
+                        })
+                    }
+                    else if(tanar===true){
+                        LekerdezesEredmenye(sql4).then((valasz)=>{
+                            if(valasz.length==1)
+                            {
+                                tan=1;
+                                let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
+                                LekerdezesEredmenye(sql2).then((valasz)=>{
+                                    if(valasz.length==1){
+                                        regInfo.innerHTML="A felhasználó név már foglalt!";}
+                                    else{
+                                        LekerdezesEredmenye(sql3).then((valasz)=>{
+                                        if(valasz.length==1){
+                                            regInfo.innerHTML="Van már ilyen email cím!";}
+                                        else  LekerdezesEredmenye(sql).then((valasz)=>{
+                                            console.log(valasz);})
+                                            regInfo.innerHTML="Sikeres regisztáció";
+                                            logForm.style.display="none";
+                                            regForm.style.display="none";
+                                        })
+                                   
+                                    }
+                                })
+                            }
+                                else {regInfo.innerHTML="Nem jó jelszót adtál meg";}
+                            })}
+                        if(tan=0)
+                        fNev.innerHTML="Diak: "+localStorage.getItem("fn");
+                        else if(tan=1)
+                        fNev.innerHTML="Tanar: "+localStorage.getItem("fn");
                     })
-                })}
+                    }
                 
                 else if(!regExp.test(regfn)) regInfo.innerHTML="Nem jó a felhasználó név!";
                 else if(!emailregExp.test(email)) regInfo.innerHTML="Nem jó az email cím!";
                 else if (diak===false && tanar===false) regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"
                 else if(regpwre!=regpw) regInfo.innerHTML="Nem egyezik a két jelszó!";
     }
+}
+function tanarikod(){
+    let tanar=document.getElementById("tanar").checked;
+                    if(tanar===false)
+                    {
+                        kod.style.display="none";
+                    }
+                    else if(tanar===true)
+                    {
+                        kod.style.display="block";
+                    }
 }
