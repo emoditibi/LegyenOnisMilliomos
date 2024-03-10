@@ -81,7 +81,7 @@ function atiranyitas(){
         regForm.style.display = "block";
     }
 }
-async function login(){
+function login(){
     let fn=document.getElementById("fn").value;
     let pw=document.getElementById("pw").value;
     const regExp=/[A-Za-z0-9\.\_]{1,16}$/;
@@ -126,6 +126,104 @@ async function login(){
         })
     }
 }
+//-- jelszo
+let password = document.getElementById("regpw");
+let jelszomegjelenes = document.querySelector(".jelszomegjelenes");
+let erossegSav = document.querySelector("#strength-bar");
+let erossegSzoveg = document.querySelector(".strength-text");
+
+
+password.addEventListener("focus", function(){
+    jelszomegjelenes.style.display = "block";
+});
+
+password.addEventListener("blur", function(){
+    jelszomegjelenes.style.display = "none";
+});
+
+function SzinezzesEsSzoveg(color, szoveg){
+        erossegSav.style.backgroundColor = color;
+        erossegSzoveg.innerHTML = szoveg;
+        erossegSzoveg.style.color = color;
+}
+function ErosssegTorles(){
+    erossegSav.style.width = 0;
+    erossegSav.style.backgroundColor = "";
+    erossegSzoveg.innerHTML = "";
+}
+
+password.addEventListener("keyup", ellenorizJelszoErossseget);
+
+function ellenorizJelszoErossseget(){
+    let erosseg = 0;
+
+    if(password.value == ""){
+        ErosssegTorles();
+        return false;
+    }
+
+    if(password.value.match(/\s/)){
+        SzinezzesEsSzoveg("red", "Szóköz nem lehet benne!");
+        return false;
+    }
+
+    if(password.value.match(/\<\>\#\,\*\+\=\!\'\(\)\%\/\&\@\$\ß\{\}\[\]\@/)){
+        SzinezzesEsSzoveg("red", "Csak kötőjel, alulvonás és pont lehet benne");
+        return false;
+    }
+
+    if(password.value.length > 14){
+        SzinezzesEsSzoveg("red", "A jelszó több mint 14 karakter!");
+        return false;
+    }
+
+    if(password.value.length < 4){
+        erosseg = 20;
+        SzinezzesEsSzoveg("red", "Túl rövid a jelszó!");
+        
+    }
+    else{
+        
+        let kisbetu = password.value.match(/[a-z]/);
+        let nagybetu = password.value.match(/[A-Z]/);
+        let szamok = password.value.match(/[0-9]/);
+        let specialisKarakterek = password.value.match(/\-\.\_]/);
+
+        if(kisbetu || nagybetu || szamok || specialisKarakterek){
+            erosseg = 40;
+            SzinezzesEsSzoveg("red", "Gyenge"); 
+            if( 
+                (kisbetu && nagybetu) || (kisbetu && szamok) || (kisbetu && specialisKarakterek) ||
+                (nagybetu && szamok) || (nagybetu && specialisKarakterek) || (szamok && specialisKarakterek))
+                {
+                    
+                    if( (kisbetu && nagybetu && szamok) || (kisbetu && nagybetu && specialisKarakterek) ||
+                    (kisbetu && szamok && specialisKarakterek) ||  (nagybetu && szamok && specialisKarakterek)
+                    )
+                    {
+                        
+                        if( kisbetu && nagybetu && szamok && specialisKarakterek ) 
+                        {
+                            erosseg = 100;
+                            SzinezzesEsSzoveg("green", "Nagyon erős");	
+                            
+                        }
+                        else{ erosseg = 80;
+                            SzinezzesEsSzoveg("#088f08", "Erős");}
+                    }
+                    else{erosseg = 60; 
+                    SzinezzesEsSzoveg("orange", "Közepes");	}
+                    erossegSav.style.width = erosseg + "%";
+                    return true;
+                } 
+                
+                else {erossegSav.style.width = erosseg + "%";
+                return false;}
+        }
+        
+    }
+    
+}
 function regisztracio(){
     let tan=0;
     let regfn=document.getElementById("regfn").value;
@@ -140,7 +238,8 @@ function regisztracio(){
     else{
         const regExp=/^[A-Za-z0-9._]{1,16}$/;
         const emailregExp=/^[\w.\-]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&&regpwre==regpw &&(diak===true || tanar===true)){
+        sessionStorage.setItem("fn", regfn);
+        if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&& ellenorizJelszoErossseget()&&regpwre==regpw &&(diak===true || tanar===true)){
             hash(regpw).then((hash)=>{ 
                 let sql4="SELECT * FROM codok c WHERE c.nev='"+kod+"'";
                 let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
@@ -161,8 +260,9 @@ function regisztracio(){
                                     console.log(valasz);})
                                     logForm.style.display="none";
                                     regForm.style.display="none";
-                                    fNev.innerHTML="Diak: "+regfn;
-                                    
+                                    sessionStorage.setItem("userType", "Diak");
+                                    sessionStorage.setItem("login", true);
+                                    updateUI();
                                     
                                 })
                             }
@@ -186,7 +286,9 @@ function regisztracio(){
                                             console.log(valasz);})
                                             logForm.style.display="none";
                                             regForm.style.display="none";
-                                            fNev.innerHTML="Tanar: "+regfn;
+                                            sessionStorage.setItem("userType", "Tanar");
+                                            sessionStorage.setItem("login", true);
+                                            updateUI();
 
                                         });
                                    
@@ -195,14 +297,13 @@ function regisztracio(){
                             }
                                 else {regInfo.innerHTML="Nem jó jelszót adtál meg";}
                             })}
-                        
                     
                     })
                     }
-                
                 else if(!emailregExp.test(email)) regInfo.innerHTML="Nem jó az email cím!";
                 else if(!regExp.test(regfn)) regInfo.innerHTML="Nem jó a felhasználó név!";
                 else if (diak===false && tanar===false) regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"
+                else if(!ellenorizJelszoErossseget()) regInfo.innerHTML="Nem elég erős a jelszó!";
                 else if(regpwre!=regpw) regInfo.innerHTML="Nem egyezik a két jelszó!";
     }
 }
@@ -216,93 +317,4 @@ function tanarikod(){
                     {
                         kod.style.display="block";
                     }
-}
-//-- jelszo
-let password = document.getElementById("regpw");
-let jelszomegjelenes = document.querySelector(".jelszomegjelenes");
-let erossegSav = document.querySelector("#strength-bar");
-let erossegSzoveg = document.querySelector(".strength-text");
-
-
-password.addEventListener("focus", function(){
-	jelszomegjelenes.style.display = "block";
-});
-
-password.addEventListener("blur", function(){
-	jelszomegjelenes.style.display = "none";
-});
-
-function SzinezzesEsSzoveg(color, szoveg){
-        erossegSav.style.backgroundColor = color;
-        erossegSzoveg.innerHTML = szoveg;
-        erossegSzoveg.style.color = color;
-}
-function ErosssegTorles(){
-	erossegSav.style.width = 0;
-	erossegSav.style.backgroundColor = "";
-	erossegSzoveg.innerHTML = "";
-}
-
-password.addEventListener("keyup", ellenorizJelszoErossseget);
-
-function ellenorizJelszoErossseget(){
-	let erosseg = 0;
-
-	if(password.value == ""){
-		ErosssegTorles();
-		return false;
-	}
-
-	if(password.value.match(/\s/)){
-		SzinezzesEsSzoveg("red", "Szóköz nem lehet benne!");
-		return false;
-	}
-
-	if(password.value.match(/<|>/)){
-		SzinezzesEsSzoveg("red", "< > Nem lehetnek benne!");
-		return false;
-	}
-
-	if(password.value.length > 14){
-		SzinezzesEsSzoveg("red", "A jelszó több mint 14 karakter!");
-		return false;
-	}
-
-	if(password.value.length < 7){
-		erosseg = 20;
-		SzinezzesEsSzoveg("red", "Túl rövid a jelszó!");
-		
-		let kisbetu = password.value.match(/[a-z]/);
-		let nagybetu = password.value.match(/[A-Z]/);
-		let szamok = password.value.match(/[0-9]/);
-		let specialisKarakterek = password.value.match(/[\!\~\@\&\#\$\%\^\&\*\(\)\{\}\?\-\_\+\=]/);
-
-		if(kisbetu || nagybetu || szamok || specialisKarakterek){
-			erosseg = 40;
-			SzinezzesEsSzoveg("red", "Gyenge"); 
-		}
-		if( 
-			(kisbetu && nagybetu) || (kisbetu && szamok) || (kisbetu && specialisKarakterek) ||
-			(nagybetu && szamok) || (nagybetu && specialisKarakterek) || (szamok && specialisKarakterek)
-		  )
-		{
-			erosseg = 60;
-			SzinezzesEsSzoveg("orange", "Közepes");	
-		} 
-		
-		if( (kisbetu && nagybetu && szamok) || (kisbetu && nagybetu && specialisKarakterek) ||
-		    (kisbetu && szamok && specialisKarakterek) ||  (nagybetu && szamok && specialisKarakterek)
-		  )
-		{
-			erosseg = 80;
-			SzinezzesEsSzoveg("#088f08", "Erős");
-		}
-
-		if( kisbetu && nagybetu && szamok && specialisKarakterek ) 
-		{
-			erosseg = 100;
-			SzinezzesEsSzoveg("green", "Nagyon erős");	
-		}
-	}
-	erossegSav.style.width = erosseg + "%";
 }
