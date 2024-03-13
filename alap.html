@@ -15,9 +15,9 @@
     </div>
     <form id="logForm">
         
-        <label for="fn">Felhasználónév:</label>
+        <label for="fn" id="fnl">Felhasználónév:</label>
         <input type="text" class="des" id="fn" placeholder="Felhasználónév"><br>
-        <label for="pw">Jelszó:</label>
+        <label for="pw" id="jelszol">Jelszó:</label>
         <input type="password" class="des" id="pw" placeholder="Jelszó"><br>
         <input class="gomb"  type="button" id="bejelentkezesgomb" value="Bejelentkezés" onclick="login()">
         <input  class="gomb" type="button" id="atiranyitasregisztraciohoz" value="Nincs még fiókom!" onclick="atiranyitas()">
@@ -25,14 +25,16 @@
     </form>
 
     <form id="regForm">
-        <label for="fn">Felhasználónév:</label>
-        <input type="text" class="des" id="regfn" placeholder="Felhasználónév"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
-        <label for="email">Email:</label>
-        <input type="text" class="des" id="email" placeholder="Email"  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"><br>
+        
+        <label id="nevlabel" for="fn">Felhasználónév:</label>
+
+        <input type="text" class="des" id="regfn" placeholder="Felhasználónév" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+        <label id="emaillabel" for="email">Email:</label>
+        <input type="text" class="des" id="email" placeholder="Email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$"><br>
         <form action="" method="post">
             <div class="password-container">
-                <label for="pw">Jelszó:</label>
-                <input type="password" class="des" id="regpw" name="password"  placeholder="Jelszó"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+                <label id="jelszolabel" for="pw">Jelszó:</label>
+                <input type="password" class="des" id="regpw" name="password"  placeholder="Jelszó" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
                 <input type="password" class="des" id="regpwre" placeholder="Jelszó újra" ><br>
                <div class="jelszomegjelenes">
                   <p class="title"> Jelszó erőssége: <span class="strength-text"></span> </p>
@@ -51,7 +53,7 @@
                         <input type="radio" id="tanar" name="fiok" onclick="tanarikod()">
                     </th>
                     <th>
-                        <input type="text" class="des" id="kod" placeholder="Tanári kód:" >
+                        <input type="password" class="des" id="kod" placeholder="Tanári kód:" >
                     </th>
                 </tr>
             </table>
