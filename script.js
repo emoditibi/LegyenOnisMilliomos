@@ -2,17 +2,38 @@ var logForm = document.getElementById("logForm");
 var logInfo = document.getElementById("logInfo");
 var regForm = document.getElementById("regForm");
 var regInfo = document.getElementById("regInfo");
+var admin = document.getElementById("adminForm");
+var tanar = document.getElementById("tanarForm");
+var diak = document.getElementById("diakForm");
 var kod = document.getElementById("kod");
+var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
+admin.style.display="none";
+tanar.style.display="none";
+diak.style.display="none";
 regForm.style.display="none";
 kod.style.display="none";
+kijeletkezesgomb.style.display="none";
 function updateUI() {
     var fNev = document.getElementById("fNev");
     var userType = sessionStorage.getItem("userType");
     
     if (sessionStorage.getItem("login")) {
-        fNev.innerHTML = `${userType}: ${sessionStorage.getItem("fn")}`;
+        if(userType=="Admin"){
+            admin.style.display="block";
+            fNev.innerHTML = `Admin: ${sessionStorage.getItem("fn")}`;
+        }
+        else if(userType=="Tanar"){
+            tanar.style.display="block";
+            fNev.innerHTML = `Tanar: ${sessionStorage.getItem("fn")}`;
+        }
+        else if(userType=="Diak"){
+            diak.style.display="block";
+            fNev.innerHTML = `Diak: ${sessionStorage.getItem("fn")}`;
+        }
         logForm.style.display="none";
         regForm.style.display="none";
+        kijeletkezesgomb.style.display="block";
+
     }
 }
 window.onload = updateUI;
@@ -116,19 +137,24 @@ function login(){
                             LekerdezesEredmenye(sql3).then((valasz)=>{
                                 if(valasz[0].tanar===0){
                                    sessionStorage.setItem("userType", "Diak");
+
                                    updateUI();
+                                   kijeletkezesgomb.style.display="block";
+                                   
                                    
                                 }
                                 else{ 
                                     
                                     sessionStorage.setItem("userType", "Tanar");
                                     updateUI();
+                                    kijeletkezesgomb.style.display="block";
                                 }
                              });
                         }
                         else {
                             sessionStorage.setItem("userType", "Admin");
                              updateUI();
+                             kijeletkezesgomb.style.display="block";
                         }
                     });
                     logForm.style.display="none";
@@ -248,30 +274,24 @@ function regisztracio(){
     let diak=document.getElementById("diak").checked;
     let tanar=document.getElementById("tanar").checked;
     let kod=document.getElementById("kod").value;
-    if(regfn==""||email==""||regpw==""||regpwre==""){
-        regInfo.innerHTML="Nem töltött ki minden adatot!";
-    }
-        let nev = document.getElementById("nevlabel");
-        let jelszo = document.getElementById("jelszolabel");
-        let emaill = document.getElementById("emaillabel");
-        if(regfn==""){
-            nev.classList.add("csillag");
+    let nev = document.getElementById("nevlabel");
+    let jelszo = document.getElementById("jelszolabel");
+    let emaill = document.getElementById("emaillabel");
+    if(regfn==""){
+        nev.classList.add("csillag");
         }
         else { 
             nev.classList.remove("csillag");
         } 
         if(email==""){
-        emaill.classList.add("csillag");
+            emaill.classList.add("csillag");
         }
         else{ emaill.classList.remove("csillag");}
         if(regpw=="" ||regpwre==""){
             jelszo.classList.add("csillag");   
         } 
         else{ jelszo.classList.remove("csillag");}
-
-    
-
-    
+        
         const regExp=/^[A-Za-z0-9._]{1,16}$/;
         const emailregExp=/^[\w.\-]+@([\w-]+\.)+[\w-]{2,4}$/;
         sessionStorage.setItem("fn", regfn);
@@ -280,28 +300,28 @@ function regisztracio(){
                 let sql4="SELECT * FROM codok c WHERE c.nev='"+kod+"'";
                 let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
                 let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
-            
-                    if(tanar===false){
-                        tan=0;
-                        let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
-                        LekerdezesEredmenye(sql2).then((valasz)=>{
-                            if(valasz.length==1){
-                                regInfo.innerHTML="A felhasználó név már foglalt!";}
+                
+                if(tanar===false){
+                    tan=0;
+                    let sql="insert into felhasznalok(id,nev,password,email,tanar)values(null,'"+regfn+"','"+hash+"','"+email+"','"+tan+"')";
+                    LekerdezesEredmenye(sql2).then((valasz)=>{
+                        if(valasz.length==1){
+                            regInfo.innerHTML="A felhasználó név már foglalt!";}
                             else{
                                 LekerdezesEredmenye(sql3).then((valasz)=>{
-                                if(valasz.length==1){
-                                    regInfo.innerHTML="Van már ilyen email cím!";}
-                                    
-                                else{ LekerdezesEredmenye(sql).then((valasz)=>{
-                                    console.log(valasz);
-                                    logForm.style.display="none";
-                                    regForm.style.display="none";
-                                    sessionStorage.setItem("userType", "Diak");
-                                    sessionStorage.setItem("login", true);
-                                    updateUI();
+                                    if(valasz.length==1){
+                                        regInfo.innerHTML="Van már ilyen email cím!";}
+                                        
+                                        else{ LekerdezesEredmenye(sql).then((valasz)=>{
+                                            console.log(valasz);
+                                            logForm.style.display="none";
+                                            regForm.style.display="none";
+                                            sessionStorage.setItem("userType", "Diak");
+                                            sessionStorage.setItem("login", true);
+                                            updateUI();
+                                        })
+                                    }
                                 })
-                                }
-                            })
                             }
                         })
                     }
@@ -314,44 +334,52 @@ function regisztracio(){
                                 LekerdezesEredmenye(sql2).then((valasz)=>{
                                     if(valasz.length==1){
                                         regInfo.innerHTML="A felhasználó név már foglalt!";}
-                                    else{
-                                        LekerdezesEredmenye(sql3).then((valasz)=>{
-                                        if(valasz.length==1){
-                                            regInfo.innerHTML="Van már ilyen email cím!";}
-                                        else  LekerdezesEredmenye(sql).then((valasz)=>{
-                                            console.log("alma");
-                                            console.log(valasz);})
-                                            logForm.style.display="none";
-                                            regForm.style.display="none";
-                                            sessionStorage.setItem("userType", "Tanar");
-                                            sessionStorage.setItem("login", true);
-                                            updateUI();
-
-                                        });
-                                   
-                                    }
+                                        else{
+                                            LekerdezesEredmenye(sql3).then((valasz)=>{
+                                                if(valasz.length==1){
+                                                    regInfo.innerHTML="Van már ilyen email cím!";}
+                                                    else  LekerdezesEredmenye(sql).then((valasz)=>{
+                                                        console.log("alma");
+                                                        console.log(valasz);})
+                                                        logForm.style.display="none";
+                                                        regForm.style.display="none";
+                                                        sessionStorage.setItem("userType", "Tanar");
+                                                        sessionStorage.setItem("login", true);
+                                                        updateUI();
+                                                        
+                                                        
+                                                    });
+                                                    
+                                                }
+                                            })
+                                        }
+                                        else {regInfo.innerHTML="Nem jó jelszót adtál meg";}
+                                    })}
+                                    
                                 })
                             }
-                                else {regInfo.innerHTML="Nem jó jelszót adtál meg";}
-                            })}
-                    
-                    })
-                    }
-                else if(!emailregExp.test(email)) regInfo.innerHTML="Nem jó az email cím!";
-                else if(!regExp.test(regfn)) regInfo.innerHTML="Nem jó a felhasználó név!";
-                else if (diak===false && tanar===false) regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"
-                else if(!ellenorizJelszoErossseget()) regInfo.innerHTML="Nem elég erős a jelszó!";
-                else if(regpwre!=regpw) regInfo.innerHTML="Nem egyezik a két jelszó!";
-    }
-
+                            if(regfn==""||email==""||regpw==""||regpwre==""){
+                                regInfo.innerHTML="Nem töltött ki minden adatot!";
+                            }
+                            else if(!regExp.test(regfn)) regInfo.innerHTML="Nem jó a felhasználó név!";
+                            else if(!emailregExp.test(email)) regInfo.innerHTML="Nem jó az email cím!";
+                            else if(!ellenorizJelszoErossseget()) regInfo.innerHTML="Nem elég erős a jelszó!";
+                            else if(regpwre!=regpw) regInfo.innerHTML="Nem egyezik a két jelszó!";
+                            else if (diak===false && tanar===false) regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"
+                        }
+                        
 function tanarikod(){
     let tanar=document.getElementById("tanar").checked;
-                    if(tanar===false)
-                    {
-                        kod.style.display="none";
-                    }
-                    else if(tanar===true)
-                    {
-                        kod.style.display="block";
-                    }
+    if(tanar===false)
+    {
+        kod.style.display="none";
+    }
+    else if(tanar===true)
+    {
+        kod.style.display="block";
+    }
+}
+function Kijelentkezes(){
+    sessionStorage.clear();
+    location.reload();
 }
