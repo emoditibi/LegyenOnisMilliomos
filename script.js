@@ -6,37 +6,48 @@ var admin = document.getElementById("adminForm");
 var tanar = document.getElementById("tanarForm");
 var diak = document.getElementById("diakForm");
 var kod = document.getElementById("kod");
+var gombok=document.querySelector(".background");
+var tartalom=document.getElementById("tartalom");
+var vissza = document.getElementById("visszagomb");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 admin.style.display="none";
 tanar.style.display="none";
 diak.style.display="none";
 regForm.style.display="none";
 kod.style.display="none";
+tartalom.style.display="none";
 kijeletkezesgomb.style.display="none";
-function updateUI() {
+vissza.style.display="none";
+function Init() {
     var fNev = document.getElementById("fNev");
+    var fNev2 = document.getElementById("fNev2");
+    var fNev3 = document.getElementById("fNev3");
     var userType = sessionStorage.getItem("userType");
     
     if (sessionStorage.getItem("login")) {
+        gombok.style.display="none";
         if(userType=="Admin"){
             admin.style.display="block";
             fNev.innerHTML = `Admin: ${sessionStorage.getItem("fn")}`;
+
         }
         else if(userType=="Tanar"){
             tanar.style.display="block";
-            fNev.innerHTML = `Tanar: ${sessionStorage.getItem("fn")}`;
+            fNev2.innerHTML = `Tanar: ${sessionStorage.getItem("fn")}`;
+
         }
         else if(userType=="Diak"){
             diak.style.display="block";
-            fNev.innerHTML = `Diak: ${sessionStorage.getItem("fn")}`;
+            fNev3.innerHTML = `Diak: ${sessionStorage.getItem("fn")}`;
+
         }
         logForm.style.display="none";
         regForm.style.display="none";
         kijeletkezesgomb.style.display="block";
-
     }
 }
-window.onload = updateUI;
+
+window.onload = Init;
 const AdatbazisEleres = ()=>{
     fetch("http://127.0.0.1:3000")
     .then(function (response) {
@@ -137,24 +148,23 @@ function login(){
                             LekerdezesEredmenye(sql3).then((valasz)=>{
                                 if(valasz[0].tanar===0){
                                    sessionStorage.setItem("userType", "Diak");
-
-                                   updateUI();
+                                   Init();
                                    kijeletkezesgomb.style.display="block";
-                                   
-                                   
+                               
                                 }
                                 else{ 
-                                    
                                     sessionStorage.setItem("userType", "Tanar");
-                                    updateUI();
+                                    Init();
                                     kijeletkezesgomb.style.display="block";
+                           
                                 }
                              });
                         }
                         else {
                             sessionStorage.setItem("userType", "Admin");
-                             updateUI();
-                             kijeletkezesgomb.style.display="block";
+                            Init();
+                            kijeletkezesgomb.style.display="block";
+                         
                         }
                     });
                     logForm.style.display="none";
@@ -239,8 +249,7 @@ function ellenorizJelszoErossseget(){
                 {
                     
                     if( (kisbetu && nagybetu && szamok) || (kisbetu && nagybetu && specialisKarakterek) ||
-                    (kisbetu && szamok && specialisKarakterek) ||  (nagybetu && szamok && specialisKarakterek)
-                    )
+                    (kisbetu && szamok && specialisKarakterek) ||  (nagybetu && szamok && specialisKarakterek))
                     {
                         
                         if( kisbetu && nagybetu && szamok && specialisKarakterek ) 
@@ -318,7 +327,7 @@ function regisztracio(){
                                             regForm.style.display="none";
                                             sessionStorage.setItem("userType", "Diak");
                                             sessionStorage.setItem("login", true);
-                                            updateUI();
+                                            Init();
                                         })
                                     }
                                 })
@@ -345,7 +354,7 @@ function regisztracio(){
                                                         regForm.style.display="none";
                                                         sessionStorage.setItem("userType", "Tanar");
                                                         sessionStorage.setItem("login", true);
-                                                        updateUI();
+                                                        Init();
                                                         
                                                         
                                                     });
@@ -382,4 +391,84 @@ function tanarikod(){
 function Kijelentkezes(){
     sessionStorage.clear();
     location.reload();
+}
+async function Tartalom() {
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
+    for (let i = 1; i <= sqladat[0].count; i++) {
+        let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
+        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + i + "'";
+
+        let valasz = await LekerdezesEredmenye(sql);
+        if (valasz.length == 1) {
+            let id = document.createElement("div");
+            id.innerText = valasz[0].id;
+            id.classList.add("valaszok");
+            document.getElementById("id").appendChild(id);
+
+            let tema = document.createElement("div");
+            tema.innerText = valasz[0].tema;
+            tema.classList.add("valaszok");
+            document.getElementById("tema").appendChild(tema);
+
+            let kerdes = document.createElement("div");
+            kerdes.innerText = valasz[0].kerdes;
+            kerdes.classList.add("valaszok");
+            document.getElementById("kerdes").appendChild(kerdes);
+
+            let valasz1 = document.createElement("div");
+            valasz1.innerText = valasz[0].elsovalasz;
+            valasz1.classList.add("valaszok");
+            document.getElementById("valasz1").appendChild(valasz1);
+
+            let valasz2 = document.createElement("div");
+            valasz2.innerText = valasz[0].masodikvalasz;
+            valasz2.classList.add("valaszok");
+            document.getElementById("valasz2").appendChild(valasz2);
+
+            let valasz3 = document.createElement("div");
+            valasz3.innerText = valasz[0].harmadikvalasz;
+            valasz3.classList.add("valaszok");
+            document.getElementById("valasz3").appendChild(valasz3);
+
+            let valasz4 = document.createElement("div");
+            valasz4.innerText = valasz[0].negyedikvalasz;
+            valasz4.classList.add("valaszok");
+            document.getElementById("valasz4").appendChild(valasz4);
+
+            LekerdezesEredmenye(sql2).then((valasz)=>{
+               if(valasz[0].helyesvalasz=="1"){
+                valasz1.style.backgroundColor="green";
+               }
+               else if(valasz[0].helyesvalasz=="2"){
+                valasz2.style.backgroundColor="Green";
+            
+               }
+               else if(valasz[0].helyesvalasz=="3"){
+                valasz3.style.backgroundColor="Green";
+               }
+               else if(valasz[0].helyesvalasz=="4"){
+                valasz4.style.backgroundColor="Green";
+               }
+            })
+        }
+    }
+
+    let betoltes = document.getElementById("betoltesgomb");
+    betoltes.style.display = "none";
+    tartalom.style.display="block";
+    vissza.style.display = "block";
+}
+
+function Vissza(){
+    let betoltes = document.getElementById("betoltesgomb");
+    betoltes.style.display = "block";
+    vissza.style.display = "none";
+    document.getElementById("id").innerHTML = "ID:";
+    document.getElementById("tema").innerHTML = "Téma:";
+    document.getElementById("kerdes").innerHTML = "Kérdés:";
+    document.getElementById("valasz1").innerHTML = "Válasz1:";
+    document.getElementById("valasz2").innerHTML = "Válasz2:";
+    document.getElementById("valasz3").innerHTML = "Válasz3:";
+    document.getElementById("valasz4").innerHTML = "Válasz4:";
+    tartalom.style.display="none";
 }
