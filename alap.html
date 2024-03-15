@@ -71,9 +71,21 @@
             <th><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></th>
         </tr>
     </table>
-    <input  class="betoltesgomb" type="button" id="betoltesgomb" value="Kérdések:" onclick="Tartalom()">
-    <input  class="betoltesgomb" type="button" id="visszagomb" value="Vissza" onclick="Vissza()">
-    <table id="tartalom">
+    <table>
+        <tr>
+            <th>
+
+                <input  class="admingomb" type="button" id="betoltesgomb" value="Kérdések:" onclick="KTartalom()">
+                <input  class="admingomb" type="button" id="visszagomb" value="Vissza" onclick="KVissza()">
+            </th>
+            <th>
+
+                <input  class="admingomb" type="button" id="felhasznalokgomb" value="Felhasznalok:" onclick="FTartalom()">
+                <input  class="admingomb" type="button" id="visszagomb2" value="Vissza" onclick="FVissza()">
+            </th>
+        </tr>
+    </table>
+    <table id="Ktartalom">
         <tr>
         <th><label  id="id" for="id">ID:</label>
             <p id="id"></p></th>
@@ -89,6 +101,22 @@
             <p id="valasz3"></p></th>
         <th><label id="valasz4" for="valasz4">Válasz4:</label>
             <p id="valasz4"></p></th>
+
+    </tr>
+    <table id="Ftartalom">
+        <tr>
+        <th><label  id="Fid" for="Fid">ID:</label>
+            <p id="Fid"></p></th>
+        <th><label  id="Fnev" for="Fnev">Név:</label>
+            <p id="Fnev"></p></th>
+        <th><label id="Fpassword" for="Fpassword">Jelszó:</label>
+            <p id="Fpassword"></p></th>
+        <th><label  id="Femail" for="Femail">Email:</label>
+            <p id="Femail"></p></th>
+        <th><label id="Ftanare" for="Ftanare">Tanár jog:</label>
+            <p id="Ftanare"></p></th>
+        <th><label  id="Fadmine" for="Fadmine">Admin jog:</label>
+            <p id="Fadmine"></p></th>
 
     </tr>
 </table>
