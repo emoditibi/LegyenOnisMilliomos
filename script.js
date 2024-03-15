@@ -7,17 +7,21 @@ var tanar = document.getElementById("tanarForm");
 var diak = document.getElementById("diakForm");
 var kod = document.getElementById("kod");
 var gombok=document.querySelector(".background");
-var tartalom=document.getElementById("tartalom");
+var Ktartalom=document.getElementById("Ktartalom");
+var Ftartalom=document.getElementById("Ftartalom");
 var vissza = document.getElementById("visszagomb");
+var vissza2 = document.getElementById("visszagomb2");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 admin.style.display="none";
 tanar.style.display="none";
 diak.style.display="none";
 regForm.style.display="none";
 kod.style.display="none";
-tartalom.style.display="none";
+Ktartalom.style.display="none";
+Ftartalom.style.display="none";
 kijeletkezesgomb.style.display="none";
 vissza.style.display="none";
+vissza2.style.display="none";
 function Init() {
     var fNev = document.getElementById("fNev");
     var fNev2 = document.getElementById("fNev2");
@@ -46,8 +50,8 @@ function Init() {
         kijeletkezesgomb.style.display="block";
     }
 }
-
 window.onload = Init;
+//adatbázis
 const AdatbazisEleres = ()=>{
     fetch("http://127.0.0.1:3000")
     .then(function (response) {
@@ -104,6 +108,7 @@ const LekerdezesEredmenye = (sql) => {
         }
     });
 }
+// bejelentkezés és regisztráció megjelenítése
 function atiranyitas(){
     if (regForm.style.display === "block") {
         regForm.style.display = "none";
@@ -113,6 +118,7 @@ function atiranyitas(){
         regForm.style.display = "block";
     }
 }
+//bejelentkezés
 function login(){
     let fn=document.getElementById("fn").value;
     let pw=document.getElementById("pw").value;
@@ -274,6 +280,7 @@ function ellenorizJelszoErossseget(){
     }
     
 }
+//regisztráció
 function regisztracio(){
     let tan=0;
     let regfn=document.getElementById("regfn").value;
@@ -377,6 +384,7 @@ function regisztracio(){
                             else if (diak===false && tanar===false) regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"
                         }
                         
+//Diak gomb vagy Tanar gomb van kiválasztva
 function tanarikod(){
     let tanar=document.getElementById("tanar").checked;
     if(tanar===false)
@@ -388,11 +396,14 @@ function tanarikod(){
         kod.style.display="block";
     }
 }
+//felhasznalok
 function Kijelentkezes(){
     sessionStorage.clear();
     location.reload();
 }
-async function Tartalom() {
+//admin
+//kérdések
+async function KTartalom() {
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
@@ -455,11 +466,11 @@ async function Tartalom() {
 
     let betoltes = document.getElementById("betoltesgomb");
     betoltes.style.display = "none";
-    tartalom.style.display="block";
+    Ktartalom.style.display="block";
     vissza.style.display = "block";
 }
-
-function Vissza(){
+//kérdések vissza gomb
+function KVissza(){
     let betoltes = document.getElementById("betoltesgomb");
     betoltes.style.display = "block";
     vissza.style.display = "none";
@@ -470,5 +481,65 @@ function Vissza(){
     document.getElementById("valasz2").innerHTML = "Válasz2:";
     document.getElementById("valasz3").innerHTML = "Válasz3:";
     document.getElementById("valasz4").innerHTML = "Válasz4:";
-    tartalom.style.display="none";
+    Ktartalom.style.display="none";
+}
+//felhasznalok -- meg nem mukodik
+async function FTartalom() {
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM felhasznalok");
+    for (let i = 1; i <= sqladat[0].count; i++) {
+        let sql = "SELECT * FROM felhasznalok f WHERE f.id='" + i + "'";
+        let valasz = await LekerdezesEredmenye(sql);
+        if (valasz.length == 1) {
+            
+            let Fid = document.createElement("div");
+            Fid.innerText = valasz[0].id;
+            Fid.classList.add("valaszok");
+            document.getElementById("Fid").appendChild(Fid);
+
+            let Fnev = document.createElement("div");
+            Fnev.innerText = valasz[0].nev;
+            Fnev.classList.add("valaszok");
+            document.getElementById("Fnev").appendChild(Fnev);
+
+            let Fpassword = document.createElement("div");
+            Fpassword.innerText = valasz[0].password;
+            Fpassword.classList.add("valaszok");
+            document.getElementById("Fpassword").appendChild(Fpassword);
+
+            let Femail = document.createElement("div");
+            Femail.innerText = valasz[0].email;
+            Femail.classList.add("valaszok");
+            document.getElementById("Femail").appendChild(Femail);
+
+            let Ftanare = document.createElement("div");
+            Ftanare.innerText = valasz[0].tanar;
+            Ftanare.classList.add("valaszok");
+            document.getElementById("Ftanare").appendChild(Ftanare);
+
+
+            let Fadmine = document.createElement("div");
+            Fadmine.innerText = valasz[0].admin;
+            Fadmine.classList.add("valaszok");
+            document.getElementById("Fadmine").appendChild(Fadmine);
+
+        }
+    }
+    
+     let betoltes = document.getElementById("felhasznalokgomb");
+     betoltes.style.display = "none";
+     Ftartalom.style.display="block";
+     vissza2.style.display="block";
+}
+function FVissza(){
+    let betoltes = document.getElementById("felhasznalokgomb");
+    betoltes.style.display = "block";
+    vissza2.style.display = "none";
+    document.getElementById("Fid").innerHTML = "ID:";
+    document.getElementById("Fnev").innerHTML = "Név:";
+    document.getElementById("Fpassword").innerHTML = "Jelszó:";
+    document.getElementById("Femail").innerHTML = "Email:";
+    document.getElementById("Ftanare").innerHTML = "Tanár jog:";
+    document.getElementById("Fadmine").innerHTML = "Admin jog:";
+
+    Ftartalom.style.display="none";
 }
