@@ -65,16 +65,49 @@
     
  
    <form id="adminForm">
-        <p id="fNev"></p>
-        <input  class="gomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()">
+    <table>
+        <tr>
+            <th><p id="fNev"></p></th>
+            <th><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></th>
+        </tr>
+    </table>
+    <input  class="betoltesgomb" type="button" id="betoltesgomb" value="Kérdések:" onclick="Tartalom()">
+    <input  class="betoltesgomb" type="button" id="visszagomb" value="Vissza" onclick="Vissza()">
+    <table id="tartalom">
+        <tr>
+        <th><label  id="id" for="id">ID:</label>
+            <p id="id"></p></th>
+        <th><label  id="tema" for="tema">Téma:</label>
+            <p id="tema"></p></th>
+        <th><label id="kerdes" for="kerdes">Kérdés:</label>
+            <p id="kerdes"></p></th>
+        <th><label  id="valasz1" for="valasz1">Válasz1:</label>
+            <p id="valasz1"></p></th>
+        <th><label id="valasz2" for="valasz2">Válasz2:</label>
+            <p id="valasz2"></p></th>
+        <th><label  id="valasz3" for="valasz3">Válasz3:</label>
+            <p id="valasz3"></p></th>
+        <th><label id="valasz4" for="valasz4">Válasz4:</label>
+            <p id="valasz4"></p></th>
+
+    </tr>
+</table>
     </form>
     <form id="tanarForm">
-        <p id="fNev"></p>
-        <input  class="gomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()">
+        <table>
+            <tr>
+                 <th><p id="fNev2"></p></th>
+                 <th><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></th>
+             </tr>
+        </table>
     </form>
     <form id="diakForm">
-        <p id="fNev"></p>
-        <input  class="gomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()">
+        <table>
+            <tr>
+                <th><p id="fNev3"></p></th>
+                <th><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></th>
+            </tr>
+        </table>
     </form>
 
 
