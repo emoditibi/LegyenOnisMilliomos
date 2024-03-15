@@ -18,18 +18,62 @@ cursor: pointer;
 display: inline-block;
 font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
 padding: 7px 20px;
-text-decoration: none;
 transition: all 250ms;
 font-size: 14px;
 font-weight: 300;
-border: 0;
 font-size: 16px;
 user-select: none;
 -webkit-user-select: none;
 touch-action: manipulation;
 text-align: center;
-
+position: relative; 
 }
+.betoltesgomb {
+  background-color: orange;
+  margin-top: 10px;
+  height: 50px;
+  width: 10%;
+  border-radius: 100px;
+  box-shadow: rgba(255, 157, 1, 0.2) 0 -25px 18px -14px inset,rgba(250, 184, 2, 0.2) 0 1px 2px,rgba(250, 184, 2, 0.2) 0 2px 4px,rgba(250, 184, 2, 0.2) 0 4px 8px,rgba(250, 184, 2, 0.2) 0 8px 16px,rgba(250, 184, 2, 0.2) 0 16px 32px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  transition: all 250ms;
+  font-size: 14px;
+  font-weight: 300;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-align: center;
+  position:relative;
+  }
+
+.kijelentkezesgomb{
+  background-color: orange;
+  height: 50px;
+  width: 100%;
+  border-radius: 100px;
+  box-shadow: rgba(255, 157, 1, 0.2) 0 -25px 18px -14px inset,rgba(250, 184, 2, 0.2) 0 1px 2px,rgba(250, 184, 2, 0.2) 0 2px 4px,rgba(250, 184, 2, 0.2) 0 4px 8px,rgba(250, 184, 2, 0.2) 0 8px 16px,rgba(250, 184, 2, 0.2) 0 16px 32px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  transition: all 250ms;
+  font-size: 14px;
+  font-weight: 300;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-align: right;
+  position: relative; 
+}
+
+
 .gomb:hover {
 box-shadow: rgba(250, 184, 2, 0.2) 0 -25px 18px -14px inset,rgba(250, 184, 2, 0.2) 0 1px 2px,rgba(250, 184, 2, 0.2) 0 2px 4px,rgba(250, 184, 2, 0.2) 0 4px 8px,rgba(250, 184, 2, 0.2) 0 8px 16px,rgba(250, 184, 2, 0.2) 0 16px 32px;
 transform: scale(1.05) rotate(-1deg);
@@ -61,11 +105,13 @@ background: linear-gradient(
     to right,
     #ff512f,
     #f09819
+    
 );
 right: -160px;
 bottom: -150px;
+
 }
-form{
+form:not(#adminForm,#tanarForm,#diakForm){
 height: 680px;
 width: 400px;
 position: absolute;
@@ -92,7 +138,6 @@ margin-top: 30px;
 font-size: 16px;
 font-weight: 500;
 }
-
 .des{
 display: block;
 height: 50px;
@@ -107,7 +152,7 @@ font-weight: 300;
 ::placeholder{
 color: #e5e5e5;
 }
-#fNev{
+#fNev,#fNev2,#fNev3{
 text-align: left;
 font-family: Arial, Helvetica, sans-serif;
 font-weight: bold;
@@ -175,4 +220,11 @@ font-weight: bold;
   content: "*";
   color:red;
   margin-left:2px
+}
+p{
+  position: relative; 
+}
+.valaszok {
+  text-align: left;
+  border: 2px solid rgba(255,255,255);
 }
