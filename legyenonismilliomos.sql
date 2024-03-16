@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Már 16. 14:56
+-- Létrehozás ideje: 2024. Már 16. 22:49
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -58,8 +58,8 @@ CREATE TABLE `felhasznalok` (
 --
 
 INSERT INTO `felhasznalok` (`id`, `nev`, `password`, `email`, `tanar`, `admin`) VALUES
-(1, 'admin', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'nincs', 0, 1),
-(2, 'emodi.tibor', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'emodi.tibor@gmail.com', 0, 1),
+(1, 'szabo.emanuel', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'nincs', 0, 1),
+(2, 'emodi.tibor', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'nincs', 0, 1),
 (3, 'szarvas', '167130d695be9f945878237b84e3683c50ced3bbce4e4bf850ef6f9de166535e', 'szarvas@gmail.com', 1, 0),
 (4, 'majom', 'b493d48364afe44d11c0165cf470a4164d1e2609911ef998be868d46ade3de4e', 'majom@majom.com', 1, 0),
 (5, 'kecske', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'kecske@sajt.com', 1, 0),
@@ -101,15 +101,16 @@ INSERT INTO `kerdesek` (`id`, `kerdes`, `tema`, `helyesvalasz`, `elsovalasz`, `m
 
 CREATE TABLE `kodok` (
   `id` int(11) NOT NULL,
-  `nev` varchar(50) NOT NULL
+  `nev` varchar(50) NOT NULL,
+  `idokorlat` int(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `kodok`
 --
 
-INSERT INTO `kodok` (`id`, `nev`) VALUES
-(1, 'tanar0');
+INSERT INTO `kodok` (`id`, `nev`, `idokorlat`) VALUES
+(1, 'tanar0', NULL);
 
 --
 -- Indexek a kiírt táblákhoz
