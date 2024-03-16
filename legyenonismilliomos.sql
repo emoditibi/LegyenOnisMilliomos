@@ -20,8 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `legyenonismilliomos`
 --
-CREATE DATABASE IF NOT EXISTS `legyenonismilliomos2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `legyenonismilliomos2`;
+CREATE DATABASE IF NOT EXISTS `legyenonismilliomos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `legyenonismilliomos`;
 
 -- --------------------------------------------------------
 
