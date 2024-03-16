@@ -224,9 +224,15 @@ font-weight: bold;
 p{
   position: relative; 
 }
+#idadmin,#temaadmin,#kerdesadmin,#valasz1admin,#valasz2admin,#valasz3admin,#valasz4admin,#Fidadmin,#Fnevadmin,#Fpasswordadmin,#Femailadmin,#Ftanareadmin,#Fadmineadmin,#hvalaszadminkerdes,#HValaszAdminKerdes,#TemaAdminKerdes,#KerdesAdminKerdes,#Valasz1AdminKerdes,#Valasz2AdminKerdes,#Valasz3AdminKerdes,#Valasz4AdminKerdes,#idadminKod,#nevadminKod,#idoadminKod{
+  background-color: gray;
+  height: 40px;
+  text-align: center;
+  line-height: 40px; 
+}
 .valaszok {
   text-align: left;
-  border: 1px solid black;
+  border-bottom: 2px solid black;
   background-color: #f9f9f9;
   color:black;
   padding: 10px;
