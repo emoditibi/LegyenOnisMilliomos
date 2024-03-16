@@ -9,8 +9,10 @@ var kod = document.getElementById("kod");
 var gombok=document.querySelector(".background");
 var Ktartalom=document.getElementById("Ktartalom");
 var Ftartalom=document.getElementById("Ftartalom");
+var Kodtartalom=document.getElementById("Kodtartalom");
 var vissza = document.getElementById("visszagomb");
 var vissza2 = document.getElementById("visszagomb2");
+var vissza3 = document.getElementById("visszagomb3");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 admin.style.display="none";
 tanar.style.display="none";
@@ -19,9 +21,11 @@ regForm.style.display="none";
 kod.style.display="none";
 Ktartalom.style.display="none";
 Ftartalom.style.display="none";
+Kodtartalom.style.display="none";
 kijeletkezesgomb.style.display="none";
 vissza.style.display="none";
 vissza2.style.display="none";
+vissza3.style.display="none";
 function Init() {
     var fNev = document.getElementById("fNev");
     var fNev2 = document.getElementById("fNev2");
@@ -210,7 +214,7 @@ function ErosssegTorles(){
 }
 
 password.addEventListener("keyup", ellenorizJelszoErossseget);
-
+// jelszo erossege
 function ellenorizJelszoErossseget(){
     let erosseg = 0;
 
@@ -313,7 +317,7 @@ function regisztracio(){
         sessionStorage.setItem("fn", regfn);
         if(regExp.test(regfn)&&regExp.test(regpw)&&regExp.test(regpwre)&&emailregExp.test(email)&& ellenorizJelszoErossseget()&&regpwre==regpw &&(diak===true || tanar===true)){
             hash(regpw).then((hash)=>{ 
-                let sql4="SELECT * FROM codok c WHERE c.nev='"+kod+"'";
+                let sql4="SELECT * FROM kodok k WHERE k.nev='"+kod+"'";
                 let sql2="SELECT * FROM felhasznalok f WHERE f.nev='"+regfn+"'";
                 let sql3="SELECT * FROM felhasznalok f WHERE f.email='"+email+"'";
                 
@@ -375,15 +379,14 @@ function regisztracio(){
                                 })
                             }
                             if(regfn==""||email==""||regpw==""||regpwre==""){
-                                regInfo.innerHTML="Nem töltött ki minden adatot!";
+                                regInfo.innerHTML="Nem töltöttél ki minden adatot!";
                             }
                             else if(!regExp.test(regfn)) regInfo.innerHTML="Nem jó a felhasználó név!";
                             else if(!emailregExp.test(email)) regInfo.innerHTML="Nem jó az email cím!";
                             else if(!ellenorizJelszoErossseget()) regInfo.innerHTML="Nem elég erős a jelszó!";
                             else if(regpwre!=regpw) regInfo.innerHTML="Nem egyezik a két jelszó!";
                             else if (diak===false && tanar===false) regInfo.innerHTML="Nem választotta ki hogy diák vagy tanár!"
-                        }
-                        
+}
 //Diak gomb vagy Tanar gomb van kiválasztva
 function tanarikod(){
     let tanar=document.getElementById("tanar").checked;
@@ -403,7 +406,7 @@ function Kijelentkezes(){
 }
 //admin
 //kérdések
-async function KTartalom() {
+async function KTartalom(){
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
@@ -469,22 +472,44 @@ async function KTartalom() {
     Ktartalom.style.display="block";
     vissza.style.display = "block";
 }
+//kerdes hozzadas
+function KerdesHozzaadas(){
+    let adminInfo=document.getElementById("adminInfo");
+    let helyesvalasz=document.getElementById("HValaszAdminKerdesInput").value;
+    let tema=document.getElementById("TemaAdminKerdesInput").value;
+    let kerdes=document.getElementById("KerdesAdminKerdesInput").value;
+    let valasz1=document.getElementById("Valasz1AdminKerdesInput").value;
+    let valasz2=document.getElementById("Valasz2AdminKerdesInput").value;
+    let valasz3=document.getElementById("Valasz3AdminKerdesInput").value;
+    let valasz4=document.getElementById("Valasz4AdminKerdesInput").value;
+    var regex = /[A-Za-z0-9\W_]{1,}/;
+    if(helyesvalasz==""||tema==""||kerdes==""||valasz1==""||valasz2==""||valasz3==""||valasz4==""){
+        adminInfo.innerHTML="Nem töltöttél ki minden adatot!";
+    }
+    else if(regex.test(helyesvalasz)&&regex.test(tema)&&regex.test(kerdes)&&regex.test(valasz1)&&regex.test(valasz2)&&regex.test(valasz3)&&regex.test(valasz4) ){
+            let sql="insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz)values(null,'"+helyesvalasz+"','"+tema+"','"+kerdes+"','"+valasz1+"','"+valasz2+"','"+valasz3+"','"+valasz4+"')";
+            LekerdezesEredmenye(sql).then((valasz)=>{
+                console.log(valasz);
+                adminInfo.innerHTML="";
+            })
+        } 
+}
 //kérdések vissza gomb
 function KVissza(){
     let betoltes = document.getElementById("betoltesgomb");
     betoltes.style.display = "block";
     vissza.style.display = "none";
-    document.getElementById("id").innerHTML = "ID:";
-    document.getElementById("tema").innerHTML = "Téma:";
-    document.getElementById("kerdes").innerHTML = "Kérdés:";
-    document.getElementById("valasz1").innerHTML = "Válasz1:";
-    document.getElementById("valasz2").innerHTML = "Válasz2:";
-    document.getElementById("valasz3").innerHTML = "Válasz3:";
-    document.getElementById("valasz4").innerHTML = "Válasz4:";
+    document.getElementById("id").innerHTML = "";
+    document.getElementById("tema").innerHTML = "";
+    document.getElementById("kerdes").innerHTML = "";
+    document.getElementById("valasz1").innerHTML = "";
+    document.getElementById("valasz2").innerHTML = "";
+    document.getElementById("valasz3").innerHTML = "";
+    document.getElementById("valasz4").innerHTML = "";
     Ktartalom.style.display="none";
 }
-//felhasznalok -- meg nem mukodik
-async function FTartalom() {
+//felhasznalok
+async function FTartalom(){
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM felhasznalok");
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM felhasznalok f WHERE f.id='" + i + "'";
@@ -534,12 +559,80 @@ function FVissza(){
     let betoltes = document.getElementById("felhasznalokgomb");
     betoltes.style.display = "block";
     vissza2.style.display = "none";
-    document.getElementById("Fid").innerHTML = "ID:";
-    document.getElementById("Fnev").innerHTML = "Név:";
-    document.getElementById("Fpassword").innerHTML = "Jelszó:";
-    document.getElementById("Femail").innerHTML = "Email:";
-    document.getElementById("Ftanare").innerHTML = "Tanár jog:";
-    document.getElementById("Fadmine").innerHTML = "Admin jog:";
+    document.getElementById("Fid").innerHTML = "";
+    document.getElementById("Fnev").innerHTML = "";
+    document.getElementById("Fpassword").innerHTML = "";
+    document.getElementById("Femail").innerHTML = "";
+    document.getElementById("Ftanare").innerHTML = "";
+    document.getElementById("Fadmine").innerHTML = "";
 
     Ftartalom.style.display="none";
+}
+async function KodTartalom(){
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kodok");
+    for (let i = 1; i <= sqladat[0].count; i++) {
+        let sql = "SELECT * FROM kodok f WHERE f.id='" + i + "'";
+        let valasz = await LekerdezesEredmenye(sql);
+        if (valasz.length == 1) {
+            
+            let Kodid = document.createElement("div");
+            Kodid.innerText = valasz[0].id;
+            Kodid.classList.add("valaszok");
+            document.getElementById("idadminKod").appendChild(Kodid);
+
+            let Kodnev = document.createElement("div");
+            Kodnev.innerText = valasz[0].nev;
+            Kodnev.classList.add("valaszok");
+            document.getElementById("nevadminKod").appendChild(Kodnev);
+
+            let Kodido = document.createElement("div");
+            if(valasz[0].idokorlat==null){
+                Kodido.innerText ="Univerzális";
+            }
+            else{Kodido.innerText = valasz[0].idokorlat;}
+            Kodido.classList.add("valaszok");
+            document.getElementById("idoadminKod").appendChild(Kodido);
+
+           
+        }
+    }
+     let betoltes = document.getElementById("kodgomb");
+     betoltes.style.display = "none";
+     Kodtartalom.style.display="block";
+     vissza3.style.display="block";
+    //  let ev=new Date().getFullYear();
+    //  let honap=new Date().getMonth();
+    //  let nap=new Date().getDate();
+    //  let ora = new Date().getHours();
+    //  let perc = new Date().getMinutes();
+    // console.log("ev: "+ev+" honap: "+(honap+1)+" nap: "+nap+" ora: "+ora+" perc: "+perc);
+}
+function KodVissza(){
+    let betoltes = document.getElementById("kodgomb");
+    betoltes.style.display = "block";
+    vissza3.style.display = "none";
+    document.getElementById("idadminKod").innerHTML = "ID:";
+    document.getElementById("nevadminKod").innerHTML = "Kód:";
+    document.getElementById("idoadminKod").innerHTML = "Idő korlát:";
+
+    Kodtartalom.style.display="none";
+}
+function KodHozzaadas(){
+    
+        let adminInfo=document.getElementById("adminInfo2");
+        let nev=document.getElementById("NevAdminKerdesInput").value;
+        let ido=document.getElementById("IdoAdminKerdesInput").value;
+    
+        var regex = /[A-Za-z0-9\W_]{1,}/;
+        if(nev==""||ido==""){
+            adminInfo.innerHTML="Nem töltöttél ki minden adatot!";
+        }
+        else if(regex.test(nev)&&regex.test(ido)){
+                let sql="insert into kodok(id,nev,idokorlat)values(null,'"+nev+"','"+ido+"')";
+                LekerdezesEredmenye(sql).then((valasz)=>{
+                    console.log(valasz);
+                    adminInfo.innerHTML="";
+                })
+            } 
+    
 }
