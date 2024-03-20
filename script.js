@@ -449,6 +449,13 @@ async function KTartalom(){
             valasz4.classList.add("valaszok");
             document.getElementById("valasz4").appendChild(valasz4);
 
+            let gomb1 = document.createElement("button");
+            let sortores = document.createElement("br");
+            gomb1.innerText = "cica";
+            gomb1.classList.add("valaszok");
+            document.getElementById("gomb1").appendChild(gomb1);
+            document.getElementById("gomb1").appendChild(sortores);
+
             LekerdezesEredmenye(sql2).then((valasz)=>{
                if(valasz[0].helyesvalasz=="1"){
                 valasz1.style.backgroundColor="green";
@@ -547,7 +554,10 @@ async function FTartalom(){
             Fadmine.classList.add("valaszok");
             document.getElementById("Fadmine").appendChild(Fadmine);
 
-        }
+         
+        }   
+       
+
     }
     
      let betoltes = document.getElementById("felhasznalokgomb");
