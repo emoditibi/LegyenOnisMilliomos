@@ -411,74 +411,80 @@ async function KTartalom(){
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
         let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + i + "'";
-
+        
+        
         let valasz = await LekerdezesEredmenye(sql);
         if (valasz.length == 1) {
             let id = document.createElement("div");
             id.innerText = valasz[0].id;
             id.classList.add("valaszok");
             document.getElementById("id").appendChild(id);
-
+            
             let tema = document.createElement("div");
             tema.innerText = valasz[0].tema;
             tema.classList.add("valaszok");
             document.getElementById("tema").appendChild(tema);
-
+            
             let kerdes = document.createElement("div");
             kerdes.innerText = valasz[0].kerdes;
             kerdes.classList.add("valaszok");
             document.getElementById("kerdes").appendChild(kerdes);
-
+            
             let valasz1 = document.createElement("div");
             valasz1.innerText = valasz[0].elsovalasz;
             valasz1.classList.add("valaszok");
             document.getElementById("valasz1").appendChild(valasz1);
-
+            
             let valasz2 = document.createElement("div");
             valasz2.innerText = valasz[0].masodikvalasz;
             valasz2.classList.add("valaszok");
             document.getElementById("valasz2").appendChild(valasz2);
-
+            
             let valasz3 = document.createElement("div");
             valasz3.innerText = valasz[0].harmadikvalasz;
             valasz3.classList.add("valaszok");
             document.getElementById("valasz3").appendChild(valasz3);
-
+            
             let valasz4 = document.createElement("div");
             valasz4.innerText = valasz[0].negyedikvalasz;
             valasz4.classList.add("valaszok");
             document.getElementById("valasz4").appendChild(valasz4);
-
-            let gomb1 = document.createElement("button");
-            let sortores = document.createElement("br");
-            gomb1.innerText = "cica";
-            gomb1.classList.add("valaszok");
-            document.getElementById("gomb1").appendChild(gomb1);
-            document.getElementById("gomb1").appendChild(sortores);
-
-            LekerdezesEredmenye(sql2).then((valasz)=>{
-               if(valasz[0].helyesvalasz=="1"){
-                valasz1.style.backgroundColor="green";
-               }
-               else if(valasz[0].helyesvalasz=="2"){
-                valasz2.style.backgroundColor="Green";
             
-               }
-               else if(valasz[0].helyesvalasz=="3"){
-                valasz3.style.backgroundColor="Green";
-               }
-               else if(valasz[0].helyesvalasz=="4"){
-                valasz4.style.backgroundColor="Green";
-               }
+            // let gomb1 = document.createElement("button");
+            // gomb1.innerText = valasz[0].id+"törlés";
+            // gomb1.classList.add("valaszok");
+            // document.getElementById("gomb1").appendChild(gomb1);
+            
+            LekerdezesEredmenye(sql2).then((valasz)=>{
+                if(valasz[0].helyesvalasz=="1"){
+                    valasz1.style.backgroundColor="green";
+                }
+                else if(valasz[0].helyesvalasz=="2"){
+                    valasz2.style.backgroundColor="Green";
+                    
+                }
+                else if(valasz[0].helyesvalasz=="3"){
+                    valasz3.style.backgroundColor="Green";
+                }
+                else if(valasz[0].helyesvalasz=="4"){
+                    valasz4.style.backgroundColor="Green";
+                }
             })
         }
     }
-
+    
     let betoltes = document.getElementById("betoltesgomb");
     betoltes.style.display = "none";
     Ktartalom.style.display="block";
     vissza.style.display = "block";
+  
+    // let sqldelete="DELETE FROM kerdesek WHERE kerdesek.id="+gomb1.innerHTML+"";
+    // let valasz= await LekerdezesEredmenye(sqldelete);
+    // if (valasz.length == 1) {
+    //     console.log(valasz);
+    // }
 }
+
 //kerdes hozzadas
 function KerdesHozzaadas(){
     let adminInfo=document.getElementById("adminInfo");
@@ -513,6 +519,7 @@ function KVissza(){
     document.getElementById("valasz2").innerHTML = "";
     document.getElementById("valasz3").innerHTML = "";
     document.getElementById("valasz4").innerHTML = "";
+    document.getElementById("gomb1").innerHTML = "";
     Ktartalom.style.display="none";
 }
 //felhasznalok
@@ -554,10 +561,7 @@ async function FTartalom(){
             Fadmine.classList.add("valaszok");
             document.getElementById("Fadmine").appendChild(Fadmine);
 
-         
-        }   
-       
-
+        }
     }
     
      let betoltes = document.getElementById("felhasznalokgomb");
@@ -643,6 +647,5 @@ function KodHozzaadas(){
                     console.log(valasz);
                     adminInfo.innerHTML="";
                 })
-            } 
-    
+            }
 }
