@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Már 16. 22:49
+-- Létrehozás ideje: 2024. Már 24. 19:03
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -91,7 +91,7 @@ INSERT INTO `kerdesek` (`id`, `kerdes`, `tema`, `helyesvalasz`, `elsovalasz`, `m
 (2, 'Melyik számrendszer használja a számokat 0-tól 7-ig, és gyakran alkalmazzák a számítógépekben a bitek reprezentálására?', 'informatika', 2, 'Bináris', 'Oktális', 'Decimális', 'Hexadecimális'),
 (3, 'Ki írta az \"Egri csillagok\" című regényt, amely Magyarország egyik legismertebb irodalmi alkotása?', 'irodalom', 3, 'Móricz Zsigmond', 'Krúdy Gyula', 'Gárdonyi Géza', 'Jókai Mór'),
 (4, 'Melyik erdélyi születésű magyar író hagyott hátra rendkívül gazdag irodalmi örökséget, munkásságában gyakran foglalkozott a magyar és erdélyi tájjal, valamint a magyar történelemmel és néprajzzal?\n\n', 'irodalom', 2, 'Kosztolányi Dezső', 'Wass Albert', 'Krúdy Gyula', 'Jókai Mór'),
-(5, 'Mi az eredménye a következő műveletnek: 5 × 3  +  8 - 2 ?', 'matematika', 2, '53', '21', '45', '41');
+(5, 'Mi az 5 és 9 közötti összes pozitív egész szám legnagyobb közös osztója?', 'matematika', 4, '3', '2', '5', '1');
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,8 @@ CREATE TABLE `kodok` (
 --
 
 INSERT INTO `kodok` (`id`, `nev`, `idokorlat`) VALUES
-(1, 'tanar0', NULL);
+(1, 'tanar0', NULL),
+(2, 'auto', 2025);
 
 --
 -- Indexek a kiírt táblákhoz
@@ -167,7 +168,7 @@ ALTER TABLE `kerdesek`
 -- AUTO_INCREMENT a táblához `kodok`
 --
 ALTER TABLE `kodok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Megkötések a kiírt táblákhoz
