@@ -78,38 +78,34 @@ position: relative;
 box-shadow: rgba(250, 184, 2, 0.2) 0 -25px 18px -14px inset,rgba(250, 184, 2, 0.2) 0 1px 2px,rgba(250, 184, 2, 0.2) 0 2px 4px,rgba(250, 184, 2, 0.2) 0 4px 8px,rgba(250, 184, 2, 0.2) 0 8px 16px,rgba(250, 184, 2, 0.2) 0 16px 32px;
 transform: scale(1.05) rotate(-1deg);
 }
-.background{
-width: 430px;
-height: 520px;
-position: absolute;
-transform: translate(-50%,-50%);
-left: 50%;
-top: 50%;
+.background {
+  width: 100%;
+  height: 100%; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: -1; 
 }
-.background .shape{
-height: 200px;
-width: 200px;
-position: absolute;
-border-radius: 50%;
-}
-.shape:first-child{
-background: linear-gradient(
-    #1845ad,
-    #23a2f6
-);
-left: -160px;
-top: -150px;
-}
-.shape:last-child{
-background: linear-gradient(
-    to right,
-    #ff512f,
-    #f09819
-    
-);
-right: -160px;
-bottom: -150px;
 
+.background .shape {
+  position: absolute; 
+  border-radius: 50%; 
+}
+
+.shape:first-child {
+  height: 200px; 
+  width: 200px; 
+  background: linear-gradient(#1845ad, #23a2f6); 
+  left: 300px; 
+  top: 50px; 
+}
+
+.shape:last-child {
+  height: 200px;
+  width: 200px; 
+  background: linear-gradient(to right, #ff512f, #f09819); 
+  right: 300px;
+  bottom: 50px; 
 }
 form:not(#adminForm,#tanarForm,#diakForm){
 height: 680px;
@@ -237,4 +233,31 @@ th{
   color:black;
   padding: 10px;
   height: 50px; 
+}
+div{
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.gombvalaszok{
+  text-align: left;
+  background-color: #f9f9f9;
+  color:black;
+  padding: 5px;
+  height: 30px; 
+  cursor: pointer;
+  margin-bottom: 90%;
+  border-radius: 8px;
+}
+.gombvalaszok2{
+  text-align: left;
+  background-color: #f9f9f9;
+  color:black;
+  padding: 5px;
+  height: 30px; 
+  cursor: pointer;
+  margin-bottom: 54%;
+  border-radius: 8px;
+}
+#Hozzaadastabla{
+  padding:1%;
 }
