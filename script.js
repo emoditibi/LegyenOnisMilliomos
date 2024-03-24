@@ -8,18 +8,27 @@ var diak = document.getElementById("diakForm");
 var kod = document.getElementById("kod");
 var gombok=document.querySelector(".background");
 var Ktartalom=document.getElementById("Ktartalom");
+var Modositastabla=document.getElementById("Modositastabla");
+var Hozzaadastabla=document.getElementById("Hozzaadastabla");
+var hozzaadasvissza=document.getElementById("hozzaadasvissza");
+var kh=document.getElementById("kh");
 var Ftartalom=document.getElementById("Ftartalom");
 var Kodtartalom=document.getElementById("Kodtartalom");
 var vissza = document.getElementById("visszagomb");
 var vissza2 = document.getElementById("visszagomb2");
 var vissza3 = document.getElementById("visszagomb3");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
+var gombertek2;
 admin.style.display="none";
 tanar.style.display="none";
 diak.style.display="none";
 regForm.style.display="none";
 kod.style.display="none";
 Ktartalom.style.display="none";
+kh.style.display="none";
+Modositastabla.style.display="none";
+Hozzaadastabla.style.display="none";
+hozzaadasvissza.style.display="none";
 Ftartalom.style.display="none";
 Kodtartalom.style.display="none";
 kijeletkezesgomb.style.display="none";
@@ -193,15 +202,12 @@ let jelszomegjelenes = document.querySelector(".jelszomegjelenes");
 let erossegSav = document.querySelector("#strength-bar");
 let erossegSzoveg = document.querySelector(".strength-text");
 
-
 password.addEventListener("focus", function(){
     jelszomegjelenes.style.display = "block";
 });
-
 password.addEventListener("blur", function(){
     jelszomegjelenes.style.display = "none";
 });
-
 function SzinezzesEsSzoveg(color, szoveg){
         erossegSav.style.backgroundColor = color;
         erossegSzoveg.innerHTML = szoveg;
@@ -212,7 +218,6 @@ function ErosssegTorles(){
     erossegSav.style.backgroundColor = "";
     erossegSzoveg.innerHTML = "";
 }
-
 password.addEventListener("keyup", ellenorizJelszoErossseget);
 // jelszo erossege
 function ellenorizJelszoErossseget(){
@@ -405,8 +410,11 @@ function Kijelentkezes(){
     location.reload();
 }
 //admin
+async function UjraRendezId() {
+}
 //kérdések
 async function KTartalom(){
+    kh.style.display="block";
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
@@ -450,11 +458,39 @@ async function KTartalom(){
             valasz4.classList.add("valaszok");
             document.getElementById("valasz4").appendChild(valasz4);
             
-            // let gomb1 = document.createElement("button");
-            // gomb1.innerText = valasz[0].id+"törlés";
-            // gomb1.classList.add("valaszok");
-            // document.getElementById("gomb1").appendChild(gomb1);
+            let br = document.createElement("br");
+            let br2 = document.createElement("br");
+
+            let torlesgomb = document.createElement("button");
+            let modositasgomb=document.createElement("button");
+            torlesgomb.innerText ="törlés";
+            torlesgomb.value = valasz[0].id; 
+            modositasgomb.innerText ="módosítás";
+            modositasgomb.value = valasz[0].id; 
+            modositasgomb.type="button";
+            torlesgomb.classList.add("gombvalaszok");
+            document.getElementById("torlesgomb").appendChild(torlesgomb);
+            document.getElementById("torlesgomb").appendChild(br);
+            modositasgomb.classList.add("gombvalaszok2");
+            document.getElementById("modositasgomb").appendChild(modositasgomb);
+            document.getElementById("modositasgomb").appendChild(br2);
+            torlesgomb.onclick = function() {
+                var gombertek = this.value;
+                let sqldelete="DELETE FROM kerdesek WHERE kerdesek.id="+gombertek+"";
+                let sqlAutoIncrement="ALTER TABLE kerdesek AUTO_INCREMENT = "+sqladat[0].count+"";
+                let sqlujraindexeles = "UPDATE kerdesek k SET k.id = id-1 WHERE id > "+gombertek+"";
+                LekerdezesEredmenye(sqldelete);
+                LekerdezesEredmenye(sqlujraindexeles);
+                LekerdezesEredmenye(sqlAutoIncrement);
+            };
             
+            modositasgomb.onclick=function(){
+                gombertek2=this.value;
+                Modositastabla.style.display="block";
+                let ID=document.getElementById("HValaszAdminID");
+                ID.innerText="Id:"+this.value;
+            };
+
             LekerdezesEredmenye(sql2).then((valasz)=>{
                 if(valasz[0].helyesvalasz=="1"){
                     valasz1.style.backgroundColor="green";
@@ -472,19 +508,24 @@ async function KTartalom(){
             })
         }
     }
-    
     let betoltes = document.getElementById("betoltesgomb");
     betoltes.style.display = "none";
     Ktartalom.style.display="block";
     vissza.style.display = "block";
-  
-    // let sqldelete="DELETE FROM kerdesek WHERE kerdesek.id="+gomb1.innerHTML+"";
-    // let valasz= await LekerdezesEredmenye(sqldelete);
-    // if (valasz.length == 1) {
-    //     console.log(valasz);
-    // }
 }
+function KerdesHozzadasMenu(){
+    Hozzaadastabla.style.display="block";
+    hozzaadas.style.display="none";
+    hozzaadasvissza.style.display="block";
 
+
+}
+function KerdesHozzadasMenuVissza(){
+    Hozzaadastabla.style.display="none";
+    hozzaadas.style.display="block";
+    hozzaadasvissza.style.display="none";
+
+}
 //kerdes hozzadas
 function KerdesHozzaadas(){
     let adminInfo=document.getElementById("adminInfo");
@@ -501,17 +542,59 @@ function KerdesHozzaadas(){
     }
     else if(regex.test(helyesvalasz)&&regex.test(tema)&&regex.test(kerdes)&&regex.test(valasz1)&&regex.test(valasz2)&&regex.test(valasz3)&&regex.test(valasz4) ){
             let sql="insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz)values(null,'"+helyesvalasz+"','"+tema+"','"+kerdes+"','"+valasz1+"','"+valasz2+"','"+valasz3+"','"+valasz4+"')";
-            LekerdezesEredmenye(sql).then((valasz)=>{
-                console.log(valasz);
+            LekerdezesEredmenye(sql);
                 adminInfo.innerHTML="";
-            })
+                location.reload();
+            
         } 
+}
+function KerdesekModositasa(){
+ 
+    let kerdes=document.getElementById("KerdesAdminKerdesInputMod").value;
+    let tema=document.getElementById("TemaAdminKerdesInputMod").value;
+    let helyesvalasz=document.getElementById("HValaszAdminKerdesInputMod").value;
+    let valasz1=document.getElementById("Valasz1AdminKerdesInputMod").value;
+    let valasz2=document.getElementById("Valasz2AdminKerdesInputMod").value;
+    let valasz3=document.getElementById("Valasz3AdminKerdesInputMod").value;
+    let valasz4=document.getElementById("Valasz4AdminKerdesInputMod").value;
+    
+    console.log(gombertek2);
+  if(!kerdes==""){
+    let sqlmod="UPDATE kerdesek k SET k.kerdes='"+kerdes+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+  if(!tema==""){
+    let sqlmod="UPDATE kerdesek k SET k.tema='"+tema+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+  if(!helyesvalasz==""){
+    let sqlmod="UPDATE kerdesek k SET k.helyesvalasz='"+helyesvalasz+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+  if(!valasz1==""){
+    let sqlmod="UPDATE kerdesek k SET k.elsovalasz='"+valasz1+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+  if(!valasz2==""){
+    let sqlmod="UPDATE kerdesek k SET k.masodikvalasz='"+valasz2+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+  if(!valasz3==""){
+    let sqlmod="UPDATE kerdesek k SET k.harmadikvalasz='"+valasz3+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+  if(!valasz4==""){
+    let sqlmod="UPDATE kerdesek k SET k.negyedikvalasz='"+valasz4+"' WHERE id = "+gombertek2+"";
+        LekerdezesEredmenye(sqlmod);}
+    location.reload();
+}
+function KerdesekModositasVissza(){
+    Modositastabla.style.display="none";
+    
 }
 //kérdések vissza gomb
 function KVissza(){
     let betoltes = document.getElementById("betoltesgomb");
     betoltes.style.display = "block";
+    Ktartalom.style.display="none";
+    Modositastabla.style.display="none";
+    Hozzaadastabla.style.display="none";
     vissza.style.display = "none";
+    kh.style.display="none";
     document.getElementById("id").innerHTML = "";
     document.getElementById("tema").innerHTML = "";
     document.getElementById("kerdes").innerHTML = "";
@@ -519,8 +602,9 @@ function KVissza(){
     document.getElementById("valasz2").innerHTML = "";
     document.getElementById("valasz3").innerHTML = "";
     document.getElementById("valasz4").innerHTML = "";
-    document.getElementById("gomb1").innerHTML = "";
-    Ktartalom.style.display="none";
+    document.getElementById("torlesgomb").innerHTML = "";
+    document.getElementById("modositasgomb").innerHTML = "";
+    
 }
 //felhasznalok
 async function FTartalom(){
@@ -560,7 +644,6 @@ async function FTartalom(){
             Fadmine.innerText = valasz[0].admin;
             Fadmine.classList.add("valaszok");
             document.getElementById("Fadmine").appendChild(Fadmine);
-
         }
     }
     
@@ -569,6 +652,7 @@ async function FTartalom(){
      Ftartalom.style.display="block";
      vissza2.style.display="block";
 }
+//felhasznalok vissza gomb
 function FVissza(){
     let betoltes = document.getElementById("felhasznalokgomb");
     betoltes.style.display = "block";
