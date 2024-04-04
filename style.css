@@ -267,3 +267,38 @@ option{
 #TemaAdminKerdesInputMod{
   color:black;
 }
+.diakgomb {
+  background-color: orange;
+  margin-top: 10px;
+  height: 50px;
+  width: 100%;
+  border-radius: 100px;
+  box-shadow: rgba(255, 157, 1, 0.2) 0 -25px 18px -14px inset,rgba(250, 184, 2, 0.2) 0 1px 2px,rgba(250, 184, 2, 0.2) 0 2px 4px,rgba(250, 184, 2, 0.2) 0 4px 8px,rgba(250, 184, 2, 0.2) 0 8px 16px,rgba(250, 184, 2, 0.2) 0 16px 32px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  transition: all 250ms;
+  font-size: 14px;
+  font-weight: 300;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-align: center;
+  }
+  #milliomosMenu{
+    height: 400px;
+    width: 400px;
+    position: absolute;
+    background-color: rgba(255,255,255,0.13);
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 20px 35px;
+}
