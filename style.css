@@ -302,3 +302,15 @@ option{
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 20px 35px;
 }
+#gém{
+  height: 600px;
+  width: 1000px;
+  position: absolute;
+  top: 20%;
+  left:25%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.1);
+  padding: 20px 35px;
+  
+}

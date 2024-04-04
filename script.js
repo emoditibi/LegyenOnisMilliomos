@@ -19,19 +19,24 @@ var vissza2 = document.getElementById("visszagomb2");
 var vissza3 = document.getElementById("visszagomb3");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 var valtoztatnivalo = document.getElementById("valtoztatnivalo");
+var gém=document.getElementById("gém");
+
 var gombertek2;
+
 admin.style.display = "none";
-tanar.style.display = "none";
-diak.style.display = "none";
-regForm.style.display = "none";
-kod.style.display = "none";
 Ktartalom.style.display = "none";
 kh.style.display = "none";
 Modositastabla.style.display = "none";
 Hozzaadastabla.style.display = "none";
 hozzaadasvissza.style.display = "none";
+tanar.style.display = "none";
+diak.style.display = "none";
 Ftartalom.style.display = "none";
+gém.style.display="none";
+kod.style.display = "none";
 Kodtartalom.style.display = "none";
+
+regForm.style.display = "none";
 kijeletkezesgomb.style.display = "none";
 vissza.style.display = "none";
 vissza2.style.display = "none";
@@ -765,11 +770,17 @@ function KodHozzaadas() {
     }
 }
 function startMilliomos() {
-    alert('A játék még fejlesztés alatt áll!');
+   
+  let milliomosMenu=document.getElementById("milliomosMenu");
+    milliomosMenu.style.display="none";
+    gém.style.display="block";
 }
-function showGameRules() {
+function Jatekszabalyok() {
     diakInfo=document.getElementById("diakInfo");
     if(diakInfo.innerHTML==""){
         diakInfo.innerHTML=' \nCél:\n  A játék célja az, hogy a játékos minél több pénzt nyerjen megválaszolva különböző nehézségű kérdéseket.\nJátékmenet: \n A játék 15 kérdésből áll. Minden kérdéshez négy válaszlehetőség tartozik, közülük csak egy helyes. A játékosnak választ kell adnia minden kérdésre, mielőtt továbblépne a következő kérdésre. A játék végén a játékos megtartja a legutolsó sikeresen megválaszolt kérdés nyereményét. Ha egy kérdésre helytelenül válaszol, elveszíti az addig elért nyereményt. A játékosnak van lehetősége feladni a játékot bármely ponton, és megtartani az addig elért nyereményt.Nehézség:A kérdések nehézsége fokozatosan növekszik a játék során.A későbbi kérdések több pénzt érnek, de nehezebbek is.\nSegítség:\n A játékosnak lehetősége van segítséget kérni a közönségtől, egy baráttól vagy két válaszlehetőség közül elhagyni egy helytelen választ.\nFőnyeremény:\n  A játék főnyereménye 1 milliárd forint.';}
     else diakInfo.innerHTML="";
+}
+function VisszaAMenube(){
+
 }
