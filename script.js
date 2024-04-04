@@ -733,8 +733,7 @@ async function KodTartalom() {
     //  let ev=new Date().getFullYear();
     //  let honap=new Date().getMonth();
     //  let nap=new Date().getDate();
-    //  let ora = new Date().getHours();
-    //  let perc = new Date().getMinutes();
+
     // console.log("ev: "+ev+" honap: "+(honap+1)+" nap: "+nap+" ora: "+ora+" perc: "+perc);
 }
 function KodVissza() {
@@ -765,4 +764,3 @@ function KodHozzaadas() {
         })
     }
 }
-//teszt
