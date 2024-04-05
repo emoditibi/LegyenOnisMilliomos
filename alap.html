@@ -110,8 +110,6 @@
                 <td>
                     <input  class="admingomb" type="button" id="hozzaadas" value="Kérdés hozzáadása" onclick="KerdesHozzadasMenu()">
                 </td>
-                
-                
             </tr>
         </table>
         </table>
@@ -127,12 +125,24 @@
             </tr>
             <tr>
                 <td><input type="text" class="des" id="HValaszAdminKerdesInput" placeholder="H Válasz"></td>
-                <td><input type="text" class="des" id="TemaAdminKerdesInput" placeholder="Téma"></td>
+                <td>
+                    <select id="TemaAdminKerdesInputMod" name="tantargyak">
+                        <option id="temahozzaad" value="tema" selected>Téma</option>
+                        <option value="Matematika" >Matematika</option>
+                        <option value="Történelem">Történelem</option>
+                        <option value="Biológia">Biológia</option>
+                        <option value="Fizika">Fizika</option>
+                        <option value="Kémia">Kémia</option>
+                        <option value="Irodalom">Irodalom</option>
+                        <option value="Informatika">Informatika</option>
+                    </select>
+                </td>
                 <td><input type="text" class="des" id="KerdesAdminKerdesInput" placeholder="Kérdés"></td>
                 <td><input type="text" class="des" id="Valasz1AdminKerdesInput" placeholder="Válasz1"></td>
                 <td><input type="text" class="des" id="Valasz2AdminKerdesInput" placeholder="Válasz2"></td>
                 <td><input type="text" class="des" id="Valasz3AdminKerdesInput" placeholder="Válasz3"></td>
                 <td><input type="text" class="des" id="Valasz4AdminKerdesInput" placeholder="Válasz4"></td>
+                
             </tr>
             <tr>
                 <td>
@@ -160,7 +170,8 @@
             <tr>
                 <td><input type="text" class="des" id="HValaszAdminKerdesInputMod" placeholder="H Válasz"></td>
                 <td>
-                    <select id="TemaAdminKerdesInputMod" name="tantargyak">
+                    <select id="TemaAdminKerdesInput" name="tantargyak">
+                        <option id="TemaModosit" value="tema" selected>tema</option>
                         <option value="Matematika" >Matematika</option>
                         <option value="Történelem">Történelem</option>
                         <option value="Biológia">Biológia</option>
@@ -170,8 +181,6 @@
                         <option value="Informatika">Informatika</option>
                     </select>
                 </td>
-                
-                    
                 <td><input type="text" class="des" id="KerdesAdminKerdesInputMod" placeholder="Kérdés"></td>
                 <td><input type="text" class="des" id="Valasz1AdminKerdesInputMod" placeholder="Válasz1"></td>
                 <td><input type="text" class="des" id="Valasz2AdminKerdesInputMod" placeholder="Válasz2"></td>
@@ -183,7 +192,7 @@
                 <input  class="admingomb" type="button" id="modositasgomb" value="Módosítás" onclick="KerdesekModositasa()">
             </td>
             <td>
-                <input  class="admingomb" type="button" id="modositasvisszagomb" value="Vissza" onclick="KerdesekModositasVissza()">
+                <input  class="admingomb" type="button" id="modositasvisszagomb" value="Vissza" onclick="KerdesekModositasaVissza()">
             </td>
             <td>
                 <p id="adminInfoMod"></p>
@@ -207,6 +216,38 @@
             <td><p id="Femail"></p></td>
             <td><p id="Ftanare"></p></td>
             <td><p id="Fadmine"></p></td>
+            <td><p id="Ftorlesgomb"></p></td>
+            <td><p id="Fmodositasgomb"></p></td>
+            </tr>
+        </table>
+        <table id="FelhasznaloModositastabla">
+            <tr>
+                <th><label id="FnevadminMod" for="FnevMod">Név:</label></th>
+                <th><label id="FemailadminMod" for="FemailMod">Email:</label></th>
+                <th><label id="FtanareadminMod" for="FtanareMod">Tanár jog:</label></th>
+                <th><label id="FValaszAdminID">Id:</label></th>
+            </tr>
+            <tr>
+                <td><input type="text" class="des" id="FnevMod" placeholder="Felhasználó név"></td>
+                <td><input type="text" class="des" id="FemailMod" placeholder="Email"></td>
+                <td>
+                    <select id="FtanareMod" name="tanareMOD">
+                        <option id="tanarModosit" value="tanar" selected>tanare</option>
+                        <option value="1" >Igen</option>
+                        <option value="0">Nem</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+            <td>
+                <input  class="admingomb" type="button" id="Fmodositasgomb" value="Módosítás" onclick="FelhasznalokModositasa()">
+            </td>
+            <td>
+                <input  class="admingomb" type="button" id="Fmodositasvisszagomb" value="Vissza" onclick="FelhasznalokModositasVissza()">
+            </td>
+            <td>
+                <p id="FelhasznaloAdminInfoMod"></p>
+            </td>
             </tr>
         </table>
         <table id="Kodtartalom">
@@ -214,30 +255,76 @@
                 <th><label  id="idadminKod" for="idkod">ID:</label></th>
                 <th><label  id="nevadminKod" for="nevkod">Kód:</label></th>
                 <th><label id="idoadminKod" for="idokod">idő:</label></th>
+                <td><p id="torlesgombkod"></p></td>
+                <td><p id="modositasgombkod"></p></td>
+
+                
             </tr>
             <tr>
                 <td><p id="idkod"></p></td>
                 <td><p id="nevkod"></p></td>
                 <td><p id="idokod"></p></td>
+           
             </tr>
+            <table id="khkod">
+                <tr>
+                    <td>
+                        <input  class="admingomb" type="button" id="kodhozzaadas" value="Kód hozzáadása" onclick="KodHozzadasMenu()">
+                    </td>
+                </tr>
+            </table>
+            </table>
+            <table id="KodHozzaadastabla">
             <tr>
                 <th><label id="nevadminKod" for="NevAdminKerdesInput">Kód:</label></th>
                 <th><label id="idoadminKod" for="IdoAdminKerdesInput">Idő:</label></th>
             </tr>
             <tr>
                 <td><input type="text" class="des" id="NevAdminKerdesInput" placeholder="tanarjelszo"></td>
-                <td><input type="text" class="des" id="IdoAdminKerdesInput" placeholder="20240315"></td>
+                <td><input type="text" class="des" id="IdoAdminKerdesInput" placeholder="2024.03.15 21:42"></td>
             </tr>
             <tr>
                 <td>
-                    <input  class="admingomb" type="button" id="hozzaadasgomb2" value="Hozzáadás" onclick="KodHozzaadas()">
+                    <input  class="admingomb" type="button" id="kodhozzaadasgomb" value="Hozzáadás" onclick="KodHozzaadas()">
+                </td>
+                <td>
+                    <input  class="admingomb" type="button" id="kodhozzaadasvissza" value="Vissza" onclick="KodHozzadasMenuVissza()">
                 </td>
                 <td>
                     <p id="adminInfo2"></p>
                 </td>
             </tr>
-                </tr>
+            </table>
+
+        
+        <table id="KodModositastabla">
+            
+            <tr>
+                <th><label  id="nevadminKodMod" for="nevkodMod">Kód:</label></th>
+                <th><label id="idoadminKodMod" for="idokodMod">idő:</label></th>
+                <th><label id="idoadminKodMod" for="idokodMod">idő:</label></th>
+
+                
+                
+                <th><label id="KodValaszAdminID">Id:</label></th>
+            </tr>
+            <tr>
+                <td><input type="text" class="des" id="nevkodMod" placeholder="tanarjelszo"></td>
+                <td><input type="text" class="des" id="idokodMod" placeholder="2024"></td>
+            </tr>
+            <tr>
+            <td>
+                <input  class="admingomb" type="button" id="Kodmodositasgomb" value="Módosítás" onclick="KodModositasa()">
+            </td>
+            <td>
+                <input  class="admingomb" type="button" id="Kodmodositasvisszagomb" value="Vissza" onclick="KodModositasVissza()">
+            </td>
+            <td>
+                <p id="KodAdminInfoMod"></p>
+            </td>
+            </tr>
         </table>
+
     </form>
     <form id="tanarForm">
         <table>
@@ -247,42 +334,32 @@
                 </tr>
         </table>
     </form>
-<form id="diakForm">
-    <table>
-        <tr>
-            <td><p id="fNev3">Üdvözlünk a "Legyen ön is milliomos" játékban!</p></td>
-            <td><input class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelentkezés" onclick="Kijelentkezes()"></td>
-        </tr>
-    </table>
-    
-    <!-- Legyen ön is milliomos menü -->
-
-       
-        <table  id="milliomosMenu">
-            <th> <p>Kész vagy a kihívásra?</p></th>
+    <form id="diakForm">
+        <table>
             <tr>
-                <td><button type="button" class="diakgomb" onclick="startMilliomos()">Játék indítása</button></td>
+                <td><p id="fNev3"></p></th>
+                <td><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></td>
             </tr>
-            <tr>
-                <td> <button type="button" class="diakgomb" onclick="Jatekszabalyok()">Játékszabályok</button></td>
-            </tr>
-            <tr>
-                <td><p id="diakInfo"></p></td>
-            </tr>
-           
         </table>
-        <table id="gém">
-            <th>Kérdés</th>
-            <tr><td>A</td><td>B</td></tr>
-            <tr><td>C</td><td>D</td></tr>
+        <div >
+            <table>
+                <tr>
+                    <td>Kerdes:</td>
+                </tr>
+                <tr>
+                    <td>A:</td>
+                    <td>B:</td>
+                </tr>
+                <tr>
+                    <td>C:</td>
+                    <td>D:</td>
+                </tr>
+            </table>
             
-        </table>
-        <td> <button type="button" class="diakgomb" onclick="VisszaAMenube()">Menu</button></td>
-
-        
-
-</form>
-
+            
+    
+        </div>
+    </form>
 
     <p id="version">v0.0.1</p>
     <script src="script.js"></script>
