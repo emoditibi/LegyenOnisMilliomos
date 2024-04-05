@@ -10,33 +10,43 @@ var gombok = document.querySelector(".background");
 var Ktartalom = document.getElementById("Ktartalom");
 var Modositastabla = document.getElementById("Modositastabla");
 var Hozzaadastabla = document.getElementById("Hozzaadastabla");
+var KodHozzaadastabla = document.getElementById("KodHozzaadastabla");
 var hozzaadasvissza = document.getElementById("hozzaadasvissza");
+var hozzaadas = document.getElementById("hozzaadas");
+var kodhozzaadasvissza = document.getElementById("kodhozzaadasvissza");
+var kodhozzaadas = document.getElementById("kodhozzaadas");
 var kh = document.getElementById("kh");
+var khkod = document.getElementById("khkod");
 var Ftartalom = document.getElementById("Ftartalom");
+var FelhasznaloModositastabla = document.getElementById("FelhasznaloModositastabla");
 var Kodtartalom = document.getElementById("Kodtartalom");
+var KodModositastabla = document.getElementById("KodModositastabla");
 var vissza = document.getElementById("visszagomb");
 var vissza2 = document.getElementById("visszagomb2");
 var vissza3 = document.getElementById("visszagomb3");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 var valtoztatnivalo = document.getElementById("valtoztatnivalo");
-var gém=document.getElementById("gém");
-
 var gombertek2;
-
+var gombertek4;
+var gombertek6;
 admin.style.display = "none";
-Ktartalom.style.display = "none";
-kh.style.display = "none";
-Modositastabla.style.display = "none";
-Hozzaadastabla.style.display = "none";
-hozzaadasvissza.style.display = "none";
 tanar.style.display = "none";
 diak.style.display = "none";
-Ftartalom.style.display = "none";
-gém.style.display="none";
-kod.style.display = "none";
-Kodtartalom.style.display = "none";
-
 regForm.style.display = "none";
+kod.style.display = "none";
+Ktartalom.style.display = "none";
+kh.style.display = "none";
+khkod.style.display = "none";
+Hozzaadastabla.style.display = "none";
+KodHozzaadastabla.style.display = "none";
+Modositastabla.style.display = "none";
+hozzaadas.style.display = "none";
+kodhozzaadasvissza.style.display = "none";
+kodhozzaadas.style.display = "none";
+Ftartalom.style.display = "none";
+FelhasznaloModositastabla.style.display = "none";
+Kodtartalom.style.display = "none";
+KodModositastabla.style.display = "none";
 kijeletkezesgomb.style.display = "none";
 vissza.style.display = "none";
 vissza2.style.display = "none";
@@ -423,18 +433,14 @@ function Kijelentkezes() {
     sessionStorage.clear();
     location.reload();
 }
-//admin
-async function UjraRendezId() {
-}
-//kérdések
+//ADMIN
+//Kérdések
 async function KTartalom() {
     kh.style.display = "block";
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
         let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + i + "'";
-
-
         let valasz = await LekerdezesEredmenye(sql);
         if (valasz.length == 1) {
             let id = document.createElement("div");
@@ -498,28 +504,18 @@ async function KTartalom() {
                 LekerdezesEredmenye(sqlAutoIncrement);
             };
 
-            modositasgomb.onclick = function () {
+            modositasgomb.onclick = async function () {
                 gombertek2 = this.value;
                 Modositastabla.style.display = "block";
                 let ID = document.getElementById("HValaszAdminID");
                 ID.innerText = "Id:" + this.value;
-            
-                // Get the current theme of the question being modified
-                let currentTheme = document.getElementById("tema" + gombertek2).innerText.trim();
-            
-                // Set the value of the select element to the current theme
-                let temaSelect = document.getElementById("TemaAdminKerdesInputMod");
-                for (let i = 0; i < temaSelect.options.length; i++) {
-                    if (temaSelect.options[i].value.trim() === currentTheme) {
-                        temaSelect.value = currentTheme;
-                        break;
-                    }
-                }
+                let sql = "SELECT k.tema FROM kerdesek k WHERE k.id='" + this.value + "'";
+                let eredmenyObjektum = await LekerdezesEredmenye(sql);
+                let tema = eredmenyObjektum[0].tema;
+                document.getElementById("TemaModosit").innerText = tema;
+                document.getElementById("TemaModosit").value = tema;
             };
             
-            
-            
-
             LekerdezesEredmenye(sql2).then((valasz) => {
                 if (valasz[0].helyesvalasz == "1") {
                     valasz1.style.backgroundColor = "green";
@@ -541,6 +537,8 @@ async function KTartalom() {
     betoltes.style.display = "none";
     Ktartalom.style.display = "block";
     vissza.style.display = "block";
+    hozzaadas.style.display = "block";
+
 }
 function KerdesHozzadasMenu() {
     Hozzaadastabla.style.display = "block";
@@ -552,7 +550,7 @@ function KerdesHozzadasMenu() {
 function KerdesHozzadasMenuVissza() {
     Hozzaadastabla.style.display = "none";
     hozzaadas.style.display = "block";
-    hozzaadasvissza.style.display = "none";
+    
 
 }
 //kerdes hozzadas
@@ -560,7 +558,7 @@ function KerdesHozzaadas() {
 
     let adminInfo = document.getElementById("adminInfo");
     let helyesvalasz = document.getElementById("HValaszAdminKerdesInput").value;
-    let tema = document.getElementById("TemaAdminKerdesInput").value;
+    let tema = document.getElementById("TemaAdminKerdesInputMod").value;
     let kerdes = document.getElementById("KerdesAdminKerdesInput").value;
     let valasz1 = document.getElementById("Valasz1AdminKerdesInput").value;
     let valasz2 = document.getElementById("Valasz2AdminKerdesInput").value;
@@ -575,13 +573,12 @@ function KerdesHozzaadas() {
         LekerdezesEredmenye(sql);
         adminInfo.innerHTML = "";
         location.reload();
-
     }
 }
 function KerdesekModositasa() {
 
-    let kerdes = document.getElementById("KerdesAdminKerdesInputMod").value;
-    let tema = document.getElementById("TemaAdminKerdesInputMod").value;
+    let kerdes = document.getElementById("FnevadminMod").value;
+    let tema = document.getElementById("TemaAdminKerdesInput").value;
     let helyesvalasz = document.getElementById("HValaszAdminKerdesInputMod").value;
     let valasz1 = document.getElementById("Valasz1AdminKerdesInputMod").value;
     let valasz2 = document.getElementById("Valasz2AdminKerdesInputMod").value;
@@ -619,9 +616,8 @@ function KerdesekModositasa() {
     }
     location.reload();
 }
-function KerdesekModositasVissza() {
+function KerdesekModositasaVissza() {
     Modositastabla.style.display = "none";
-
 }
 //kérdések vissza gomb
 function KVissza() {
@@ -643,7 +639,8 @@ function KVissza() {
     document.getElementById("modositasgomb").innerHTML = "";
 
 }
-//felhasznalok
+
+//Felhasznalok
 async function FTartalom() {
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM felhasznalok");
     for (let i = 1; i <= sqladat[0].count; i++) {
@@ -681,18 +678,84 @@ async function FTartalom() {
             Fadmine.innerText = valasz[0].admin;
             Fadmine.classList.add("valaszok");
             document.getElementById("Fadmine").appendChild(Fadmine);
+
+            let br = document.createElement("br");
+            let br2 = document.createElement("br");
+
+            let torlesgomb = document.createElement("button");
+            let modositasgomb = document.createElement("button");
+            torlesgomb.innerText = "törlés";
+            torlesgomb.value = valasz[0].id;
+            modositasgomb.innerText = "módosítás";
+            modositasgomb.value = valasz[0].id;
+            modositasgomb.type = "button";
+            torlesgomb.classList.add("gombvalaszok");
+            document.getElementById("Ftorlesgomb").appendChild(torlesgomb);
+            document.getElementById("Ftorlesgomb").appendChild(br);
+            modositasgomb.classList.add("gombvalaszok2");
+            document.getElementById("Fmodositasgomb").appendChild(modositasgomb);
+            document.getElementById("Fmodositasgomb").appendChild(br2);
+            torlesgomb.onclick = function () {
+                var gombertek3 = this.value;
+                let sqldelete = "DELETE FROM felhasznalok WHERE felhasznalok.id=" + gombertek3 + "";
+                let sqlAutoIncrement = "ALTER TABLE felhasznalok AUTO_INCREMENT = " + sqladat[0].count + "";
+                let sqlujraindexeles = "UPDATE felhasznalok f SET f.id = id-1 WHERE id > " + gombertek3 + "";
+                LekerdezesEredmenye(sqldelete);
+                LekerdezesEredmenye(sqlujraindexeles);
+                LekerdezesEredmenye(sqlAutoIncrement);
+            };
+
+            modositasgomb.onclick = async function () {
+                gombertek4 = this.value;
+                FelhasznaloModositastabla.style.display = "block";
+                let ID = document.getElementById("FValaszAdminID");
+                ID.innerText = "Id:" + this.value;
+                let sql = "SELECT f.tanar FROM felhasznalok f WHERE f.id='" + this.value + "'";
+                let eredmenyObjektum = await LekerdezesEredmenye(sql);
+                let tanar = eredmenyObjektum[0].tanar;
+                document.getElementById("tanarModosit").innerText = tanar;
+                document.getElementById("tanarModosit").value = tanar;
+            };
+            
         }
     }
-
     let betoltes = document.getElementById("felhasznalokgomb");
     betoltes.style.display = "none";
     Ftartalom.style.display = "block";
     vissza2.style.display = "block";
 }
+//felhasznalok módosítása
+function FelhasznalokModositasa() { 
+
+    let felhasznalonev = document.getElementById("FnevMod").value;
+    let email = document.getElementById("FemailMod").value;
+    let tanare = document.getElementById("FtanareMod").value;
+
+    console.log(gombertek4);
+    if (!felhasznalonev == "") {
+        let sqlmod = "UPDATE felhasznalok f SET f.nev='" + felhasznalonev + "' WHERE id = " + gombertek4 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!email == "") {
+        let sqlmod = "UPDATE felhasznalok f SET f.email='" + email + "' WHERE id = " + gombertek4 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!tanare == "") {
+        let sqlmod = "UPDATE felhasznalok f SET f.tanar='" + tanare + "' WHERE id = " + gombertek4 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    location.reload();
+}
+function FelhasznalokModositasVissza() {
+    FelhasznaloModositastabla.style.display = "none";
+
+}
 //felhasznalok vissza gomb
 function FVissza() {
     let betoltes = document.getElementById("felhasznalokgomb");
     betoltes.style.display = "block";
+    Ftartalom.style.display = "none";
+    FelhasznaloModositastabla.style.display = "none";
     vissza2.style.display = "none";
     document.getElementById("Fid").innerHTML = "";
     document.getElementById("Fnev").innerHTML = "";
@@ -700,10 +763,11 @@ function FVissza() {
     document.getElementById("Femail").innerHTML = "";
     document.getElementById("Ftanare").innerHTML = "";
     document.getElementById("Fadmine").innerHTML = "";
-
-    Ftartalom.style.display = "none";
+    document.getElementById("Ftorlesgomb").innerHTML = "";
+    document.getElementById("Fmodositasgomb").innerHTML = "";
 }
 async function KodTartalom() {
+    khkod.style.display = "block";
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kodok");
     for (let i = 1; i <= sqladat[0].count; i++) {
         let sql = "SELECT * FROM kodok f WHERE f.id='" + i + "'";
@@ -728,6 +792,40 @@ async function KodTartalom() {
             Kodido.classList.add("valaszok");
             document.getElementById("idoadminKod").appendChild(Kodido);
 
+            let br = document.createElement("br");
+            let br2 = document.createElement("br");
+
+            let torlesgomb = document.createElement("button");
+            let modositasgomb = document.createElement("button");
+            torlesgomb.innerText = "törlés";
+            torlesgomb.value = valasz[0].id;
+            modositasgomb.innerText = "módosítás";
+            modositasgomb.value = valasz[0].id;
+            modositasgomb.type = "button";
+            document.getElementById("torlesgombkod").appendChild(torlesgomb);
+            document.getElementById("torlesgombkod").appendChild(br);
+            torlesgomb.classList.add("gombkodvalaszok");
+            document.getElementById("modositasgombkod").appendChild(modositasgomb);
+            document.getElementById("modositasgombkod").appendChild(br2);
+            modositasgomb.classList.add("gombkodvalaszok2");
+            torlesgomb.onclick = function () {
+                var gombertek5 = this.value;
+                let sqldelete = "DELETE FROM kodok WHERE kodok.id=" + gombertek5 + "";
+                let sqlAutoIncrement = "ALTER TABLE kodok AUTO_INCREMENT = " + sqladat[0].count + "";
+                let sqlujraindexeles = "UPDATE kodok k SET k.id = id-1 WHERE id > " + gombertek5 + "";
+                LekerdezesEredmenye(sqldelete);
+                LekerdezesEredmenye(sqlujraindexeles);
+                LekerdezesEredmenye(sqlAutoIncrement);
+            };
+
+            modositasgomb.onclick = async function () {
+                gombertek6 = this.value;
+                KodModositastabla.style.display = "block";
+                let ID = document.getElementById("KodValaszAdminID");
+                ID.innerText = "Id:" + this.value;
+               
+            };
+
 
         }
     }
@@ -735,21 +833,58 @@ async function KodTartalom() {
     betoltes.style.display = "none";
     Kodtartalom.style.display = "block";
     vissza3.style.display = "block";
+    kodhozzaadas.style.display = "block";
+
     //  let ev=new Date().getFullYear();
     //  let honap=new Date().getMonth();
     //  let nap=new Date().getDate();
-
+    //  let ora = new Date().getHours();
+    //  let perc = new Date().getMinutes();
     // console.log("ev: "+ev+" honap: "+(honap+1)+" nap: "+nap+" ora: "+ora+" perc: "+perc);
 }
+function KodHozzadasMenu() {
+    KodHozzaadastabla.style.display = "block";
+    kodhozzaadas.style.display = "none";
+    
+    kodhozzaadasvissza.style.display = "block";
+}
+function KodHozzadasMenuVissza() {
+    KodHozzaadastabla.style.display = "none";
+    kodhozzaadas.style.display = "block";
+    kodhozzaadasvissza.style.display = "none";
+}
+function KodModositasa() {
+
+    let nev = document.getElementById("nevkodMod").value;
+    let ido = document.getElementById("idokodMod").value;
+
+    console.log(gombertek2);
+    if (!nev == "") {
+        let sqlmod = "UPDATE kodok k SET k.nev='" + nev + "' WHERE id = " + gombertek6 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!ido == "") {
+        let sqlmod = "UPDATE kodok k SET k.idokorlat='" + ido + "' WHERE id = " + gombertek6 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    location.reload();
+}
+function KerdesekModositasVissza() {
+    KodModositastabla.style.display = "none";
+
+}
 function KodVissza() {
+    khkod.style.display = "none";
     let betoltes = document.getElementById("kodgomb");
     betoltes.style.display = "block";
+    Kodtartalom.style.display = "none";
     vissza3.style.display = "none";
+    KodModositastabla.style.display = "none";
     document.getElementById("idadminKod").innerHTML = "ID:";
     document.getElementById("nevadminKod").innerHTML = "Kód:";
     document.getElementById("idoadminKod").innerHTML = "Idő korlát:";
-
-    Kodtartalom.style.display = "none";
+    document.getElementById("torlesgombkod").innerHTML = "";
+    document.getElementById("modositasgombkod").innerHTML = "";
 }
 function KodHozzaadas() {
 
@@ -768,19 +903,4 @@ function KodHozzaadas() {
             adminInfo.innerHTML = "";
         })
     }
-}
-function startMilliomos() {
-   
-  let milliomosMenu=document.getElementById("milliomosMenu");
-    milliomosMenu.style.display="none";
-    gém.style.display="block";
-}
-function Jatekszabalyok() {
-    diakInfo=document.getElementById("diakInfo");
-    if(diakInfo.innerHTML==""){
-        diakInfo.innerHTML=' \nCél:\n  A játék célja az, hogy a játékos minél több pénzt nyerjen megválaszolva különböző nehézségű kérdéseket.\nJátékmenet: \n A játék 15 kérdésből áll. Minden kérdéshez négy válaszlehetőség tartozik, közülük csak egy helyes. A játékosnak választ kell adnia minden kérdésre, mielőtt továbblépne a következő kérdésre. A játék végén a játékos megtartja a legutolsó sikeresen megválaszolt kérdés nyereményét. Ha egy kérdésre helytelenül válaszol, elveszíti az addig elért nyereményt. A játékosnak van lehetősége feladni a játékot bármely ponton, és megtartani az addig elért nyereményt.Nehézség:A kérdések nehézsége fokozatosan növekszik a játék során.A későbbi kérdések több pénzt érnek, de nehezebbek is.\nSegítség:\n A játékosnak lehetősége van segítséget kérni a közönségtől, egy baráttól vagy két válaszlehetőség közül elhagyni egy helytelen választ.\nFőnyeremény:\n  A játék főnyereménye 1 milliárd forint.';}
-    else diakInfo.innerHTML="";
-}
-function VisszaAMenube(){
-
 }
