@@ -27,18 +27,18 @@ var vissza2 = document.getElementById("visszagomb2");
 var vissza3 = document.getElementById("visszagomb3");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 var valtoztatnivalo = document.getElementById("valtoztatnivalo");
+var VisszaAMenubeGomb=document.getElementById("VisszaAMenubeGomb");
+regForm.style.display = "none";
+
+//admin
+admin.style.display = "none";
 var gombertek2;
 var gombertek4;
 var gombertek6;
-admin.style.display = "none";
-tanar.style.display = "none";
-diak.style.display = "none";
-regForm.style.display = "none";
 kod.style.display = "none";
 Ktartalom.style.display = "none";
 kh.style.display = "none";
 khkod.style.display = "none";
-gém.style.display="none";
 Hozzaadastabla.style.display = "none";
 KodHozzaadastabla.style.display = "none";
 Modositastabla.style.display = "none";
@@ -53,6 +53,13 @@ kijeletkezesgomb.style.display = "none";
 vissza.style.display = "none";
 vissza2.style.display = "none";
 vissza3.style.display = "none";
+//tanar
+tanar.style.display = "none";
+//diak
+diak.style.display = "none";
+VisszaAMenubeGomb.style.display="none";
+gém.style.display="none";
+//Init
 function Init() {
     var fNev = document.getElementById("fNev");
     var fNev2 = document.getElementById("fNev2");
@@ -907,10 +914,11 @@ function KodHozzaadas() {
     }
 }
 function startMilliomos() {
-   
-  let milliomosMenu=document.getElementById("milliomosMenu");
+    Game();
+    var milliomosMenu=document.getElementById("milliomosMenu");
     milliomosMenu.style.display="none";
     gém.style.display="block";
+    VisszaAMenubeGomb.style.display="block";
 }
 function Jatekszabalyok() {
     diakInfo=document.getElementById("diakInfo");
@@ -919,5 +927,20 @@ function Jatekszabalyok() {
     else diakInfo.innerHTML="";
 }
 function VisszaAMenube(){
+VisszaAMenubeGomb.style.display="none";
+gém.style.display="none";
+milliomosMenu.style.display="block";
+}
+async function Game(){
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
+    let maxId = sqladat[0].count;
 
+    for (let i = 1; i <= maxId; i++) {
+        let randomId = Math.floor(Math.random() * maxId) + 1; // Véletlen ID generálása
+
+        let sql = "SELECT k.kerdes FROM kerdesek k WHERE k.id='" + randomId + "'";
+        await LekerdezesEredmenye(sql).then((valasz) => {
+            document.getElementById("jatekkerdes").innerHTML =  valasz[0].kerdes;
+        })
+    }
 }

@@ -344,7 +344,7 @@
     <table  id="milliomosMenu">
             <th> <p>Kész vagy a kihívásra?</p></th>
             <tr>
-                <td><button type="button" class="diakgomb" onclick="startMilliomos()">Játék indítása</button></td>
+                <td><button type="button"  class="diakgomb" onclick="startMilliomos()">Játék indítása</button></td>
             </tr>
             <tr>
                 <td> <button type="button" class="diakgomb" onclick="Jatekszabalyok()">Játékszabályok</button></td>
@@ -355,12 +355,18 @@
            
         </table>
         <table id="gém">
-            <th>Kérdés</th>
-            <tr><td>A</td><td>B</td></tr>
-            <tr><td>C</td><td>D</td></tr>
-            
+        <th colspan="2" id="jatekkerdes">Kérdés</th>
+        <tr>
+            <td><button type="button" class="DiakgombVisszaGomb" id="A" onclick="VisszaAMenube()">A</button></td>
+            <td><button type="button" class="DiakgombVisszaGomb" id="B" onclick="VisszaAMenube()">B</button></td>
+        </tr>
+        <tr>
+            <td><button type="button" class="DiakgombVisszaGomb" id="C" onclick="VisszaAMenube()">C</button></td>
+            <td><button type="button" class="DiakgombVisszaGomb" id="D" onclick="VisszaAMenube()">D</button></td>
+        </tr>      
         </table>
-        <td> <button type="button" class="diakgomb" id="VisszaAMenubeGomb" onclick="VisszaAMenube()">Menu</button></td>
+        
+        <td> <button type="button" class="DiakgombVisszaGomb" id="VisszaAMenubeGomb" onclick="VisszaAMenube()">Vissza a menübe</button></td>
 
     </form>
 
