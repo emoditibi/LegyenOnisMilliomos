@@ -934,13 +934,66 @@ milliomosMenu.style.display="block";
 async function Game(){
     let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
     let maxId = sqladat[0].count;
-
     for (let i = 1; i <= maxId; i++) {
-        let randomId = Math.floor(Math.random() * maxId) + 1; // Véletlen ID generálása
-
+        let randomId = Math.floor(Math.random() * maxId) + 1;
         let sql = "SELECT k.kerdes FROM kerdesek k WHERE k.id='" + randomId + "'";
         await LekerdezesEredmenye(sql).then((valasz) => {
             document.getElementById("jatekkerdes").innerHTML =  valasz[0].kerdes;
         })
+
+    }
+
+}
+/*// Definiáljuk a játékhoz tartozó változókat
+let pontszam = 0;
+let aktualisKerdesIndex = 0;
+let kerdesek = [];
+
+// Játék indítása
+async function Game() {
+    let sqladat = await LekerdezesEredmenye("SELECT * FROM kerdesek");
+    kerdesek = sqladat;
+    nextQuestion();
+}
+
+// Következő kérdés megjelenítése
+function nextQuestion() {
+    if (aktualisKerdesIndex < kerdesek.length) {
+        let kerdes = kerdesek[aktualisKerdesIndex];
+        document.getElementById("jatekkerdes").innerText = kerdes.kerdes;
+
+        let valaszDiv = document.getElementById("valaszok");
+        valaszDiv.innerHTML = ""; // Töröljük az előző válaszokat
+
+        // Hozzáadjuk a válaszokat
+        for (let i = 1; i <= 4; i++) {
+            let valasz = document.createElement("div");
+            valasz.innerText = kerdes["valasz" + i];
+            valasz.dataset.helyes = (i === kerdes.helyes_index) ? "true" : "false"; // Helyes válasz megjelölése
+            valasz.addEventListener("click", valaszKlikk);
+            valaszDiv.appendChild(valasz);
+        }
+
+        aktualisKerdesIndex++;
+    } else {
+        // Játék vége
+        jatekVege();
     }
 }
+
+// Felhasználói válasz kezelése
+function valaszKlikk(event) {
+    let valaszDiv = event.target;
+    let helyes = valaszDiv.dataset.helyes === "true";
+    if (helyes) {
+        pontszam++;
+    }
+    nextQuestion();
+}
+
+// Játék végének kezelése
+function jatekVege() {
+    document.getElementById("jatekkerdes").innerText = "Játék vége! Pontszám: " + pontszam;
+    document.getElementById("valaszok").innerHTML = ""; // Töröljük a válaszokat
+    // További teendők a játék végén...
+} */
