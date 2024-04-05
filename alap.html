@@ -335,30 +335,37 @@
         </table>
     </form>
     <form id="diakForm">
-        <table>
-            <tr>
-                <td><p id="fNev3"></p></th>
-                <td><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></td>
-            </tr>
-        </table>
-        <div >
-            <table>
-                <tr>
-                    <td>Kerdes:</td>
-                </tr>
-                <tr>
-                    <td>A:</td>
-                    <td>B:</td>
-                </tr>
-                <tr>
-                    <td>C:</td>
-                    <td>D:</td>
-                </tr>
-            </table>
-            
-            
+       <table>
+        <tr>
+            <td><p id="fNev3">Üdvözlünk a "Legyen ön is milliomos" játékban!</p></td>
+            <td><input class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelentkezés" onclick="Kijelentkezes()"></td>
+        </tr>
+    </table>
     
-        </div>
+    <!-- Legyen ön is milliomos menü -->
+
+       
+        <table  id="milliomosMenu">
+            <th> <p>Kész vagy a kihívásra?</p></th>
+            <tr>
+                <td><button type="button" class="diakgomb" onclick="startMilliomos()">Játék indítása</button></td>
+            </tr>
+            <tr>
+                <td> <button type="button" class="diakgomb" onclick="Jatekszabalyok()">Játékszabályok</button></td>
+            </tr>
+            <tr>
+                <td><p id="diakInfo"></p></td>
+            </tr>
+           
+        </table>
+        <table id="gém">
+            <th>Kérdés</th>
+            <tr><td>A</td><td>B</td></tr>
+            <tr><td>C</td><td>D</td></tr>
+            
+        </table>
+        <td> <button type="button" class="diakgomb" onclick="VisszaAMenube()">Menu</button></td>
+
     </form>
 
     <p id="version">v0.0.1</p>
