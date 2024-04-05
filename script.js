@@ -19,6 +19,7 @@ var kh = document.getElementById("kh");
 var khkod = document.getElementById("khkod");
 var Ftartalom = document.getElementById("Ftartalom");
 var FelhasznaloModositastabla = document.getElementById("FelhasznaloModositastabla");
+var gém=document.getElementById("gém");
 var Kodtartalom = document.getElementById("Kodtartalom");
 var KodModositastabla = document.getElementById("KodModositastabla");
 var vissza = document.getElementById("visszagomb");
@@ -37,6 +38,7 @@ kod.style.display = "none";
 Ktartalom.style.display = "none";
 kh.style.display = "none";
 khkod.style.display = "none";
+gém.style.display="none";
 Hozzaadastabla.style.display = "none";
 KodHozzaadastabla.style.display = "none";
 Modositastabla.style.display = "none";
@@ -869,7 +871,7 @@ function KodModositasa() {
     }
     location.reload();
 }
-function KerdesekModositasVissza() {
+function KodModositasaVissza() {
     KodModositastabla.style.display = "none";
 
 }
