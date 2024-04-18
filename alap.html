@@ -354,23 +354,39 @@
             </tr>
            
         </table>
+        <button type="button" class="segitsegGomb" id="felezes" onclick="Segitseg1()">Felezés</button>
+        <button type="button" class="segitsegGomb" id="telefon" onclick="Segitseg2()">Telefonos segítség</button>
+        <button type="button" class="segitsegGomb" id="nezo" onclick="Segitseg3()">Nézői segítség</button>
+
         <table id="gém">
         <th colspan="2" id="jatekkerdes">Kérdés</th>
         <tr>
-            <td><button type="button" class="DiakgombVisszaGomb" id="A" onclick="VisszaAMenube()">A</button></td>
-            <td><button type="button" class="DiakgombVisszaGomb" id="B" onclick="VisszaAMenube()">B</button></td>
+            <td><button type="button" class="DiakGomb" id="1" onclick="Ellenorzes(1)">A</button></td>
+            <td><button type="button" class="DiakGomb" id="2" onclick="Ellenorzes(2)">B</button></td>
         </tr>
         <tr>
-            <td><button type="button" class="DiakgombVisszaGomb" id="C" onclick="VisszaAMenube()">C</button></td>
-            <td><button type="button" class="DiakgombVisszaGomb" id="D" onclick="VisszaAMenube()">D</button></td>
+            <td><button type="button" class="DiakGomb" id="3" onclick="Ellenorzes(3)">C</button></td>
+            <td><button type="button" class="DiakGomb" id="4" onclick="Ellenorzes(4)">D</button></td>
         </tr>      
         </table>
         
+        <table id="pontozasiRendszer">
+            <thead>
+                <tr>
+                    <th>Kérdés száma</th>
+                    <th>Pontszám</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <p id="nyertel"></p>
+        <p id="Pelem"></p>
+        <p id="Nezok"></p>
         <td> <button type="button" class="DiakgombVisszaGomb" id="VisszaAMenubeGomb" onclick="VisszaAMenube()">Vissza a menübe</button></td>
-
     </form>
 
-    <p id="version">v0.0.1</p>
+    <p id="version">v0.0.2</p>
     <script src="script.js"></script>
 </body>
 </html>
