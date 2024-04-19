@@ -1,3 +1,4 @@
+
 var logForm = document.getElementById("logForm");
 var logInfo = document.getElementById("logInfo");
 var regForm = document.getElementById("regForm");
@@ -28,6 +29,7 @@ var vissza3 = document.getElementById("visszagomb3");
 var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 var valtoztatnivalo = document.getElementById("valtoztatnivalo");
 var VisszaAMenubeGomb=document.getElementById("VisszaAMenubeGomb");
+var pontok=document.getElementById("pontozasiRendszer");
 document.getElementById("felezes").style.display="none";
 document.getElementById("telefon").style.display="none";
 document.getElementById("nezo").style.display = "none";
@@ -61,6 +63,8 @@ vissza3.style.display = "none";
 tanar.style.display = "none";
 //diak
 diak.style.display = "none";
+pontok.style.display="none";
+
 VisszaAMenubeGomb.style.display="none";
 gém.style.display="none";
 //Init
@@ -917,6 +921,8 @@ function KodHozzaadas() {
         })
     }
 }
+var pelem=document.getElementById("Pelem");
+var nezok=document.getElementById("Nezok");
 function startMilliomos() {
     pontszam=0;
      updatePontozasiRendszer();
@@ -940,6 +946,14 @@ function VisszaAMenube(){
 VisszaAMenubeGomb.style.display="none";
 gém.style.display="none";
 milliomosMenu.style.display="block";
+pontok.style.display="none";
+document.getElementById("nyertel").style.display = "none";
+document.getElementById("Nezok").style.display = "none";
+document.getElementById("Pelem").style.display = "none";
+document.getElementById("nezo").style.display = "none";
+document.getElementById("felezes").style.display = "none";
+document.getElementById("telefon").style.display = "none";
+
 }
 let currentRandomId; // Globális változó a jelenlegi randomId tárolására
 
@@ -952,7 +966,8 @@ async function Randomkerdes() {
 var kellkerdes = true;
 
 async function Game() {
-
+   
+   pontok.style.display="block";
         await Randomkerdes();
    
    
@@ -968,21 +983,23 @@ async function Game() {
     })
     await LekerdezesEredmenye(sqlvalasz1).then((valasz) => {
         document.getElementById("1").innerHTML = valasz[0].elsovalasz;
+
     })
     await LekerdezesEredmenye(sqlvalasz2).then((valasz) => {
         document.getElementById("2").innerHTML = valasz[0].masodikvalasz;
+
     })
     await LekerdezesEredmenye(sqlvalasz3).then((valasz) => {
         document.getElementById("3").innerHTML = valasz[0].harmadikvalasz;
+
     })
     await LekerdezesEredmenye(sqlvalasz4).then((valasz) => {
         document.getElementById("4").innerHTML = valasz[0].negyedikvalasz;
+
        
     })
     
 }
-var pelem=document.getElementById("Pelem");
-var nezok=document.getElementById("Nezok");
 async function Ellenorzes(valasztottId) {
     pelem.style.display="none";
     let sqlhelyesvalasz = "SELECT k.helyesvalasz FROM kerdesek k where k.id='" + currentRandomId + "'";
@@ -995,20 +1012,43 @@ async function Ellenorzes(valasztottId) {
              updatePontozasiRendszer();
              Game();
              if (pontszam === 15) {
+                 gém.style.display="none";
                 document.getElementById("nyertel").innerHTML = "Megnyerted a 1228800000FT-ot gratulálok!";
                 document.getElementById("nyertel").style.display = "block";
-                VisszaAMenubeGomb.style.display="none";
-                gém.style.display="none";
-                milliomosMenu.style.display="block";
+                document.getElementById("nezo").style.display = "none";
+                document.getElementById("felezes").style.display = "none";
+                document.getElementById("telefon").style.display = "none";
+                document.getElementById("Nezok").style.display = "none";
+                document.getElementById("Pelem").style.display = "none";
+                VisszaAMenubeGomb.style.display="block";
+                milliomosMenu.style.display="none";
+                pontok.style.display="block";
+                
             }
         }
          else {
-            VisszaAMenubeGomb.style.display="none";
+            VisszaAMenubeGomb.style.display="block";
             gém.style.display="none";
-            milliomosMenu.style.display="block";
+            milliomosMenu.style.display="none";
              updatePontozasiRendszer(); // Frissítsük a pontszámot
-             document.getElementById("nyertel").innerHTML = "Majd leközelebb meg lessz a fődíj!";
+             if(pontszam<5){
+                document.getElementById("nyertel").innerHTML = "A nyereményed 0 forint!";
+             }
+             else if(pontszam=5||5<pontszam<10){
+                document.getElementById("nyertel").innerHTML = "A nyereményed 1000000 forint!";
+             }
+             else if(pontszam=10||10<pontszam<15){
+                document.getElementById("nyertel").innerHTML = "A nyereményed 10000000 forint!";
+             }
              document.getElementById("nyertel").style.display = "block";
+             document.getElementById("nezo").style.display = "none";
+             document.getElementById("felezes").style.display = "none";
+             document.getElementById("telefon").style.display = "none";
+             document.getElementById("Nezok").style.display = "none";
+             document.getElementById("Pelem").style.display = "none";
+             
+             pontok.style.display="block";
+
         }
 
      
@@ -1022,21 +1062,28 @@ function updatePontozasiRendszer() {
 
     // Hozzuk létre a pontozási rendszer tartalmát
     let content = "";
-   
+    let pontszamok = [0,5000, 10000, 20000, 50000, 100000, 200000, 300000, 500000, 800000, 1000000, 2000000, 5000000, 10000000, 20000000, 40000000];
     for (let i = 1; i <= 15; i++) {
         content += "<tr>";
         content += "<td>" + i + "</td>"; // Kérdés száma
             if (i <= pontszam) {
-                content += "<td style='color: green;'>"+i*5000 * Math.pow(2, i - 1)+"FT</td>"; // Ha a kérdés helyes, zöld a szín
+                content += "<td style='background-color: orange; color: black;'>"+pontszamok[i]+"FT</td>";
+
+
              
-            } else {
-                content += "<td>"+i*5000 * Math.pow(2, i - 1)+"FT";+"</td>"; // Ha a kérdés helytelen, alapértelmezett a szín
+            }
+            else if (i === 5 || i === 10) {
+            content += "<td style='background-color: white; color: black;'>"+pontszamok[i]+"FT</td>";
+            } 
+            else {
+                content += "<td style='color: orange;'>"+pontszamok[i]+"FT"+"</td>";
+               
+
             }
             content += "</tr>";
-            
         
     }
-    
+
     
     // Frissítsük a táblázat tartalmát
     tableBody.innerHTML = content;
@@ -1087,7 +1134,8 @@ function Segitseg3() {
         let randomIndex = Math.floor(Math.random() * rosszValaszok.length);
         valasz = rosszValaszok[randomIndex].innerHTML;
     }
-    let uzenet = "A nézők szerint a helyes válasz: " + valasz;
+    let uzenet=document.getElementById("Pelem") ;
+     uzenet = "A nézők szerint a helyes válasz: " + valasz;
     nezok.innerHTML=uzenet;
     nezok.style.display="block";
     document.getElementById("nezo").style.display = "none";
