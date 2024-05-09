@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/87e5f04eca.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
     <title>LegyenOnisMilliardos</title>
 </head>
@@ -128,13 +129,25 @@
                 <td>
                     <select id="TemaAdminKerdesInputMod" name="tantargyak">
                         <option id="temahozzaad" value="tema" selected>Téma</option>
-                        <option value="Matematika" >Matematika</option>
+                        <option value="Matematika">Matematika</option>
                         <option value="Történelem">Történelem</option>
                         <option value="Biológia">Biológia</option>
                         <option value="Fizika">Fizika</option>
                         <option value="Kémia">Kémia</option>
                         <option value="Irodalom">Irodalom</option>
                         <option value="Informatika">Informatika</option>
+                        <option value="Földrajz">Földrajz</option>
+                        <option value="Nyelvtan">Nyelvtan</option>
+                        <option value="Testnevelés">Testnevelés</option>
+                        <option value="Képzőművészet">Képzőművészet</option>
+                        <option value="Zene">Zene</option>
+                        <option value="Számítástechnika">Számítástechnika</option>
+                        <option value="Logika">Logika</option>
+                        <option value="Művészettörténet">Művészettörténet</option>
+                        <option value="Biblia">Biblia</option>
+                        <option value="Politika">Politika</option>
+                        <option value="Gasztronómia">Gasztronómia</option>
+
                     </select>
                 </td>
                 <td><input type="text" class="des" id="KerdesAdminKerdesInput" placeholder="Kérdés"></td>
@@ -172,13 +185,24 @@
                 <td>
                     <select id="TemaAdminKerdesInput" name="tantargyak">
                         <option id="TemaModosit" value="tema" selected>tema</option>
-                        <option value="Matematika" >Matematika</option>
+                        <option value="Matematika">Matematika</option>
                         <option value="Történelem">Történelem</option>
                         <option value="Biológia">Biológia</option>
                         <option value="Fizika">Fizika</option>
                         <option value="Kémia">Kémia</option>
                         <option value="Irodalom">Irodalom</option>
                         <option value="Informatika">Informatika</option>
+                        <option value="Földrajz">Földrajz</option>
+                        <option value="Nyelvtan">Nyelvtan</option>
+                        <option value="Testnevelés">Testnevelés</option>
+                        <option value="Képzőművészet">Képzőművészet</option>
+                        <option value="Zene">Zene</option>
+                        <option value="Számítástechnika">Számítástechnika</option>
+                        <option value="Logika">Logika</option>
+                        <option value="Művészettörténet">Művészettörténet</option>
+                        <option value="Biblia">Biblia</option>
+                        <option value="Politika">Politika</option>
+                        <option value="Gasztronómia">Gasztronómia</option>
                     </select>
                 </td>
                 <td><input type="text" class="des" id="KerdesAdminKerdesInputMod" placeholder="Kérdés"></td>
@@ -332,33 +356,182 @@
                     <td><p id="fNev2"></p></th>
                     <td><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></td>
                 </tr>
+                <input  class="admingomb" type="button" id="betoltesgomb2" value="Kérdések:" onclick="TTartalom()">
+                <input  class="admingomb" type="button" id="visszatanar" value="Vissza" onclick="TVissza()">
+        </table>
+        <table id="Ttartalom">
+            <tr>
+                <th><label  id="idtanar" for="id2">ID:</label></th>
+                <th><label  id="tematanar" for="tema2">Téma:</label></th>
+                <th><label id="kerdestanar" for="kerdes2">Kérdés:</label></th>
+                <th><label  id="valasz1tanar" for="valasz12">Válasz1:</label></th>
+                <th><label id="valasz2tanar" for="valasz22">Válasz2:</label></th>
+                <th><label  id="valasz3tanar" for="valasz32">Válasz3:</label></th>
+                <th><label id="valasz4tanar" for="valasz42">Válasz4:</label></th>
+            </tr>
+            <tr>
+                <td>  <p id="id2"></p></td>
+                <td>  <p id="tema2"></p></td>
+                <td>  <p id="kerdes2"></p></td>
+                <td>  <p id="valasz12"></p></td>
+                <td>  <p id="valasz22"></p></td>
+                <td>  <p id="valasz32"></p></td>
+                <td>  <p id="valasz42"></p></td>
+                <td>  <p id="torlesgomb2"></p></td>
+                <td>  <p id="modositasgomb2"></p></td>
+            </tr>
+            <table id="kh2">
+            <tr>
+                <td>
+                    <input  class="admingomb" type="button" id="hozzaadas" value="Kérdés hozzáadása" onclick="KerdesHozzadasMenu2()">
+                </td>
+            </tr>
+            
+        </table>
+        <table id="Hozzaadastabla2">
+            <tr>
+                <th><label id="HValaszTanarKerdes" for="HValaszTanarKerdesInput">Helyes Válasz:</label></th>
+                <th><label  id="TemaTanarKerdes" for="TemaTanarKerdesInput">Téma:</label></th>
+                <th><label id="KerdesTanarKerdes" for="KerdesTanarKerdesInput">Kérdés:</label></th>
+                <th><label  id="Valasz1TanarKerdes" for="Valasz1TanarKerdesInput">Válasz1:</label></th>
+                <th><label id="Valasz2TanarKerdes" for="Valasz2TanarKerdesInput">Válasz2:</label></th>
+                <th><label  id="Valasz3TanarKerdes" for="Valasz3TanarKerdesInput">Válasz3:</label></th>
+                <th><label id="Valasz4TanarKerdes" for="Valasz4TanarKerdesInput">Válasz4:</label></th>
+            </tr>
+            <tr>
+                <td><input type="text" class="des" id="HValaszTanarKerdesInput" placeholder="H Válasz"></td>
+                <td>
+                    <select id="TemaTanarKerdesInputMod" name="tantargyak">
+                        <option id="temahozzaad" value="tema" selected>Téma</option>
+                        <option value="Matematika">Matematika</option>
+                        <option value="Történelem">Történelem</option>
+                        <option value="Biológia">Biológia</option>
+                        <option value="Fizika">Fizika</option>
+                        <option value="Kémia">Kémia</option>
+                        <option value="Irodalom">Irodalom</option>
+                        <option value="Informatika">Informatika</option>
+                        <option value="Földrajz">Földrajz</option>
+                        <option value="Nyelvtan">Nyelvtan</option>
+                        <option value="Testnevelés">Testnevelés</option>
+                        <option value="Képzőművészet">Képzőművészet</option>
+                        <option value="Zene">Zene</option>
+                        <option value="Számítástechnika">Számítástechnika</option>
+                        <option value="Logika">Logika</option>
+                        <option value="Művészettörténet">Művészettörténet</option>
+                        <option value="Biblia">Biblia</option>
+                        <option value="Politika">Politika</option>
+                        <option value="Gasztronómia">Gasztronómia</option>
+
+                    </select>
+                </td>
+                <td><input type="text" class="des" id="KerdesTanarKerdesInput" placeholder="Kérdés"></td>
+                <td><input type="text" class="des" id="Valasz1TanarKerdesInput" placeholder="Válasz1"></td>
+                <td><input type="text" class="des" id="Valasz2TanarKerdesInput" placeholder="Válasz2"></td>
+                <td><input type="text" class="des" id="Valasz3TanarKerdesInput" placeholder="Válasz3"></td>
+                <td><input type="text" class="des" id="Valasz4TanarKerdesInput" placeholder="Válasz4"></td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <input  class="admingomb" type="button" id="hozzaadasgombtanar" value="Hozzáadás" onclick="KerdesHozzaadasTanar()">
+                   
+                </td>
+                <td> <input  class="admingomb" type="button" id="hozzaadasvissza2" value="Vissza" onclick="KerdesHozzadasMenuVissza2()"></td>
+                <td>
+                    <p id="tanarInfo"></p>
+                </td>
+            </tr>
+        </table>
+        <table id="Modositastabla2">
+            <tr>
+                <tr>
+                    <th><label id="HValaszTanarKerdes" for="HValaszTanarKerdesInputMod">Helyes Válasz:</label></th>
+                    <th><label  id="TemaTanarKerdes" for="TemaTanarKerdesInputMod">Téma:</label></th>
+                    <th><label id="KerdesTanarKerdes" for="KerdesTanarKerdesInputMod">Kérdés:</label></th>
+                    <th><label  id="Valasz1TanarKerdes" for="Valasz1TanarKerdesInputMod">Válasz1:</label></th>
+                    <th><label id="Valasz2TanarKerdes" for="Valasz2TanarKerdesInputMod">Válasz2:</label></th>
+                    <th><label  id="Valasz3TanarKerdes" for="Valasz3TanarKerdesInputMod">Válasz3:</label></th>
+                    <th><label id="Valasz4TanarKerdes" for="Valasz4TanarKerdesInputMod">Válasz4:</label></th>
+                </tr>
+                <th><label id="HValaszTanarID" >Id:</label></th>
+            </tr>
+            <tr>
+                <td><input type="text" class="des" id="HValaszTanarKerdesInputMod" placeholder="H Válasz"></td>
+                <td>
+                    <select id="TemaTanarKerdesInput" name="tantargyak">
+                        <option id="TemaModosit" value="tema" selected>tema</option>
+                        <option value="Matematika">Matematika</option>
+                        <option value="Történelem">Történelem</option>
+                        <option value="Biológia">Biológia</option>
+                        <option value="Fizika">Fizika</option>
+                        <option value="Kémia">Kémia</option>
+                        <option value="Irodalom">Irodalom</option>
+                        <option value="Informatika">Informatika</option>
+                        <option value="Földrajz">Földrajz</option>
+                        <option value="Nyelvtan">Nyelvtan</option>
+                        <option value="Testnevelés">Testnevelés</option>
+                        <option value="Képzőművészet">Képzőművészet</option>
+                        <option value="Zene">Zene</option>
+                        <option value="Számítástechnika">Számítástechnika</option>
+                        <option value="Logika">Logika</option>
+                        <option value="Művészettörténet">Művészettörténet</option>
+                        <option value="Biblia">Biblia</option>
+                        <option value="Politika">Politika</option>
+                        <option value="Gasztronómia">Gasztronómia</option>
+                    </select>
+                </td>
+                <td><input type="text" class="des" id="KerdesTanarKerdesInputMod" placeholder="Kérdés"></td>
+                <td><input type="text" class="des" id="Valasz1TanarKerdesInputMod" placeholder="Válasz1"></td>
+                <td><input type="text" class="des" id="Valasz2TanarKerdesInputMod" placeholder="Válasz2"></td>
+                <td><input type="text" class="des" id="Valasz3TanarKerdesInputMod" placeholder="Válasz3"></td>
+                <td><input type="text" class="des" id="Valasz4TanarKerdesInputMod" placeholder="Válasz4"></td>
+            </tr>
+            <tr>
+            <td>
+                <input  class="admingomb" type="button" id="modositasgombtanar" value="Módosítás" onclick="KerdesekModositasa2()">
+            </td>
+            <td>
+                <input  class="admingomb" type="button" id="modositasvisszagomb" value="Vissza" onclick="KerdesekModositasaVissza2()">
+            </td>
+            <td>
+                <p id="adminInfoMod"></p>
+            </td>
+            </tr>
         </table>
     </form>
     <form id="diakForm">
        <table>
         <tr>
             <td><p id="fNev3">Üdvözlünk a "Legyen ön is milliomos" játékban!</p></td>
-            <td><input class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelentkezés" onclick="Kijelentkezes()"></td>
+         
         </tr>
-    </table>
-    <table  id="milliomosMenu">
-            <th> <p>Kész vagy a kihívásra?</p></th>
-            <tr>
-                <td><button type="button"  class="diakgomb" onclick="startMilliomos()">Játék indítása</button></td>
-            </tr>
-            <tr>
-                <td> <button type="button" class="diakgomb" onclick="Jatekszabalyok()">Játékszabályok</button></td>
-            </tr>
-            <tr>
-                <td><p id="diakInfo"></p></td>
-            </tr>
-           
         </table>
+        <div class="float-container" id="Milliomosmenu">
+            <div class="float-child"  >
+       
+            
+              
+                        <button type="button"  class="diakgomb" onclick="startMilliomos()">Játék indítása</button>
+                        
+                  
+                        <button type="button" class="diakgomb" onclick="Jatekszabalyok()">Játékszabályok</button>
+                     
+                  
+                     
+                        <input class="diakgomb" type="button" id="kijelentkezesgomb" value="Kijelentkezés" onclick="Kijelentkezes()">
+                   
+            </div>
+            <div class="float-child">
+                <p id="diakInfo"></p>
+            </div>
+        </div>
+        <div id="ido">60</div>
         <button type="button" class="segitsegGomb" id="felezes" onclick="Segitseg1()">Felezés</button>
         <button type="button" class="segitsegGomb" id="telefon" onclick="Segitseg2()">Telefonos segítség</button>
         <button type="button" class="segitsegGomb" id="nezo" onclick="Segitseg3()">Nézői segítség</button>
 
         <table id="gém">
+
         <th colspan="2" id="jatekkerdes">Kérdés</th>
         <tr>
             <td><button type="button" class="DiakGomb" id="1" onclick="Ellenorzes(1)">A</button></td>
