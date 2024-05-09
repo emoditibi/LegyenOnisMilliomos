@@ -1,53 +1,45 @@
+//bejelentkezés
+let logForm = document.getElementById("logForm");
+let logInfo = document.getElementById("logInfo");
 
-var logForm = document.getElementById("logForm");
-var logInfo = document.getElementById("logInfo");
-var regForm = document.getElementById("regForm");
-var regInfo = document.getElementById("regInfo");
-var admin = document.getElementById("adminForm");
-var tanar = document.getElementById("tanarForm");
-var diak = document.getElementById("diakForm");
-var kod = document.getElementById("kod");
-var gombok = document.querySelector(".background");
-var Ktartalom = document.getElementById("Ktartalom");
-var Modositastabla = document.getElementById("Modositastabla");
-var Hozzaadastabla = document.getElementById("Hozzaadastabla");
-var KodHozzaadastabla = document.getElementById("KodHozzaadastabla");
-var hozzaadasvissza = document.getElementById("hozzaadasvissza");
-var hozzaadas = document.getElementById("hozzaadas");
-var kodhozzaadasvissza = document.getElementById("kodhozzaadasvissza");
-var kodhozzaadas = document.getElementById("kodhozzaadas");
-var kh = document.getElementById("kh");
-var khkod = document.getElementById("khkod");
-var Ftartalom = document.getElementById("Ftartalom");
-var FelhasznaloModositastabla = document.getElementById("FelhasznaloModositastabla");
-var gém=document.getElementById("gém");
-var Kodtartalom = document.getElementById("Kodtartalom");
-var KodModositastabla = document.getElementById("KodModositastabla");
-var vissza = document.getElementById("visszagomb");
-var vissza2 = document.getElementById("visszagomb2");
-var vissza3 = document.getElementById("visszagomb3");
-var kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
-var valtoztatnivalo = document.getElementById("valtoztatnivalo");
-var VisszaAMenubeGomb=document.getElementById("VisszaAMenubeGomb");
-var pontok=document.getElementById("pontozasiRendszer");
-document.getElementById("felezes").style.display="none";
-document.getElementById("telefon").style.display="none";
-document.getElementById("nezo").style.display = "none";
-document.getElementById("nyertel").style.display="none";
+//regisztráció
+let regForm = document.getElementById("regForm");
+let regInfo = document.getElementById("regInfo");
 regForm.style.display = "none";
-var pontszam = 0;
+
+//egyéb
+let gombocok = document.querySelector(".background");
+let kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
+kijeletkezesgomb.style.display = "none";
+
+
 //admin
+let admin = document.getElementById("adminForm");
+let kod = document.getElementById("kod");
+let Ktartalom = document.getElementById("Ktartalom");
+let Modositastabla = document.getElementById("Modositastabla");
+let Hozzaadastabla = document.getElementById("Hozzaadastabla");
+let KodHozzaadastabla = document.getElementById("KodHozzaadastabla");
+let hozzaadasvissza = document.getElementById("hozzaadasvissza");
+let hozzaadas = document.getElementById("hozzaadas");
+let kodhozzaadasvissza = document.getElementById("kodhozzaadasvissza");
+let kodhozzaadas = document.getElementById("kodhozzaadas");
+let kh = document.getElementById("kh");
+let khkod = document.getElementById("khkod");
+let Ftartalom = document.getElementById("Ftartalom");
+let FelhasznaloModositastabla = document.getElementById("FelhasznaloModositastabla");
+let Kodtartalom = document.getElementById("Kodtartalom");
+let KodModositastabla = document.getElementById("KodModositastabla");
+let vissza = document.getElementById("visszagomb");
+let vissza3 = document.getElementById("visszagomb3");
 admin.style.display = "none";
-var gombertek2;
-var gombertek4;
-var gombertek6;
-kod.style.display = "none";
 Ktartalom.style.display = "none";
 kh.style.display = "none";
-khkod.style.display = "none";
 Hozzaadastabla.style.display = "none";
-KodHozzaadastabla.style.display = "none";
 Modositastabla.style.display = "none";
+kod.style.display = "none";
+khkod.style.display = "none";
+KodHozzaadastabla.style.display = "none";
 hozzaadas.style.display = "none";
 kodhozzaadasvissza.style.display = "none";
 kodhozzaadas.style.display = "none";
@@ -55,27 +47,55 @@ Ftartalom.style.display = "none";
 FelhasznaloModositastabla.style.display = "none";
 Kodtartalom.style.display = "none";
 KodModositastabla.style.display = "none";
-kijeletkezesgomb.style.display = "none";
 vissza.style.display = "none";
-vissza2.style.display = "none";
 vissza3.style.display = "none";
+let gombertek2;
+let gombertek4;
+let gombertek6;
+
 //tanar
+let tanar = document.getElementById("tanarForm");
+let Ttartalom = document.getElementById("Ttartalom");
+let Modositastabla2 = document.getElementById("Modositastabla2");
+let Hozzaadastabla2 = document.getElementById("Hozzaadastabla2");
+let hozzaadas2 = document.getElementById("hozzaadas2");
+let kh2 = document.getElementById("kh2");
+let visszatanar = document.getElementById("visszatanar");
+let vissza2 = document.getElementById("visszagomb2");
+visszatanar.style.display = "none";
 tanar.style.display = "none";
+vissza2.style.display = "none";
+kh2.style.display = "none";
+Hozzaadastabla2.style.display = "none";
+Modositastabla2.style.display = "none";
+Ttartalom.style.display = "none";
 //diak
+document.getElementById("ido").style.display="none";
+document.getElementById("felezes").style.display="none";
+document.getElementById("telefon").style.display="none";
+document.getElementById("nezo").style.display = "none";
+document.getElementById("nyertel").style.display="none";
+let diak = document.getElementById("diakForm");
+let gém=document.getElementById("gém");
+let VisszaAMenubeGomb=document.getElementById("VisszaAMenubeGomb");
+let pontok=document.getElementById("pontozasiRendszer");
+let milliomosMenu=document.getElementById("Milliomosmenu");
+let pontszam = 0;
+let countdown;
 diak.style.display = "none";
 pontok.style.display="none";
-
 VisszaAMenubeGomb.style.display="none";
 gém.style.display="none";
+
 //Init
 function Init() {
     var fNev = document.getElementById("fNev");
     var fNev2 = document.getElementById("fNev2");
     var fNev3 = document.getElementById("fNev3");
     var userType = sessionStorage.getItem("userType");
-
+    
     if (sessionStorage.getItem("login")) {
-        gombok.style.display = "none";
+        gombocok.style.display = "none";
         if (userType == "Admin") {
             admin.style.display = "block";
             fNev.innerHTML = `Admin: ${sessionStorage.getItem("fn")}`;
@@ -547,6 +567,7 @@ async function KTartalom() {
                 else if (valasz[0].helyesvalasz == "4") {
                     valasz4.style.backgroundColor = "Green";
                 }
+             
             })
         }
     }
@@ -567,6 +588,19 @@ function KerdesHozzadasMenu() {
 function KerdesHozzadasMenuVissza() {
     Hozzaadastabla.style.display = "none";
     hozzaadas.style.display = "block";
+    
+
+}
+function KerdesHozzadasMenu2() {
+    Hozzaadastabla2.style.display = "block";
+    hozzaadas2.style.display = "none";
+    hozzaadasvissza2.style.display = "block";
+
+
+}
+function KerdesHozzadasMenuVissza2() {
+    Hozzaadastabla2.style.display = "none";
+    hozzaadas2.style.display = "block";
     
 
 }
@@ -921,6 +955,200 @@ function KodHozzaadas() {
         })
     }
 }
+//TANAR
+async function TTartalom() {
+    kh2.style.display = "block";
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
+    for (let i = 1; i <= sqladat[0].count; i++) {
+        let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
+        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + i + "'";
+        let valasz = await LekerdezesEredmenye(sql);
+        if (valasz.length == 1) {
+            let id = document.createElement("div");
+            id.innerText = valasz[0].id;
+            id.classList.add("valaszok");
+            document.getElementById("id2").appendChild(id);
+
+            let tema = document.createElement("div");
+            tema.innerText = valasz[0].tema;
+            tema.classList.add("valaszok");
+            document.getElementById("tema2").appendChild(tema);
+
+            let kerdes = document.createElement("div");
+            kerdes.innerText = valasz[0].kerdes;
+            kerdes.classList.add("valaszok");
+            document.getElementById("kerdes2").appendChild(kerdes);
+
+            let valasz1 = document.createElement("div");
+            valasz1.innerText = valasz[0].elsovalasz;
+            valasz1.classList.add("valaszok");
+            document.getElementById("valasz12").appendChild(valasz1);
+
+            let valasz2 = document.createElement("div");
+            valasz2.innerText = valasz[0].masodikvalasz;
+            valasz2.classList.add("valaszok");
+            document.getElementById("valasz22").appendChild(valasz2);
+
+            let valasz3 = document.createElement("div");
+            valasz3.innerText = valasz[0].harmadikvalasz;
+            valasz3.classList.add("valaszok");
+            document.getElementById("valasz32").appendChild(valasz3);
+
+            let valasz4 = document.createElement("div");
+            valasz4.innerText = valasz[0].negyedikvalasz;
+            valasz4.classList.add("valaszok");
+            document.getElementById("valasz42").appendChild(valasz4);
+
+            let br = document.createElement("br");
+            let br2 = document.createElement("br");
+
+            let torlesgomb = document.createElement("button");
+            let modositasgomb2 = document.createElement("button");
+            torlesgomb.innerText = "törlés";
+            torlesgomb.value = valasz[0].id;
+            modositasgomb2.innerText ="modositas" ;
+            modositasgomb2.value = valasz[0].id;
+            modositasgomb2.type = "button";
+            torlesgomb.classList.add("gombvalaszok");
+            document.getElementById("torlesgomb2").appendChild(torlesgomb);
+            document.getElementById("torlesgomb2").appendChild(br);
+            modositasgomb2.classList.add("gombvalaszok2");
+            document.getElementById("modositasgomb2").appendChild(modositasgomb2);
+            document.getElementById("modositasgomb2").appendChild(br2);
+            torlesgomb.onclick = function () {
+                var gombertek = this.value;
+                let sqldelete = "DELETE FROM kerdesek WHERE kerdesek.id=" + gombertek + "";
+                let sqlAutoIncrement = "ALTER TABLE kerdesek AUTO_INCREMENT = " + sqladat[0].count + "";
+                let sqlujraindexeles = "UPDATE kerdesek k SET k.id = id-1 WHERE id > " + gombertek + "";
+                LekerdezesEredmenye(sqldelete);
+                LekerdezesEredmenye(sqlujraindexeles);
+                LekerdezesEredmenye(sqlAutoIncrement);
+            };
+
+            modositasgomb2.onclick = async function () {
+                gombertek2 = this.value;
+                Modositastabla2.style.display = "block";
+                let ID = document.getElementById("HValaszAdminID");
+                ID.innerText = "Id:" + this.value;
+                let sql = "SELECT k.tema FROM kerdesek k WHERE k.id='" + this.value + "'";
+                let eredmenyObjektum = await LekerdezesEredmenye(sql);
+                let tema = eredmenyObjektum[0].tema;
+                document.getElementById("TemaModosit").innerText = tema;
+                document.getElementById("TemaModosit").value = tema;
+            };
+            
+            LekerdezesEredmenye(sql2).then((valasz) => {
+                if (valasz[0].helyesvalasz == "1") {
+                    valasz1.style.backgroundColor = "green";
+                }
+                else if (valasz[0].helyesvalasz == "2") {
+                    valasz2.style.backgroundColor = "Green";
+
+                }
+                else if (valasz[0].helyesvalasz == "3") {
+                    valasz3.style.backgroundColor = "Green";
+                }
+                else if (valasz[0].helyesvalasz == "4") {
+                    valasz4.style.backgroundColor = "Green";
+                }
+             
+            })
+        }
+    }
+    let betoltes = document.getElementById("betoltesgomb2");
+    betoltes.style.display = "none";
+    Ttartalom.style.display = "block";
+    visszatanar.style.display = "block";
+    hozzaadas.style.display = "block";
+    
+
+}
+
+function KerdesHozzaadasTanar() {
+
+    let tanarInfo = document.getElementById("tanarInfo");
+    let helyesvalasz = document.getElementById("HValaszTanarKerdesInput").value;
+    let tema = document.getElementById("TemaTanarKerdesInputMod").value;
+    let kerdes = document.getElementById("KerdesTanarKerdesInput").value;
+    let valasz1 = document.getElementById("Valasz1TanarKerdesInput").value;
+    let valasz2 = document.getElementById("Valasz2TanarKerdesInput").value;
+    let valasz3 = document.getElementById("Valasz3TanarKerdesInput").value;
+    let valasz4 = document.getElementById("Valasz4TanarKerdesInput").value;
+    var regex = /[A-Za-z0-9\W_]{1,}/;
+    if (helyesvalasz == "" || tema == "" || kerdes == "" || valasz1 == "" || valasz2 == "" || valasz3 == "" || valasz4 == "") {
+        tanarInfo.innerHTML = "Nem töltöttél ki minden adatot!";
+    }
+    else if (regex.test(helyesvalasz) && regex.test(tema) && regex.test(kerdes) && regex.test(valasz1) && regex.test(valasz2) && regex.test(valasz3) && regex.test(valasz4)) {
+        let sql = "insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz)values(null,'" + helyesvalasz + "','" + tema + "','" + kerdes + "','" + valasz1 + "','" + valasz2 + "','" + valasz3 + "','" + valasz4 + "')";
+        LekerdezesEredmenye(sql);
+        tanarInfo.innerHTML = "";
+        location.reload();
+    }
+}
+function TVissza() {
+    let betoltes = document.getElementById("betoltesgomb2");
+    visszatanar.style.display = "none";
+    betoltes.style.display = "block";
+    Ttartalom.style.display = "none";
+    Modositastabla2.style.display = "none";
+    Hozzaadastabla2.style.display = "none";
+    kh2.style.display = "none";
+    document.getElementById("id2").innerHTML = "";
+    document.getElementById("tema2").innerHTML = "";
+    document.getElementById("kerdes2").innerHTML = "";
+    document.getElementById("valasz12").innerHTML = "";
+    document.getElementById("valasz22").innerHTML = "";
+    document.getElementById("valasz32").innerHTML = "";
+    document.getElementById("valasz42").innerHTML = "";
+    document.getElementById("torlesgomb2").innerHTML = "";
+    document.getElementById("modositasgomb2").innerHTML = "";
+
+}
+function KerdesekModositasa2() {
+
+    let kerdes = document.getElementById("KerdesTanarKerdesInputMod").value;
+    let tema = document.getElementById("TemaTanarKerdesInput").value;
+    let helyesvalasz = document.getElementById("HValaszTanarKerdesInputMod").value;
+    let valasz1 = document.getElementById("Valasz1TanarKerdesInputMod").value;
+    let valasz2 = document.getElementById("Valasz2TanarKerdesInputMod").value;
+    let valasz3 = document.getElementById("Valasz3TanarKerdesInputMod").value;
+    let valasz4 = document.getElementById("Valasz4TanarKerdesInputMod").value;
+
+    console.log(gombertek2);
+    if (!kerdes == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.kerdes='" + kerdes + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!tema == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.tema='" + tema + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!helyesvalasz == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.helyesvalasz='" + helyesvalasz + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!valasz1 == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.elsovalasz='" + valasz1 + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!valasz2 == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.masodikvalasz='" + valasz2 + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!valasz3 == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.harmadikvalasz='" + valasz3 + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    if (!valasz4 == "") {
+        let sqlmod = "UPDATE kerdesek k SET k.negyedikvalasz='" + valasz4 + "' WHERE id = " + gombertek2 + "";
+        LekerdezesEredmenye(sqlmod);
+    }
+    location.reload();
+}
+function KerdesekModositasaVissza2() {
+    Modositastabla2.style.display = "none";
+}
+//Tanarvege
 var pelem=document.getElementById("Pelem");
 var nezok=document.getElementById("Nezok");
 function startMilliomos() {
@@ -930,45 +1158,89 @@ function startMilliomos() {
      document.getElementById("telefon").style.display="block";
      document.getElementById("nezo").style.display = "block";
     Game();
-    var milliomosMenu=document.getElementById("milliomosMenu");
+    szamol();
     document.getElementById("nyertel").style.display = "none";
     milliomosMenu.style.display="none";
     gém.style.display="block";
     VisszaAMenubeGomb.style.display="block";
 }
 function Jatekszabalyok() {
-    diakInfo=document.getElementById("diakInfo");
-    if(diakInfo.innerHTML==""){
-        diakInfo.innerHTML=' \nCél:\n  A játék célja az, hogy a játékos minél több pénzt nyerjen megválaszolva különböző nehézségű kérdéseket.\nJátékmenet: \n A játék 15 kérdésből áll. Minden kérdéshez négy válaszlehetőség tartozik, közülük csak egy helyes. A játékosnak választ kell adnia minden kérdésre, mielőtt továbblépne a következő kérdésre. A játék végén a játékos megtartja a legutolsó sikeresen megválaszolt kérdés nyereményét. Ha egy kérdésre helytelenül válaszol, elveszíti az addig elért nyereményt. A játékosnak van lehetősége feladni a játékot bármely ponton, és megtartani az addig elért nyereményt.Nehézség:A kérdések nehézsége fokozatosan növekszik a játék során.A későbbi kérdések több pénzt érnek, de nehezebbek is.\nSegítség:\n A játékosnak lehetősége van segítséget kérni a közönségtől, egy baráttól vagy két válaszlehetőség közül elhagyni egy helytelen választ.\nFőnyeremény:\n  A játék főnyereménye 1 milliárd forint.';}
-    else diakInfo.innerHTML="";
+    var diakInfo = document.getElementById("diakInfo");
+    if (diakInfo.innerHTML === "") {
+        diakInfo.innerHTML = '<div style="padding: 20px; border: 2px solid #ccc;; border-radius: 10px;"> \
+            <h3>Játékszabályok</h3> \
+            <ul style="list-style-type: none; padding-left: 0;"> \
+                <li><strong>Cél:</strong> A játék célja az, hogy a játékos minél több pénzt nyerjen megválaszolva különböző nehézségű kérdéseket.</li> \
+                <li><strong>Játékmenet:</strong> A játék 15 kérdésből áll. Minden kérdéshez négy válaszlehetőség tartozik, közülük csak egy helyes. A játékosnak választ kell adnia minden kérdésre, mielőtt továbblépne a következő kérdésre. A játék végén a játékos megtartja a legutolsó sikeresen megválaszolt kérdés nyereményét. Ha egy kérdésre helytelenül válaszol, elveszíti az addig elért nyereményt. A játékosnak van lehetősége feladni a játékot bármely ponton, és megtartani az addig elért nyereményt.</li> \
+                <li><strong>Nehézség:</strong> A kérdések nehézsége fokozatosan növekszik a játék során. A későbbi kérdések több pénzt érnek, de nehezebbek is.</li> \
+                <li><strong>Segítség:</strong> A játékosnak lehetősége van segítséget kérni a közönségtől, egy baráttól vagy két válaszlehetőség közül elhagyni egy helytelen választ.</li> \
+                <li><strong>Főnyeremény:</strong> A játék főnyereménye 1 milliárd forint.</li> \
+            </ul> \
+        </div>';
+    } else {
+        diakInfo.innerHTML = "";
+    }
 }
-function VisszaAMenube(){
-VisszaAMenubeGomb.style.display="none";
-gém.style.display="none";
-milliomosMenu.style.display="block";
-pontok.style.display="none";
-document.getElementById("nyertel").style.display = "none";
-document.getElementById("Nezok").style.display = "none";
-document.getElementById("Pelem").style.display = "none";
-document.getElementById("nezo").style.display = "none";
-document.getElementById("felezes").style.display = "none";
-document.getElementById("telefon").style.display = "none";
 
+function VisszaAMenube(){
+    VisszaAMenubeGomb.style.display="none";
+    gém.style.display="none";
+    pontok.style.display="none";
+    document.getElementById("nyertel").style.display = "none";
+    document.getElementById("Nezok").style.display = "none";
+    document.getElementById("Pelem").style.display = "none";
+    document.getElementById("nezo").style.display = "none";
+    document.getElementById("felezes").style.display = "none";
+    document.getElementById("telefon").style.display = "none";
+    milliomosMenu.style.display="block";
+    clearTimeout(countdown); 
+    document.getElementById("ido").style.display="none";
 }
-let currentRandomId; // Globális változó a jelenlegi randomId tárolására
+let currentRandomId; 
 
 async function Randomkerdes() {
     let sqlmax = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
     let maxId = sqlmax[0].count;
     currentRandomId = Math.floor(Math.random() * maxId) + 1; 
+    
 }
 
 var kellkerdes = true;
 
-async function Game() {
-   
+var eddigMegjelenitettKerdesek = [];
+
+let secondsLeft;
+function szamol(){
+    secondsLeft = 60; 
+    document.getElementById("ido").style.display="block";
+    countdown = setInterval(() => {
+    secondsLeft--; 
+        
+        document.getElementById('ido').textContent = secondsLeft;
+
+    
+       
+        
+        if (secondsLeft <= 0) {
+            clearTimeout(countdown); 
+            
+            Ellenorzes();
+        }
+    }, 1000);
+    
+}
+    async function Game() {
+        secondsLeft = 61; 
+    
+    
+    await Randomkerdes();
    pontok.style.display="block";
-        await Randomkerdes();
+   if (eddigMegjelenitettKerdesek.includes(currentRandomId)){
+    await Randomkerdes();
+       console.log("nem jó")
+    }
+    eddigMegjelenitettKerdesek.push(currentRandomId);
+
    
    
     let  sql = "SELECT k.kerdes FROM kerdesek k WHERE k.id='" + currentRandomId + "'";
@@ -1013,7 +1285,7 @@ async function Ellenorzes(valasztottId) {
              Game();
              if (pontszam === 15) {
                  gém.style.display="none";
-                document.getElementById("nyertel").innerHTML = "Megnyerted a 1228800000FT-ot gratulálok!";
+                document.getElementById("nyertel").innerHTML = "Megnyerted a 40000000FT-ot gratulálok!";
                 document.getElementById("nyertel").style.display = "block";
                 document.getElementById("nezo").style.display = "none";
                 document.getElementById("felezes").style.display = "none";
@@ -1023,23 +1295,30 @@ async function Ellenorzes(valasztottId) {
                 VisszaAMenubeGomb.style.display="block";
                 milliomosMenu.style.display="none";
                 pontok.style.display="block";
-                
+                clearInterval(countdown);
+                document.getElementById("ido").style.display="none";
             }
         }
          else {
             VisszaAMenubeGomb.style.display="block";
             gém.style.display="none";
             milliomosMenu.style.display="none";
-             updatePontozasiRendszer(); // Frissítsük a pontszámot
+             updatePontozasiRendszer(); 
              if(pontszam<5){
                 document.getElementById("nyertel").innerHTML = "A nyereményed 0 forint!";
-             }
+              
+            }
+             
+             
              else if(pontszam=5||5<pontszam<10){
                 document.getElementById("nyertel").innerHTML = "A nyereményed 1000000 forint!";
-             }
+
+               
+            }
              else if(pontszam=10||10<pontszam<15){
                 document.getElementById("nyertel").innerHTML = "A nyereményed 10000000 forint!";
-             }
+                
+            }
              document.getElementById("nyertel").style.display = "block";
              document.getElementById("nezo").style.display = "none";
              document.getElementById("felezes").style.display = "none";
@@ -1048,24 +1327,25 @@ async function Ellenorzes(valasztottId) {
              document.getElementById("Pelem").style.display = "none";
              
              pontok.style.display="block";
-
+             clearInterval(countdown);
+             document.getElementById("ido").style.display="none";
         }
 
-     
+        
     })
 }
 
 
 function updatePontozasiRendszer() {
-    // Hozzáférünk a táblázathoz
+   
     let tableBody = document.querySelector("#pontozasiRendszer tbody");
 
-    // Hozzuk létre a pontozási rendszer tartalmát
+ 
     let content = "";
     let pontszamok = [0,5000, 10000, 20000, 50000, 100000, 200000, 300000, 500000, 800000, 1000000, 2000000, 5000000, 10000000, 20000000, 40000000];
     for (let i = 1; i <= 15; i++) {
         content += "<tr>";
-        content += "<td>" + i + "</td>"; // Kérdés száma
+        content += "<td>" + i + "</td>"; 
             if (i <= pontszam) {
                 content += "<td style='background-color: orange; color: black;'>"+pontszamok[i]+"FT</td>";
 
@@ -1083,60 +1363,61 @@ function updatePontozasiRendszer() {
             content += "</tr>";
         
     }
-
+    pelem.innerHTML="";
+    nezok.innerHTML="";
+    document.getElementById("1").style.display = "block";
+    document.getElementById("2").style.display = "block";
+    document.getElementById("3").style.display = "block";
+    document.getElementById("4").style.display = "block";
+   
     
-    // Frissítsük a táblázat tartalmát
     tableBody.innerHTML = content;
 }
-function Segitseg1() {
-    let rosszValaszok = document.querySelectorAll('.DiakGomb:not([id="' + currentRandomId + '"])');
-    let rosszValaszList = Array.from(rosszValaszok);
-    let randomIndex1 = Math.floor(Math.random() * rosszValaszList.length);
-    let randomIndex2;
-    do {
-        randomIndex2 = Math.floor(Math.random() * rosszValaszList.length);
-    } while (randomIndex2 === randomIndex1);
-    rosszValaszList[randomIndex1].style.display = "none";
-    rosszValaszList[randomIndex2].style.display = "none";
-    document.querySelector('.DiakGomb').addEventListener('click', function() {
-    rosszValaszList[randomIndex1].style.display = "block";
-    rosszValaszList[randomIndex2].style.display = "block";
+async function Segitseg1() {
+    let helyesValasz = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + currentRandomId + "'";
+    await LekerdezesEredmenye(helyesValasz).then((valasz) => {
+        let rosszValaszok = document.querySelectorAll('.DiakGomb:not([id="' + valasz[0].helyesvalasz + '"])');
+        let rosszValaszList = Array.from(rosszValaszok);
+        let randomIndex1 = Math.floor(Math.random() * rosszValaszList.length);
+        let randomIndex2;
+        do {
+            randomIndex2 = Math.floor(Math.random() * rosszValaszList.length);
+        } while (randomIndex2 === randomIndex1);
+        rosszValaszList[randomIndex1].style.display = "none";
+        rosszValaszList[randomIndex2].style.display = "none";
     });
-    
     document.getElementById("felezes").style.display = "none";
 }
-function Segitseg2() {
-    // Előre definiált válaszok
-    let telefonosSegitsegVálaszok = [
-        "Szerintem az A válasz lehet a helyes.",
-        "Úgy gondolom, hogy a B válasz a helyes.",
-        "Lehet, hogy a C válasz a megfelelő.",
-        "Az D válasz tűnik a legvalószínűbbnek nekem."
-    ];
 
-    // Véletlenszerű válasz kiválasztása
-    let randomIndex = Math.floor(Math.random() * telefonosSegitsegVálaszok.length);
-    let segitsegUzenet = telefonosSegitsegVálaszok[randomIndex];
-    pelem.innerHTML=segitsegUzenet;
+async function Segitseg2() {
+    let helyesValasz = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + currentRandomId + "'";
+    await LekerdezesEredmenye(helyesValasz).then((valasz) => {
+        if (Math.random() < 0.9) {
+            pelem.innerHTML = "A telefonos szerint a helyes válasz: "+document.querySelector('.DiakGomb[id="' + valasz[0].helyesvalasz + '"]').innerHTML;
+
+        }
+        else {
+            let rosszValaszok = document.querySelectorAll('.DiakGomb:not([id="' + valasz[0].helyesvalasz + '"])');
+            let randomIndex = Math.floor(Math.random() * rosszValaszok.length);
+            pelem.innerHTML= "A telefonos szerint a helyes válasz: " + rosszValaszok[randomIndex].innerHTML;
+        }
+    })
     pelem.style.display="block";
     document.getElementById("telefon").style.display = "none";
 }
-function Segitseg3() {
-    // Helyes válasz kiválasztása
-    let helyesValasz = document.getElementById(currentRandomId);
-    let valasz;
-
-    // 90% eséllyel a helyes választ mondja, 10% eséllyel véletlenszerűen választ egy rosszat
-    if (Math.random() < 0.9) {
-        valasz = helyesValasz.innerHTML;
-    } else {
-        let rosszValaszok = document.querySelectorAll('.DiakGomb:not([id="' + helyesValasz.id + '"])');
-        let randomIndex = Math.floor(Math.random() * rosszValaszok.length);
-        valasz = rosszValaszok[randomIndex].innerHTML;
-    }
-    let uzenet=document.getElementById("Pelem") ;
-     uzenet = "A nézők szerint a helyes válasz: " + valasz;
-    nezok.innerHTML=uzenet;
+async function Segitseg3() {
+    let helyesValasz = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + currentRandomId + "'";
+    await LekerdezesEredmenye(helyesValasz).then((valasz) => {
+        if (Math.random() < 0.8) {
+     
+            nezok.innerHTML = "A nézők szerint a helyes válasz: "+document.querySelector('.DiakGomb[id="' + valasz[0].helyesvalasz + '"]').innerHTML;
+        }
+        else {
+            let rosszValaszok = document.querySelectorAll('.DiakGomb:not([id="' + valasz[0].helyesvalasz + '"])');
+            let randomIndex = Math.floor(Math.random() * rosszValaszok.length);
+            nezok.innerHTML= "A nézők szerint a helyes válasz: " + rosszValaszok[randomIndex].innerHTML;
+        }
+    })
     nezok.style.display="block";
     document.getElementById("nezo").style.display = "none";
 }
