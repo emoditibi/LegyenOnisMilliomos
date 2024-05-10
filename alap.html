@@ -62,29 +62,18 @@
             <p id="regInfo"></p>
          </form>
     </form>
+    <p id="fNev" ></p>
     <form id="adminForm">
-        <table>
-            <tr>
-                <td><p id="fNev"></p></td>
-                <td><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td>
-                    <input  class="admingomb" type="button" id="betoltesgomb" value="Kérdések:" onclick="KTartalom()">
-                    <input  class="admingomb" type="button" id="visszagomb" value="Vissza" onclick="KVissza()">
-                </td>
-                <td>
-                    <input  class="admingomb" type="button" id="felhasznalokgomb" value="Felhasznalok:" onclick="FTartalom()">
-                    <input  class="admingomb" type="button" id="visszagomb2" value="Vissza" onclick="FVissza()">
-                </td>
-                <td>
-                    <input  class="admingomb" type="button" id="kodgomb" value="Tanári kódok:" onclick="KodTartalom()">
-                    <input  class="admingomb" type="button" id="visszagomb3" value="Vissza" onclick="KodVissza()">
-                </td>
-            </tr>
-        </table>
+        <div id="AdminFejléc" class="button-container">
+            <input class="admingomb" type="button" id="betoltesgomb" value="Kérdések" onclick="KTartalom()">
+            <input class="admingomb" type="button" id="visszagomb" value="Vissza" onclick="KVissza()">
+            <input class="admingomb" type="button" id="felhasznalokgomb" value="Felhasznalok" onclick="FTartalom()">
+            <input class="admingomb" type="button" id="visszagomb2" value="Vissza" onclick="FVissza()">
+            <input class="admingomb" type="button" id="kodgomb" value="Tanári kódok" onclick="KodTartalom()">
+            <input class="admingomb" type="button" id="visszagomb3" value="Vissza" onclick="KodVissza()">
+            <input class="admingomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()">
+        </div>
+        
         <table id="Ktartalom">
             <tr>
                 <th><label  id="idadmin" for="id">ID:</label></th>
@@ -125,7 +114,7 @@
                 <th><label id="Valasz4AdminKerdes" for="Valasz4AdminKerdesInput">Válasz4:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="HValaszAdminKerdesInput" placeholder="H Válasz"></td>
+                <td><input type="text" class="modositastabla"  id="HValaszAdminKerdesInput" placeholder="H Válasz"></td>
                 <td>
                     <select id="TemaAdminKerdesInputMod" name="tantargyak">
                         <option id="temahozzaad" value="tema" selected>Téma</option>
@@ -150,11 +139,11 @@
 
                     </select>
                 </td>
-                <td><input type="text" class="des" id="KerdesAdminKerdesInput" placeholder="Kérdés"></td>
-                <td><input type="text" class="des" id="Valasz1AdminKerdesInput" placeholder="Válasz1"></td>
-                <td><input type="text" class="des" id="Valasz2AdminKerdesInput" placeholder="Válasz2"></td>
-                <td><input type="text" class="des" id="Valasz3AdminKerdesInput" placeholder="Válasz3"></td>
-                <td><input type="text" class="des" id="Valasz4AdminKerdesInput" placeholder="Válasz4"></td>
+                <td><input type="text" class="modositastabla" id="KerdesAdminKerdesInput" placeholder="Kérdés"></td>
+                <td><input type="text" class="modositastabla" id="Valasz1AdminKerdesInput" placeholder="Válasz1"></td>
+                <td><input type="text" class="modositastabla" id="Valasz2AdminKerdesInput" placeholder="Válasz2"></td>
+                <td><input type="text" class="modositastabla" id="Valasz3AdminKerdesInput" placeholder="Válasz3"></td>
+                <td><input type="text" class="modositastabla" id="Valasz4AdminKerdesInput" placeholder="Válasz4"></td>
                 
             </tr>
             <tr>
@@ -181,7 +170,7 @@
                 <th><label id="HValaszAdminID" >Id:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="HValaszAdminKerdesInputMod" placeholder="H Válasz"></td>
+                <td><input type="text" class="modositastabla" id="HValaszAdminKerdesInputMod" placeholder="H Válasz"></td>
                 <td>
                     <select id="TemaAdminKerdesInput" name="tantargyak">
                         <option id="TemaModosit" value="tema" selected>tema</option>
@@ -205,11 +194,11 @@
                         <option value="Gasztronómia">Gasztronómia</option>
                     </select>
                 </td>
-                <td><input type="text" class="des" id="KerdesAdminKerdesInputMod" placeholder="Kérdés"></td>
-                <td><input type="text" class="des" id="Valasz1AdminKerdesInputMod" placeholder="Válasz1"></td>
-                <td><input type="text" class="des" id="Valasz2AdminKerdesInputMod" placeholder="Válasz2"></td>
-                <td><input type="text" class="des" id="Valasz3AdminKerdesInputMod" placeholder="Válasz3"></td>
-                <td><input type="text" class="des" id="Valasz4AdminKerdesInputMod" placeholder="Válasz4"></td>
+                <td><input type="text" class="modositastabla" id="KerdesAdminKerdesInputMod" placeholder="Kérdés"></td>
+                <td><input type="text" class="modositastabla" id="Valasz1AdminKerdesInputMod" placeholder="Válasz1"></td>
+                <td><input type="text" class="modositastabla" id="Valasz2AdminKerdesInputMod" placeholder="Válasz2"></td>
+                <td><input type="text" class="modositastabla" id="Valasz3AdminKerdesInputMod" placeholder="Válasz3"></td>
+                <td><input type="text" class="modositastabla" id="Valasz4AdminKerdesInputMod" placeholder="Válasz4"></td>
             </tr>
             <tr>
             <td>
@@ -248,14 +237,14 @@
             <tr>
                 <th><label id="FnevadminMod" for="FnevMod">Név:</label></th>
                 <th><label id="FemailadminMod" for="FemailMod">Email:</label></th>
-                <th><label id="FtanareadminMod" for="FtanareMod">Tanár jog:</label></th>
+                <th><label  id="FtanareadminMod" for="FtanareMod">Tanár jog:</label></th>
                 <th><label id="FValaszAdminID">Id:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="FnevMod" placeholder="Felhasználó név"></td>
-                <td><input type="text" class="des" id="FemailMod" placeholder="Email"></td>
+                <td><input type="text"  id="FnevMod" class="modositastabla"  placeholder="Felhasználó név"></td>
+                <td><input type="text"  id="FemailMod" class="modositastabla"  placeholder="Email"></td>
                 <td>
-                    <select id="FtanareMod" name="tanareMOD">
+                    <select class="modositastabla"   id="FtanareMod" name="tanareMOD">
                         <option id="tanarModosit" value="tanar" selected>tanare</option>
                         <option value="1" >Igen</option>
                         <option value="0">Nem</option>
@@ -304,8 +293,8 @@
                 <th><label id="idoadminKod" for="IdoAdminKerdesInput">Idő:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="NevAdminKerdesInput" placeholder="tanarjelszo"></td>
-                <td><input type="text" class="des" id="IdoAdminKerdesInput" placeholder="2024.03.15 21:42"></td>
+                <td><input type="text" class="modositastabla" id="NevAdminKerdesInput" placeholder="tanarjelszo"></td>
+                <td><input type="text" class="modositastabla" id="IdoAdminKerdesInput" placeholder="2024.03.15 21:42"></td>
             </tr>
             <tr>
                 <td>
@@ -333,8 +322,8 @@
                 <th><label id="KodValaszAdminID">Id:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="nevkodMod" placeholder="tanarjelszo"></td>
-                <td><input type="text" class="des" id="idokodMod" placeholder="2024"></td>
+                <td><input type="text" class="modositastabla" id="nevkodMod" placeholder="tanarjelszo"></td>
+                <td><input type="text" class="modositastabla" id="idokodMod" placeholder="2024"></td>
             </tr>
             <tr>
             <td>
@@ -351,14 +340,13 @@
 
     </form>
     <form id="tanarForm">
-        <table>
-            <tr>
-                    <td><p id="fNev2"></p></th>
-                    <td><input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()"></td>
-                </tr>
-                <input  class="admingomb" type="button" id="betoltesgomb2" value="Kérdések:" onclick="TTartalom()">
-                <input  class="admingomb" type="button" id="visszatanar" value="Vissza" onclick="TVissza()">
-        </table>
+        <p id="fNev2"></p>
+        <div class="button-container">
+            <input  class="admingomb" type="button" id="betoltesgomb2" value="Kérdések" width="10%" onclick="TTartalom()">
+            <input  class="admingomb" type="button" id="visszatanar" value="Vissza" onclick="TVissza()">
+            <input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()">
+              
+            </div>
         <table id="Ttartalom">
             <tr>
                 <th><label  id="idtanar" for="id2">ID:</label></th>
@@ -424,11 +412,11 @@
 
                     </select>
                 </td>
-                <td><input type="text" class="des" id="KerdesTanarKerdesInput" placeholder="Kérdés"></td>
-                <td><input type="text" class="des" id="Valasz1TanarKerdesInput" placeholder="Válasz1"></td>
-                <td><input type="text" class="des" id="Valasz2TanarKerdesInput" placeholder="Válasz2"></td>
-                <td><input type="text" class="des" id="Valasz3TanarKerdesInput" placeholder="Válasz3"></td>
-                <td><input type="text" class="des" id="Valasz4TanarKerdesInput" placeholder="Válasz4"></td>
+                <td><input type="text" class="modositastabla" id="KerdesTanarKerdesInput" placeholder="Kérdés"></td>
+                <td><input type="text" class="modositastabla" id="Valasz1TanarKerdesInput" placeholder="Válasz1"></td>
+                <td><input type="text" class="modositastabla" id="Valasz2TanarKerdesInput" placeholder="Válasz2"></td>
+                <td><input type="text" class="modositastabla" id="Valasz3TanarKerdesInput" placeholder="Válasz3"></td>
+                <td><input type="text" class="modositastabla" id="Valasz4TanarKerdesInput" placeholder="Válasz4"></td>
                 
             </tr>
             <tr>
@@ -456,7 +444,7 @@
                 <th><label id="HValaszTanarID" >Id:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="HValaszTanarKerdesInputMod" placeholder="H Válasz"></td>
+                <td><input type="text" class="modositastabla" id="HValaszTanarKerdesInputMod" placeholder="H Válasz"></td>
                 <td>
                     <select id="TemaTanarKerdesInput" name="tantargyak">
                         <option id="TemaModosit" value="tema" selected>tema</option>
@@ -480,11 +468,11 @@
                         <option value="Gasztronómia">Gasztronómia</option>
                     </select>
                 </td>
-                <td><input type="text" class="des" id="KerdesTanarKerdesInputMod" placeholder="Kérdés"></td>
-                <td><input type="text" class="des" id="Valasz1TanarKerdesInputMod" placeholder="Válasz1"></td>
-                <td><input type="text" class="des" id="Valasz2TanarKerdesInputMod" placeholder="Válasz2"></td>
-                <td><input type="text" class="des" id="Valasz3TanarKerdesInputMod" placeholder="Válasz3"></td>
-                <td><input type="text" class="des" id="Valasz4TanarKerdesInputMod" placeholder="Válasz4"></td>
+                <td><input type="text" class="modositastabla" id="KerdesTanarKerdesInputMod" placeholder="Kérdés"></td>
+                <td><input type="text" class="modositastabla" id="Valasz1TanarKerdesInputMod" placeholder="Válasz1"></td>
+                <td><input type="text" class="modositastabla" id="Valasz2TanarKerdesInputMod" placeholder="Válasz2"></td>
+                <td><input type="text" class="modositastabla" id="Valasz3TanarKerdesInputMod" placeholder="Válasz3"></td>
+                <td><input type="text" class="modositastabla" id="Valasz4TanarKerdesInputMod" placeholder="Válasz4"></td>
             </tr>
             <tr>
             <td>
