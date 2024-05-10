@@ -1,6 +1,6 @@
 
 body{
-  background-color: darkblue;
+  background-color: darkgreen;
   color:aliceblue;
   font-family: Arial;
 }
@@ -9,7 +9,7 @@ body{
   width: 15px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(80, 206, 248); 
+  background: rgb(137, 218, 121); 
   border-radius: 10px;
 }
 /*scroll bar design vége*/
@@ -59,6 +59,7 @@ position: relative;
   touch-action: manipulation;
   text-align: center;
   position:relative;
+  table-layout: fixed;
   }
 
 .kijelentkezesgomb{
@@ -103,19 +104,22 @@ transform: scale(1.05) rotate(-1deg);
 }
 
 .shape:first-child {
-  height: 200px; 
-  width: 200px; 
+  height: 200px; /* Fixed height */
+  width: 200px; /* Fixed width */
   background: linear-gradient(#1845ad, #23a2f6); 
-  left: 300px; 
-  top: 50px; 
+  left: 30%; /* You can keep this if you want a fixed left position */
+  top: 5%; /* Adjust as needed, this will place it 5% down from the top of the viewport */
+  position: absolute; /* Ensure proper positioning */
 }
 
+
 .shape:last-child {
-  height: 200px;
-  width: 200px; 
+  height: 200px; /* Fixed height */
+  width: 200px; /* Fixed width */
   background: linear-gradient(to right, #ff512f, #f09819); 
-  right: 300px;
-  bottom: 50px; 
+  right: 30%; /* You can keep this if you want a fixed left position */
+  bottom: 5%; /* Adjust as needed, this will place it 5% down from the top of the viewport */
+  position: absolute; /* Ensure proper positioning */
 }
 form:not(#adminForm,#tanarForm,#diakForm){
 height: 680px;
@@ -159,7 +163,7 @@ font-weight: 300;
 color: #e5e5e5;
 }
 #fNev,#fNev2,#fNev3{
-text-align: left;
+text-align: right;
 font-family: Arial, Helvetica, sans-serif;
 font-weight: bold;
 }
@@ -277,8 +281,16 @@ option{
 #TemaAdminKerdesInputMod,#TemaAdminKerdesInput,#TemaTanarKerdesInputMod,#TemaTanarKerdesInput{
   color:black;
 }
-#FtanareMod{
-  color:black;
+.modositastabla{
+  display: block;
+  height: 50px;
+  background-color: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+
 }
 
 .gombkodvalaszok{
@@ -435,4 +447,15 @@ width: 140%;}
   background-color: orange;
   padding: 10px 20px;
   width: fit-content;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Ez az egyenletes elosztásért felelős */
+  width: 100%;
+}
+
+.admingomb {
+  flex-grow: 1;
+  margin: 0 5px; 
+  
 }
