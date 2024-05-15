@@ -69,6 +69,7 @@ kh2.style.display = "none";
 Hozzaadastabla2.style.display = "none";
 Modositastabla2.style.display = "none";
 Ttartalom.style.display = "none";
+var tanarnev;
 //diak
 document.getElementById("ido").style.display="none";
 document.getElementById("felezes").style.display="none";
@@ -104,7 +105,8 @@ function Init() {
         else if (userType == "Tanar") {
             tanar.style.display = "block";
             fNev2.innerHTML = `Tanar: ${sessionStorage.getItem("fn")}`;
-
+            tanarnev=sessionStorage.getItem("fn");
+           
         }
         else if (userType == "Diak") {
             diak.style.display = "block";
@@ -958,48 +960,53 @@ function KodHozzaadas() {
 //TANAR
 async function TTartalom() {
     kh2.style.display = "block";
-    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
-    for (let i = 1; i <= sqladat[0].count; i++) {
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek INNER JOIN felhasznalok ON kerdesek.hozaado = felhasznalok.id WHERE felhasznalok.nev = 'szarvas';");
+    console.log(sqladat[0].count)
+    for (let i = 0; i <= sqladat[0].count-1; i++) {
         
-        
-        let sql = "SELECT f.id FROM felhasznalok f WHERE f.nev='" + fNev2.innerHTML + "'";
-        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + i + "'";
+       
+        let sql = "SELECT f.id FROM felhasznalok f WHERE f.nev='" + tanarnev + "'";
         let valasz2 = await LekerdezesEredmenye(sql);
-        let sql3 ="SELECT * FROM kerdesek k WHERE k.hozaado ='" +valasz2 + "'"
+        let sql3 ="SELECT * FROM kerdesek k WHERE k.hozaado ='" +valasz2[0].id + "'"
+     
         let valasz = await LekerdezesEredmenye(sql3);
-        if (valasz.length == 1) {
+        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + valasz[i].helyesvalasz + "'";
+        console.log(valasz[i].helyesvalasz);
+        console.log(LekerdezesEredmenye(sql2));
+        if (valasz.length == sqladat[0].count) {
             let id = document.createElement("div");
-            id.innerText = valasz[0].id;
+            id.innerText = valasz[i].id;
             id.classList.add("valaszok");
             document.getElementById("id2").appendChild(id);
+            console.log(id)
 
             let tema = document.createElement("div");
-            tema.innerText = valasz[0].tema;
+            tema.innerText = valasz[i].tema;
             tema.classList.add("valaszok");
             document.getElementById("tema2").appendChild(tema);
 
             let kerdes = document.createElement("div");
-            kerdes.innerText = valasz[0].kerdes;
+            kerdes.innerText = valasz[i].kerdes;
             kerdes.classList.add("valaszok");
             document.getElementById("kerdes2").appendChild(kerdes);
 
             let valasz1 = document.createElement("div");
-            valasz1.innerText = valasz[0].elsovalasz;
+            valasz1.innerText = valasz[i].elsovalasz;
             valasz1.classList.add("valaszok");
             document.getElementById("valasz12").appendChild(valasz1);
 
             let valasz2 = document.createElement("div");
-            valasz2.innerText = valasz[0].masodikvalasz;
+            valasz2.innerText = valasz[i].masodikvalasz;
             valasz2.classList.add("valaszok");
             document.getElementById("valasz22").appendChild(valasz2);
 
             let valasz3 = document.createElement("div");
-            valasz3.innerText = valasz[0].harmadikvalasz;
+            valasz3.innerText = valasz[i].harmadikvalasz;
             valasz3.classList.add("valaszok");
             document.getElementById("valasz32").appendChild(valasz3);
 
             let valasz4 = document.createElement("div");
-            valasz4.innerText = valasz[0].negyedikvalasz;
+            valasz4.innerText = valasz[i].negyedikvalasz;
             valasz4.classList.add("valaszok");
             document.getElementById("valasz42").appendChild(valasz4);
 
@@ -1009,9 +1016,9 @@ async function TTartalom() {
             let torlesgomb = document.createElement("button");
             let modositasgomb2 = document.createElement("button");
             torlesgomb.innerText = "törlés";
-            torlesgomb.value = valasz[0].id;
+            torlesgomb.value = valasz[i].id;
             modositasgomb2.innerText ="modositas" ;
-            modositasgomb2.value = valasz[0].id;
+            modositasgomb2.value = valasz[i].id;
             modositasgomb2.type = "button";
             torlesgomb.classList.add("gombvalaszok");
             document.getElementById("torlesgomb2").appendChild(torlesgomb);
@@ -1022,7 +1029,7 @@ async function TTartalom() {
             torlesgomb.onclick = function () {
                 var gombertek = this.value;
                 let sqldelete = "DELETE FROM kerdesek WHERE kerdesek.id=" + gombertek + "";
-                let sqlAutoIncrement = "ALTER TABLE kerdesek AUTO_INCREMENT = " + sqladat[0].count + "";
+                let sqlAutoIncrement = "ALTER TABLE kerdesek AUTO_INCREMENT = " + sqladat[i].count + "";
                 let sqlujraindexeles = "UPDATE kerdesek k SET k.id = id-1 WHERE id > " + gombertek + "";
                 LekerdezesEredmenye(sqldelete);
                 LekerdezesEredmenye(sqlujraindexeles);
@@ -1040,8 +1047,8 @@ async function TTartalom() {
                 document.getElementById("TemaModosit").innerText = tema;
                 document.getElementById("TemaModosit").value = tema;
             };
-            
             LekerdezesEredmenye(sql2).then((valasz) => {
+              console.log(valasz[0].helyesvalasz);
                 if (valasz[0].helyesvalasz == "1") {
                     valasz1.style.backgroundColor = "green";
                 }
@@ -1049,10 +1056,10 @@ async function TTartalom() {
                     valasz2.style.backgroundColor = "Green";
 
                 }
-                else if (valasz[0].helyesvalasz == "3") {
+                else if (valasz[0].helyesvalasz== "3") {
                     valasz3.style.backgroundColor = "Green";
                 }
-                else if (valasz[0].helyesvalasz == "4") {
+                else if (valasz[0].helyesvalasz== "4") {
                     valasz4.style.backgroundColor = "Green";
                 }
              
