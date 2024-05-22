@@ -116,7 +116,7 @@
             <tr>
                 <td><input type="text" class="modositastabla"  id="HValaszAdminKerdesInput" placeholder="H Válasz"></td>
                 <td>
-                    <select id="TemaAdminKerdesInputMod" name="tantargyak">
+                    <select id="TemaAdminKerdesInputMod" class="modositastabla" name="tantargyak">
                         <option id="temahozzaad" value="tema" selected>Téma</option>
                         <option value="Matematika">Matematika</option>
                         <option value="Történelem">Történelem</option>
@@ -151,7 +151,7 @@
                     <input  class="admingomb" type="button" id="hozzaadasgomb" value="Hozzáadás" onclick="KerdesHozzaadas()">
                 </td>
                 <td>
-                    <input  class="admingomb" type="button" id="hozzaadasvissza" value="Vissza" onclick="KerdesHozzadasMenuVissza()">
+                    <input  class="admingomb" type="button" id="hozzaadasvissza" value="Vissza" onclick="KerdesHozzadasVissza()">
                 </td>
                 <td>
                     <p id="adminInfo"></p>
@@ -172,8 +172,8 @@
             <tr>
                 <td><input type="text" class="modositastabla" id="HValaszAdminKerdesInputMod" placeholder="H Válasz"></td>
                 <td>
-                    <select id="TemaAdminKerdesInput" name="tantargyak">
-                        <option id="TemaModosit" value="tema" selected>tema</option>
+                    <select id="TemaAdminKerdesInput" class="modositastabla" name="tantargyak">
+                        <option id="TemaModosit" value="Téma" selected>Téma</option>
                         <option value="Matematika">Matematika</option>
                         <option value="Történelem">Történelem</option>
                         <option value="Biológia">Biológia</option>
@@ -315,10 +315,6 @@
             <tr>
                 <th><label  id="nevadminKodMod" for="nevkodMod">Kód:</label></th>
                 <th><label id="idoadminKodMod" for="idokodMod">idő:</label></th>
-                <th><label id="idoadminKodMod" for="idokodMod">idő:</label></th>
-
-                
-                
                 <th><label id="KodValaszAdminID">Id:</label></th>
             </tr>
             <tr>
@@ -371,7 +367,7 @@
             <table id="kh2">
             <tr>
                 <td>
-                    <input  class="admingomb" type="button" id="hozzaadas" value="Kérdés hozzáadása" onclick="KerdesHozzadasMenu2()">
+                    <input  class="admingomb" type="button" id="hozzaadas2" value="Kérdés hozzáadása" onclick="KerdesHozzadasMenu2()">
                 </td>
             </tr>
             
@@ -387,9 +383,9 @@
                 <th><label id="Valasz4TanarKerdes" for="Valasz4TanarKerdesInput">Válasz4:</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="des" id="HValaszTanarKerdesInput" placeholder="H Válasz"></td>
+                <td><input type="text" class="modositastabla" id="HValaszTanarKerdesInput" placeholder="H Válasz"></td>
                 <td>
-                    <select id="TemaTanarKerdesInputMod" name="tantargyak">
+                    <select id="TemaTanarKerdesInputMod" class="modositastabla" name="tantargyak">
                         <option id="temahozzaad" value="tema" selected>Téma</option>
                         <option value="Matematika">Matematika</option>
                         <option value="Történelem">Történelem</option>
@@ -417,14 +413,13 @@
                 <td><input type="text" class="modositastabla" id="Valasz2TanarKerdesInput" placeholder="Válasz2"></td>
                 <td><input type="text" class="modositastabla" id="Valasz3TanarKerdesInput" placeholder="Válasz3"></td>
                 <td><input type="text" class="modositastabla" id="Valasz4TanarKerdesInput" placeholder="Válasz4"></td>
-                
             </tr>
             <tr>
                 <td>
                     <input  class="admingomb" type="button" id="hozzaadasgombtanar" value="Hozzáadás" onclick="KerdesHozzaadasTanar()">
                    
                 </td>
-                <td> <input  class="admingomb" type="button" id="hozzaadasvissza2" value="Vissza" onclick="KerdesHozzadasMenuVissza2()"></td>
+                <td> <input  class="admingomb" type="button" id="hozzaadasvissza2" value="Vissza" onclick="KerdesHozzadasVissza2()"></td>
                 <td>
                     <p id="tanarInfo"></p>
                 </td>
@@ -440,14 +435,14 @@
                     <th><label id="Valasz2TanarKerdes" for="Valasz2TanarKerdesInputMod">Válasz2:</label></th>
                     <th><label  id="Valasz3TanarKerdes" for="Valasz3TanarKerdesInputMod">Válasz3:</label></th>
                     <th><label id="Valasz4TanarKerdes" for="Valasz4TanarKerdesInputMod">Válasz4:</label></th>
+                    <th><label id="HValaszTanarID">Id:</label></th>
                 </tr>
-                <th><label id="HValaszTanarID" >Id:</label></th>
             </tr>
             <tr>
                 <td><input type="text" class="modositastabla" id="HValaszTanarKerdesInputMod" placeholder="H Válasz"></td>
                 <td>
-                    <select id="TemaTanarKerdesInput" name="tantargyak">
-                        <option id="TemaModosit" value="tema" selected>tema</option>
+                    <select id="TemaTanarKerdesInput" class="modositastabla" name="tantargyak">
+                        <option id="TemaModosit2" value="Téma" selected>Téma</option>
                         <option value="Matematika">Matematika</option>
                         <option value="Történelem">Történelem</option>
                         <option value="Biológia">Biológia</option>
@@ -491,7 +486,6 @@
        <table>
         <tr>
             <td><p id="fNev3">Üdvözlünk a "Legyen ön is milliomos" játékban!</p></td>
-         
         </tr>
         </table>
         <div class="float-container" id="Milliomosmenu">
@@ -535,7 +529,6 @@
             <thead>
                 <tr>
                     <th>Kérdés száma</th>
-                  
                 </tr>
             </thead>
             <tbody >
