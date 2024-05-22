@@ -1,18 +1,14 @@
 //bejelentkezés
 let logForm = document.getElementById("logForm");
 let logInfo = document.getElementById("logInfo");
-
 //regisztráció
 let regForm = document.getElementById("regForm");
 let regInfo = document.getElementById("regInfo");
 regForm.style.display = "none";
-
 //egyéb
 let gombocok = document.querySelector(".background");
 let kijeletkezesgomb = document.getElementById("kijelentkezesgomb");
 kijeletkezesgomb.style.display = "none";
-
-
 //admin
 let admin = document.getElementById("adminForm");
 let kod = document.getElementById("kod");
@@ -69,6 +65,8 @@ kh2.style.display = "none";
 Hozzaadastabla2.style.display = "none";
 Modositastabla2.style.display = "none";
 Ttartalom.style.display = "none";
+hozzaadasvissza2.style.display = "none";
+var tanarnev;
 //diak
 document.getElementById("ido").style.display="none";
 document.getElementById("felezes").style.display="none";
@@ -99,12 +97,13 @@ function Init() {
         if (userType == "Admin") {
             admin.style.display = "block";
             fNev.innerHTML = `Admin: ${sessionStorage.getItem("fn")}`;
-
+            adminnev=sessionStorage.getItem("fn");
         }
         else if (userType == "Tanar") {
             tanar.style.display = "block";
             fNev2.innerHTML = `Tanar: ${sessionStorage.getItem("fn")}`;
-
+            tanarnev=sessionStorage.getItem("fn");
+           
         }
         else if (userType == "Diak") {
             diak.style.display = "block";
@@ -585,27 +584,15 @@ function KerdesHozzadasMenu() {
 
 
 }
-function KerdesHozzadasMenuVissza() {
+function KerdesHozzadasVissza() {
     Hozzaadastabla.style.display = "none";
     hozzaadas.style.display = "block";
-    
+    adminInfo.innerHTML = "";
 
 }
-function KerdesHozzadasMenu2() {
-    Hozzaadastabla2.style.display = "block";
-    hozzaadas2.style.display = "none";
-    hozzaadasvissza2.style.display = "block";
 
-
-}
-function KerdesHozzadasMenuVissza2() {
-    Hozzaadastabla2.style.display = "none";
-    hozzaadas2.style.display = "block";
-    
-
-}
 //kerdes hozzadas
-function KerdesHozzaadas() {
+async function KerdesHozzaadas() {
 
     let adminInfo = document.getElementById("adminInfo");
     let helyesvalasz = document.getElementById("HValaszAdminKerdesInput").value;
@@ -620,7 +607,11 @@ function KerdesHozzaadas() {
         adminInfo.innerHTML = "Nem töltöttél ki minden adatot!";
     }
     else if (regex.test(helyesvalasz) && regex.test(tema) && regex.test(kerdes) && regex.test(valasz1) && regex.test(valasz2) && regex.test(valasz3) && regex.test(valasz4)) {
-        let sql = "insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz)values(null,'" + helyesvalasz + "','" + tema + "','" + kerdes + "','" + valasz1 + "','" + valasz2 + "','" + valasz3 + "','" + valasz4 + "')";
+
+        let sql2 = "SELECT f.id FROM felhasznalok f WHERE f.nev='" + adminnev + "'";
+        let sqlvalasz = await LekerdezesEredmenye(sql2);
+        let sql = "insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz,hozaado)values(null,'" + helyesvalasz + "','" + tema + "','" + kerdes + "','" + valasz1 + "','" + valasz2 + "','" + valasz3 + "','" + valasz4 +  "','" + sqlvalasz[0].id +"')";
+
         LekerdezesEredmenye(sql);
         adminInfo.innerHTML = "";
         location.reload();
@@ -763,7 +754,13 @@ async function FTartalom() {
                 ID.innerText = "Id:" + this.value;
                 let sql = "SELECT f.tanar FROM felhasznalok f WHERE f.id='" + this.value + "'";
                 let eredmenyObjektum = await LekerdezesEredmenye(sql);
-                let tanar = eredmenyObjektum[0].tanar;
+                let tanar;
+                if(eredmenyObjektum[0].tanar==1){
+                    tanar="Igen";
+                }
+                else if(eredmenyObjektum[0].tanar==0){
+                    tanar="Nem";
+                }
                 document.getElementById("tanarModosit").innerText = tanar;
                 document.getElementById("tanarModosit").value = tanar;
             };
@@ -929,6 +926,7 @@ function KodVissza() {
     let betoltes = document.getElementById("kodgomb");
     betoltes.style.display = "block";
     Kodtartalom.style.display = "none";
+    KodHozzaadastabla.style.display = "none";
     vissza3.style.display = "none";
     KodModositastabla.style.display = "none";
     document.getElementById("idadminKod").innerHTML = "ID:";
@@ -958,64 +956,74 @@ function KodHozzaadas() {
 //TANAR
 async function TTartalom() {
     kh2.style.display = "block";
-    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek");
-    for (let i = 1; i <= sqladat[0].count; i++) {
-        let sql = "SELECT * FROM kerdesek k WHERE k.id='" + i + "'";
-        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + i + "'";
-        let valasz = await LekerdezesEredmenye(sql);
-        if (valasz.length == 1) {
+    let sqladat = await LekerdezesEredmenye("SELECT COUNT(*) as count FROM kerdesek INNER JOIN felhasznalok ON kerdesek.hozaado = felhasznalok.id WHERE felhasznalok.nev = 'szarvas';");
+    console.log(sqladat[0].count)
+    for (let i = 0; i <= sqladat[0].count-1; i++) {
+        
+       
+        let sql = "SELECT f.id FROM felhasznalok f WHERE f.nev='" + tanarnev + "'";
+        let valasz2 = await LekerdezesEredmenye(sql);
+        let sql3 ="SELECT * FROM kerdesek k WHERE k.hozaado ='" +valasz2[0].id + "'"
+     
+        let valasz = await LekerdezesEredmenye(sql3);
+        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + valasz[i].helyesvalasz + "'";
+        console.log(valasz[i].helyesvalasz);
+        console.log(LekerdezesEredmenye(sql2));
+        if (valasz.length == sqladat[0].count) {
             let id = document.createElement("div");
-            id.innerText = valasz[0].id;
+            id.innerText = valasz[i].id;
             id.classList.add("valaszok");
             document.getElementById("id2").appendChild(id);
+            console.log(id)
 
             let tema = document.createElement("div");
-            tema.innerText = valasz[0].tema;
+            tema.innerText = valasz[i].tema;
             tema.classList.add("valaszok");
             document.getElementById("tema2").appendChild(tema);
 
             let kerdes = document.createElement("div");
-            kerdes.innerText = valasz[0].kerdes;
+            kerdes.innerText = valasz[i].kerdes;
             kerdes.classList.add("valaszok");
             document.getElementById("kerdes2").appendChild(kerdes);
 
             let valasz1 = document.createElement("div");
-            valasz1.innerText = valasz[0].elsovalasz;
+            valasz1.innerText = valasz[i].elsovalasz;
             valasz1.classList.add("valaszok");
             document.getElementById("valasz12").appendChild(valasz1);
 
             let valasz2 = document.createElement("div");
-            valasz2.innerText = valasz[0].masodikvalasz;
+            valasz2.innerText = valasz[i].masodikvalasz;
             valasz2.classList.add("valaszok");
             document.getElementById("valasz22").appendChild(valasz2);
 
             let valasz3 = document.createElement("div");
-            valasz3.innerText = valasz[0].harmadikvalasz;
+            valasz3.innerText = valasz[i].harmadikvalasz;
             valasz3.classList.add("valaszok");
             document.getElementById("valasz32").appendChild(valasz3);
 
             let valasz4 = document.createElement("div");
-            valasz4.innerText = valasz[0].negyedikvalasz;
+            valasz4.innerText = valasz[i].negyedikvalasz;
             valasz4.classList.add("valaszok");
             document.getElementById("valasz42").appendChild(valasz4);
 
             let br = document.createElement("br");
             let br2 = document.createElement("br");
 
-            let torlesgomb = document.createElement("button");
+            let torlesgomb2 = document.createElement("button");
             let modositasgomb2 = document.createElement("button");
-            torlesgomb.innerText = "törlés";
-            torlesgomb.value = valasz[0].id;
-            modositasgomb2.innerText ="modositas" ;
-            modositasgomb2.value = valasz[0].id;
+            torlesgomb2.innerText = "törlés";
+            torlesgomb2.value = valasz[i].id;
+            modositasgomb2.innerText ="módositás" ;
+            modositasgomb2.value = valasz[i].id;
             modositasgomb2.type = "button";
-            torlesgomb.classList.add("gombvalaszok");
-            document.getElementById("torlesgomb2").appendChild(torlesgomb);
+            torlesgomb2.classList.add("gombvalaszok");
+            document.getElementById("torlesgomb2").appendChild(torlesgomb2);
             document.getElementById("torlesgomb2").appendChild(br);
             modositasgomb2.classList.add("gombvalaszok2");
             document.getElementById("modositasgomb2").appendChild(modositasgomb2);
             document.getElementById("modositasgomb2").appendChild(br2);
-            torlesgomb.onclick = function () {
+            
+            torlesgomb2.onclick = function () {
                 var gombertek = this.value;
                 let sqldelete = "DELETE FROM kerdesek WHERE kerdesek.id=" + gombertek + "";
                 let sqlAutoIncrement = "ALTER TABLE kerdesek AUTO_INCREMENT = " + sqladat[0].count + "";
@@ -1024,20 +1032,20 @@ async function TTartalom() {
                 LekerdezesEredmenye(sqlujraindexeles);
                 LekerdezesEredmenye(sqlAutoIncrement);
             };
-
+            
             modositasgomb2.onclick = async function () {
                 gombertek2 = this.value;
                 Modositastabla2.style.display = "block";
-                let ID = document.getElementById("HValaszAdminID");
+                let ID = document.getElementById("HValaszTanarID");
                 ID.innerText = "Id:" + this.value;
                 let sql = "SELECT k.tema FROM kerdesek k WHERE k.id='" + this.value + "'";
                 let eredmenyObjektum = await LekerdezesEredmenye(sql);
                 let tema = eredmenyObjektum[0].tema;
-                document.getElementById("TemaModosit").innerText = tema;
-                document.getElementById("TemaModosit").value = tema;
+                document.getElementById("TemaModosit2").innerText = tema;
+                document.getElementById("TemaModosit2").value = tema;
             };
-            
             LekerdezesEredmenye(sql2).then((valasz) => {
+              console.log(valasz[0].helyesvalasz);
                 if (valasz[0].helyesvalasz == "1") {
                     valasz1.style.backgroundColor = "green";
                 }
@@ -1045,10 +1053,10 @@ async function TTartalom() {
                     valasz2.style.backgroundColor = "Green";
 
                 }
-                else if (valasz[0].helyesvalasz == "3") {
+                else if (valasz[0].helyesvalasz== "3") {
                     valasz3.style.backgroundColor = "Green";
                 }
-                else if (valasz[0].helyesvalasz == "4") {
+                else if (valasz[0].helyesvalasz== "4") {
                     valasz4.style.backgroundColor = "Green";
                 }
              
@@ -1064,7 +1072,7 @@ async function TTartalom() {
 
 }
 
-function KerdesHozzaadasTanar() {
+async function KerdesHozzaadasTanar() {
 
     let tanarInfo = document.getElementById("tanarInfo");
     let helyesvalasz = document.getElementById("HValaszTanarKerdesInput").value;
@@ -1079,11 +1087,24 @@ function KerdesHozzaadasTanar() {
         tanarInfo.innerHTML = "Nem töltöttél ki minden adatot!";
     }
     else if (regex.test(helyesvalasz) && regex.test(tema) && regex.test(kerdes) && regex.test(valasz1) && regex.test(valasz2) && regex.test(valasz3) && regex.test(valasz4)) {
-        let sql = "insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz)values(null,'" + helyesvalasz + "','" + tema + "','" + kerdes + "','" + valasz1 + "','" + valasz2 + "','" + valasz3 + "','" + valasz4 + "')";
+        let sql2 = "SELECT f.id FROM felhasznalok f WHERE f.nev='" + tanarnev + "'";
+        let sqlvalasz = await LekerdezesEredmenye(sql2);
+        let sql = "insert into kerdesek(id,helyesvalasz,tema,kerdes,elsovalasz,masodikvalasz,harmadikvalasz,negyedikvalasz,hozaado)values(null,'" + helyesvalasz + "','" + tema + "','" + kerdes + "','" + valasz1 + "','" + valasz2 + "','" + valasz3 + "','" + valasz4 +  "','" + sqlvalasz[0].id +"')";
+
         LekerdezesEredmenye(sql);
         tanarInfo.innerHTML = "";
         location.reload();
     }
+}
+function KerdesHozzadasMenu2() {
+    Hozzaadastabla2.style.display = "block";
+    hozzaadas2.style.display = "none";
+    hozzaadasvissza2.style.display = "block";
+}
+function KerdesHozzadasVissza2() {
+    Hozzaadastabla2.style.display = "none";
+    hozzaadas2.style.display = "block";
+    tanarInfo.innerHTML = "";
 }
 function TVissza() {
     let betoltes = document.getElementById("betoltesgomb2");
