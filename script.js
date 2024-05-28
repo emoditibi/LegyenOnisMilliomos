@@ -346,7 +346,13 @@ function ellenorizJelszoErossseget() {
 
 }
 //regisztráció
-function regisztracio() {
+async function regisztracio() {
+    let ev=new Date().getFullYear();
+    let honap=new Date().getMonth();
+    let nap=new Date().getDate();
+    let ora = new Date().getHours();
+    let perc = new Date().getMinutes();
+
     let tan = 0;
     let regfn = document.getElementById("regfn").value;
     let email = document.getElementById("email").value;
@@ -381,6 +387,7 @@ function regisztracio() {
             let sql4 = "SELECT * FROM kodok k WHERE k.nev='" + kod + "'";
             let sql2 = "SELECT * FROM felhasznalok f WHERE f.nev='" + regfn + "'";
             let sql3 = "SELECT * FROM felhasznalok f WHERE f.email='" + email + "'";
+            let sqlido="Select k.idokorlat from kodok k where k.nev='" + kod + "'";
 
             if (tanar === false) {
                 tan = 0;
@@ -411,35 +418,104 @@ function regisztracio() {
             }
             else if (tanar === true) {
                 LekerdezesEredmenye(sql4).then((valasz) => {
-                    if (valasz.length == 1) {
-                        tan = 1;
-                        let sql = "insert into felhasznalok(id,nev,password,email,tanar)values(null,'" + regfn + "','" + hash + "','" + email + "','" + tan + "')";
-                        LekerdezesEredmenye(sql2).then((valasz) => {
-                            if (valasz.length == 1) {
-                                regInfo.innerHTML = "A felhasználó név már foglalt!";
+                    if(valasz.length == 1){
+                        LekerdezesEredmenye(sqlido).then((valasz) => { 
+                            let g = false;
+                            let ev;
+                            let honap;
+                            let nap;
+                            let ev2=new Date().getFullYear();
+                            let honap2=new Date().getMonth()+1;
+                            let nap2=new Date().getDate();
+                            if(valasz[0].idokorlat == null){
+                                
+                                 tan = 1;
+                                 let sql = "insert into felhasznalok(id,nev,password,email,tanar)values(null,'" + regfn + "','" + hash + "','" + email + "','" + tan + "')";
+                                 LekerdezesEredmenye(sql2).then((valasz) => {
+                                 if (valasz.length == 1) {
+                                         regInfo.innerHTML = "A felhasználó név már foglalt!";
+                                     }
+                                     else {
+                                         LekerdezesEredmenye(sql3).then((valasz) => {
+                                             if (valasz.length == 1) {
+                                                 regInfo.innerHTML = "Van már ilyen email cím!";
+                                             }
+                                             else LekerdezesEredmenye(sql).then((valasz) => {
+                                                 console.log(valasz);
+                                             })
+                                             logForm.style.display = "none";
+                                             regForm.style.display = "none";
+                                             sessionStorage.setItem("userType", "Tanar");
+                                             sessionStorage.setItem("login", true);
+                                             Init();
+     
+         
+                                         });
+
+                                     }
+                                     
+                                 })
                             }
-                            else {
-                                LekerdezesEredmenye(sql3).then((valasz) => {
-                                    if (valasz.length == 1) {
-                                        regInfo.innerHTML = "Van már ilyen email cím!";
+                            else{
+
+                                 ev=valasz[0].idokorlat.toString().slice(0, 4)
+                                 honap = valasz[0].idokorlat.toString().slice(4, 6);
+                                 nap = valasz[0].idokorlat.toString().slice(6, 8);
+                                 if ( ev-ev2>=0 ) {
+                                    g=true;
+                                    if (honap-honap2>=0) {
+                                        if (nap-nap2>=0||g) {
+                                            tan = 1;
+                                            let sql = "insert into felhasznalok(id,nev,password,email,tanar)values(null,'" + regfn + "','" + hash + "','" + email + "','" + tan + "')";
+                                            LekerdezesEredmenye(sql2).then((valasz) => {
+                                            if (valasz.length == 1) {
+                                                    regInfo.innerHTML = "A felhasználó név már foglalt!";
+                                                }
+                                                else {
+                                                    LekerdezesEredmenye(sql3).then((valasz) => {
+                                                        if (valasz.length == 1) {
+                                                            regInfo.innerHTML = "Van már ilyen email cím!";
+                                                        }
+                                                        else LekerdezesEredmenye(sql).then((valasz) => {
+                                                            console.log(valasz);
+                                                        })
+                                                        logForm.style.display = "none";
+                                                        regForm.style.display = "none";
+                                                        sessionStorage.setItem("userType", "Tanar");
+                                                        sessionStorage.setItem("login", true);
+                                                        Init();
+                
+                    
+                                                    });
+    
+                                                }
+                                                
+                                            })
+                                        }
+                                        else{
+                                            regInfo.innerHTML = "Lejárt a tanári jelszó!"; 
+                                        }
                                     }
-                                    else LekerdezesEredmenye(sql).then((valasz) => {
-                                        console.log("alma");
-                                        console.log(valasz);
-                                    })
-                                    logForm.style.display = "none";
-                                    regForm.style.display = "none";
-                                    sessionStorage.setItem("userType", "Tanar");
-                                    sessionStorage.setItem("login", true);
-                                    Init();
-
-
-                                });
-
+                                    else{
+                                        regInfo.innerHTML = "Lejárt a tanári jelszó!"; 
+                                    }
+                                
+                                
                             }
-                        })
+                            
+                            
+                            else{
+                                regInfo.innerHTML = "Lejárt a tanári jelszó!"; 
+                            }
+                            }
+                            
+                         
+                    });
                     }
-                    else { regInfo.innerHTML = "Nem jó jelszót adtál meg"; }
+                    else{
+                            regInfo.innerHTML = "Nem jó tanári jelszót adtál meg!"; 
+                        }
+                    
                 })
             }
 
@@ -881,14 +957,9 @@ async function KodTartalom() {
     betoltes.style.display = "none";
     Kodtartalom.style.display = "block";
     vissza3.style.display = "block";
-    kodhozzaadas.style.display = "block";
-
-    //  let ev=new Date().getFullYear();
-    //  let honap=new Date().getMonth();
-    //  let nap=new Date().getDate();
-    //  let ora = new Date().getHours();
-    //  let perc = new Date().getMinutes();
-    // console.log("ev: "+ev+" honap: "+(honap+1)+" nap: "+nap+" ora: "+ora+" perc: "+perc);
+    kodhozzaadas.style.display = "block"; let ev=new Date().getFullYear();
+   
+    
 }
 function KodHozzadasMenu() {
     KodHozzaadastabla.style.display = "block";
@@ -966,8 +1037,8 @@ async function TTartalom() {
         let sql3 ="SELECT * FROM kerdesek k WHERE k.hozaado ='" +valasz2[0].id + "'"
      
         let valasz = await LekerdezesEredmenye(sql3);
-        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + valasz[i].helyesvalasz + "'";
         console.log(valasz[i].helyesvalasz);
+        let sql2 = "SELECT k.helyesvalasz FROM kerdesek k WHERE k.id='" + valasz[i].helyesvalasz + "'";
         console.log(LekerdezesEredmenye(sql2));
         if (valasz.length == sqladat[0].count) {
             let id = document.createElement("div");
@@ -1026,7 +1097,7 @@ async function TTartalom() {
             torlesgomb2.onclick = function () {
                 var gombertek = this.value;
                 let sqldelete = "DELETE FROM kerdesek WHERE kerdesek.id=" + gombertek + "";
-                let sqlAutoIncrement = "ALTER TABLE kerdesek AUTO_INCREMENT = " + sqladat[0].count + "";
+                // let sqlAutoIncrement = "ALTER TABLE kerdesek AUTO_INCREMENT = " + sqladat[0].count + "";
                 let sqlujraindexeles = "UPDATE kerdesek k SET k.id = id-1 WHERE id > " + gombertek + "";
                 LekerdezesEredmenye(sqldelete);
                 LekerdezesEredmenye(sqlujraindexeles);
@@ -1201,6 +1272,23 @@ function Jatekszabalyok() {
     } else {
         diakInfo.innerHTML = "";
     }
+}
+function Toplista(){
+    let sqltoplista="SELECT nev, pont FROM toplista ORDER BY pont DESC";
+    let sqltoplistadb="SELECT COUNT(*) AS id FROM toplista;"
+    LekerdezesEredmenye(sqltoplistadb).then((valasz2)=> {
+    LekerdezesEredmenye(sqltoplista).then((valasz)=> {
+        console.log(valasz);
+        console.log(valasz2[0].id);
+        if (diakInfo.innerHTML === "") {
+            for (let i = 0; i < valasz2[0].id; i++) {
+                diakInfo.innerHTML += valasz[i].nev +" "+ valasz[i].pont+ "<br>";
+            }
+        } else {
+            diakInfo.innerHTML = "";
+        }
+     })
+    })
 }
 
 function VisszaAMenube(){
