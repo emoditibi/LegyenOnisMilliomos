@@ -340,6 +340,8 @@
         <div class="button-container">
             <input  class="admingomb" type="button" id="betoltesgomb2" value="Kérdések" width="10%" onclick="TTartalom()">
             <input  class="admingomb" type="button" id="visszatanar" value="Vissza" onclick="TVissza()">
+            <input  class="admingomb" type="button" id="csoportgomb" value="Csoportok" width="10%" onclick="Csoportok()">
+            <input  class="admingomb" type="button" id="csoportgombvissza" value="Vissza" onclick="CsoportokVissza()">
             <input  class="kijelentkezesgomb" type="button" id="kijelentkezesgomb" value="Kijelenkezes" onclick="Kijelentkezes()">
               
             </div>
@@ -382,6 +384,7 @@
                 <th><label  id="Valasz3TanarKerdes" for="Valasz3TanarKerdesInput">Válasz3:</label></th>
                 <th><label id="Valasz4TanarKerdes" for="Valasz4TanarKerdesInput">Válasz4:</label></th>
             </tr>
+            
             <tr>
                 <td><input type="text" class="modositastabla" id="HValaszTanarKerdesInput" placeholder="H Válasz"></td>
                 <td>
@@ -462,7 +465,7 @@
                         <option value="Politika">Politika</option>
                         <option value="Gasztronómia">Gasztronómia</option>
                     </select>
-                </td>
+            </td>
                 <td><input type="text" class="modositastabla" id="KerdesTanarKerdesInputMod" placeholder="Kérdés"></td>
                 <td><input type="text" class="modositastabla" id="Valasz1TanarKerdesInputMod" placeholder="Válasz1"></td>
                 <td><input type="text" class="modositastabla" id="Valasz2TanarKerdesInputMod" placeholder="Válasz2"></td>
@@ -481,6 +484,27 @@
             </td>
             </tr>
         </table>
+
+
+        <table id="Csoporttartalom">
+            <tr>
+                <th><label  id="csoportnevtanar" for="csoportnev">csoportnev</label></th>
+                <th><label  id="tanarnevtanar" for="tanarnev">Tanar:</label></th>
+                <th><label id="felhasznalokidtanar" for="felhasznalokid">Diákok:</label></th>
+                <th><label  id="kerdesekidtanar" for="kerdesekid">Kérdések:</label></th>
+            </tr>
+            <tr>
+                <td>  <p id="csoportnev"></p></td>
+                <td>  <p id="tanarnev"></p></td>
+                <td>  <p id="felhasznalokid"></p></td>
+                <td>  <p id="kerdesekid"></p></td>
+            </tr>
+        </table>
+       
+        </table>
+        <input  class="admingomb" type="button" id="csoporttorlesgomb" value="Törlés" onclick="Csoporttorlesgomb()">
+           
+     
     </form>
     <form id="diakForm">
        <table>
@@ -503,6 +527,7 @@
                    
             </div>
             <div class="float-child">
+                <p id="diakInfo3"></p>
                 <p id="diakInfo"></p>
                 <p id="diakInfo2"></p>
             </div>
